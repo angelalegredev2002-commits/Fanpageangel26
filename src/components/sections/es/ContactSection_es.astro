@@ -1,0 +1,202 @@
+---
+// Import the necessary dependencies.
+import AuthBtn from '@components/ui/buttons/AuthBtn.astro';
+import ContactIconBlock from '@components/ui/blocks/ContactIconBlock.astro';
+import TextInput from '@components/ui/forms/input/TextInput.astro';
+import EmailContactInput from '@components/ui/forms/input/EmailContactInput.astro';
+import PhoneInput from '@components/ui/forms/input/PhoneInput.astro';
+import TextAreaInput from '@components/ui/forms/input/TextAreaInput.astro';
+import Icon from '@components/ui/icons/Icon.astro';
+
+// Define the variables that will be used in this component
+const title: string = 'Contáctanos';
+const subTitle: string =
+  "¿Tienes preguntas o quieres discutir un proyecto? Contáctanos y permítenos elaborar la solución perfecta con nuestras herramientas y servicios.";
+const formTitle: string = 'Completa el formulario a continuación';
+const formSubTitle: string =
+  'Te responderemos en un plazo de 1 a 2 días hábiles.';
+---
+
+<section class="relative overflow-hidden bg-neutral-200 dark:bg-neutral-950">
+  <div class="mx-auto max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:max-w-5xl">
+      
+      {/* Header Section */}
+      <div class="mb-12 text-center">
+        <h1 class="text-3xl font-black tracking-tight text-neutral-800 dark:text-neutral-200 md:text-5xl">
+          {title}
+        </h1>
+        <p class="mt-4 text-base text-neutral-600 dark:text-neutral-400">
+          {subTitle}
+        </p>
+      </div>
+
+      <div class="grid gap-12 lg:grid-cols-2 lg:gap-20">
+        {/* Left Column: Form (No background card) */}
+        <div class="space-y-8">
+          <div class="space-y-2">
+            <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-200">
+              {formTitle}
+            </h2>
+            <p class="text-sm text-neutral-500">
+              {formSubTitle}
+            </p>
+          </div>
+
+          <form
+            id="contact-form-es"
+            action="https://formspree.io/f/xpwzgpeg"
+            method="POST"
+            class="grid gap-4"
+          >
+            <input type="hidden" name="_subject" value="Nuevo contacto desde Fanpage" />
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <TextInput id="hs-firstname-contacts" label="Nombre" name="firstname" />
+              <TextInput id="hs-lastname-contacts" label="Apellido" name="lastname" />
+            </div>
+            
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <EmailContactInput id="hs-email-contacts" label="Correo electrónico" />
+              <PhoneInput id="hs-phone-number" label="Número de teléfono" />
+            </div>
+            
+            <TextAreaInput id="hs-about-contacts" label="¿Cómo podemos ayudarte?" name="message" />
+
+            <div class="mt-4">
+              <AuthBtn title="Enviar Mensaje Ahora" />
+            </div>
+          </form>
+        </div>
+
+        {/* Right Column: Contact Details */}
+        <div class="space-y-8 lg:ps-10">
+          <div class="space-y-6">
+            <a href="https://maps.google.com/maps?q=Jirón+Jacintos+2128,+San+Juan+de+Lurigancho+15434" target="_blank" class="group flex gap-x-5 p-4 rounded-2xl hover:bg-white/50 dark:hover:bg-neutral-900/50 transition-all">
+              <Icon name="mapPin" class="size-6 text-orange-500 shrink-0 group-hover:scale-110 transition-transform" />
+              <div class="grow">
+                <h3 class="font-bold text-neutral-800 dark:text-neutral-200">Oficina Central</h3>
+                <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                  Jirón Jacintos 2128, San Juan de Lurigancho 15434, Lima, Perú
+                </p>
+                <span class="mt-2 inline-flex items-center gap-x-2 text-sm font-bold text-orange-600 dark:text-orange-500 underline decoration-transparent group-hover:decoration-current transition-all">
+                  Ver en Google Maps <Icon name="arrowUpRight" class="size-3" />
+                </span>
+              </div>
+            </a>
+
+            <a href="mailto:angelalegredev2002@gmail.com" class="group flex gap-x-5 p-4 rounded-2xl hover:bg-white/50 dark:hover:bg-neutral-900/50 transition-all">
+              <Icon name="envelopeOpen" class="size-6 text-blue-500 shrink-0 group-hover:scale-110 transition-transform" />
+              <div class="grow">
+                <h3 class="font-bold text-neutral-800 dark:text-neutral-200">Email</h3>
+                <p class="mt-1 text-sm font-bold text-neutral-600 dark:text-neutral-400 group-hover:text-orange-500 transition-colors">
+                  angelalegredev2002@gmail.com
+                </p>
+              </div>
+            </a>
+
+            <div class="flex gap-x-5">
+              <Icon name="chatBubble" class="size-6 text-emerald-500 shrink-0" />
+              <div class="grow">
+                <h3 class="font-bold text-neutral-800 dark:text-neutral-200">FAQs & Soporte</h3>
+                <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                  Respuestas rápidas y guías detalladas.
+                </p>
+                <div class="mt-2 flex gap-4">
+                  <a href="/es/faqs" class="text-sm font-bold text-orange-600 dark:text-orange-500 hover:text-orange-700">Ir a FAQ</a>
+                  <a href="#" class="text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700">Documentación</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Map Section - Wide and Integrated */}
+      <div class="mt-16 relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-orange-500/20 to-blue-500/20 rounded-3xl blur-lg opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+        <div class="relative overflow-hidden rounded-3xl border border-neutral-300 dark:border-neutral-800 h-[400px] shadow-2xl">
+          <iframe
+            title="Ubicación exacta Okanox ERP"
+            src="https://maps.google.com/maps?q=Jirón+Jacintos+2128,+San+Juan+de+Lurigancho+15434&t=&z=18&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="transition-all duration-700 grayscale hover:grayscale-0"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Success Notification Modal */}
+  <div id="contact-success-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:scale-100 mt-0 opacity-0 scale-95 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center text-center">
+      <div class="flex flex-col bg-white border border-neutral-200 shadow-2xl rounded-3xl pointer-events-auto dark:bg-neutral-900 dark:border-neutral-800 w-full p-8">
+        <div class="mx-auto size-20 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500 mb-6">
+          <Icon name="checkCircle" class="size-10" />
+        </div>
+        <h3 class="text-2xl font-black text-neutral-800 dark:text-neutral-200 mb-2">¡Mensaje Enviado!</h3>
+        <p class="text-neutral-600 dark:text-neutral-400 mb-8">
+          Gracias por contactarnos. Tu mensaje ha sido recibido con éxito. Angel Alegre se pondrá en contacto contigo muy pronto.
+        </p>
+        <button type="button" class="py-3 px-6 inline-flex justify-center items-center gap-x-2 text-sm font-black rounded-xl border border-transparent bg-orange-500 text-white hover:bg-orange-600 focus:outline-hidden focus:ring-2 focus:ring-orange-500 transition-all" data-hs-overlay="#contact-success-modal">
+          Entendido, gracias
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Hidden Trigger for the modal */}
+  <button id="trigger-success-modal" class="hidden" data-hs-overlay="#contact-success-modal"></button>
+</section>
+
+<script>
+  const WHATSAPP_NUMBER = '51954711074';
+
+  function handleFormSubmit() {
+    const form = document.getElementById('contact-form-es') as HTMLFormElement | null;
+    const triggerBtn = document.getElementById('trigger-success-modal');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const firstname = data.get('firstname') || '';
+      const lastname  = data.get('lastname')  || '';
+      const email     = (form.querySelector('#hs-email-contacts') as HTMLInputElement)?.value || '';
+      const phone     = (form.querySelector('#hs-phone-number') as HTMLInputElement)?.value || '';
+      const message   = data.get('message') || '';
+
+      // 1. Enviar al correo vía Formspree
+      try {
+        await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+      } catch (_) {
+        // continuar de todas formas — WhatsApp lleva el mensaje
+      }
+
+      // 2. Abrir WhatsApp con el mensaje pre-completado
+      const waText = encodeURIComponent(
+        `📩 Nuevo contacto desde Fanpage:\n\n👤 Nombre: ${firstname} ${lastname}\n📧 Email: ${email}\n📞 Teléfono: ${phone}\n\n💬 Mensaje:\n${message}`
+      );
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, '_blank');
+
+      // 3. Mostrar modal de éxito
+      if (triggerBtn) triggerBtn.click();
+      form.reset();
+    });
+  }
+
+  document.addEventListener('astro:page-load', handleFormSubmit);
+  if (!document.documentElement.hasAttribute('data-astro-transition')) {
+    handleFormSubmit();
+  }
+</script>

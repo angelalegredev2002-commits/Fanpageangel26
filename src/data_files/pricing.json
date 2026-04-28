@@ -1,0 +1,102 @@
+{
+  "title": "Simple, Transparent Pricing",
+  "subTitle": "Boost efficiency with clear, value-driven plans designed to scale with your business.",
+  "badge": "Most Popular",
+  "thirdOption": "Need a custom solution?",
+  "btnText": "Contact Angel",
+
+  "plans": [
+    {
+      "name": "Entrepreneur Plan",
+      "description": "5 Essential Modules",
+      "price": "$ 29",
+      "cents": ".00",
+      "billingFrequency": "USD / month",
+      "features": [
+        "Sales & Income",
+        "Purchasing & Expenses",
+        "Basic Warehouse",
+        "Cash & Treasury",
+        "Electronic Invoicing"
+      ],
+      "modules": ["Sales", "Purchasing", "Warehouse", "Cash/Treasury", "SUNAT"],
+      "purchaseBtnTitle": "Get Started",
+      "purchaseLink": "#",
+      "highlight": false
+    },
+    {
+      "name": "Business Plan",
+      "description": "10 Management Modules",
+      "price": "$ 59",
+      "cents": ".00",
+      "billingFrequency": "USD / month",
+      "features": [
+        "Everything in Entrepreneur",
+        "Customers (CRM)",
+        "Digital Marketing",
+        "Administration",
+        "System Configuration"
+      ],
+      "modules": ["Sales", "Purchasing", "Warehouse", "Cash/Treasury", "SUNAT", "Customers", "Marketing", "Administration", "System"],
+      "purchaseBtnTitle": "Choose Business",
+      "purchaseLink": "#",
+      "highlight": false
+    },
+    {
+      "name": "Professional Plan",
+      "description": "15 Operational Modules",
+      "price": "$ 99",
+      "cents": ".00",
+      "billingFrequency": "USD / month",
+      "features": [
+        "Everything in Business",
+        "Advanced Logistics",
+        "Production & Recipes",
+        "Web Page Management",
+        "HR & Payroll",
+        "Technical Support",
+        "Budgeting"
+      ],
+      "modules": ["Sales", "Purchasing", "Warehouse", "Cash/Treasury", "SUNAT", "Customers", "Marketing", "Administration", "System", "Logistics", "Production", "Web", "HR", "Support", "Budgeting"],
+      "purchaseBtnTitle": "Choose Professional",
+      "purchaseLink": "#",
+      "highlight": true
+    },
+    {
+      "name": "Corporate Plan",
+      "description": "20 Strategic Modules",
+      "price": "$ 179",
+      "cents": ".00",
+      "billingFrequency": "USD / month",
+      "features": [
+        "Everything in Professional",
+        "General Management",
+        "Corporate Governance",
+        "Finance & Auditing",
+        "Control Panel",
+        "BI Dashboard"
+      ],
+      "modules": ["Sales", "Purchasing", "Warehouse", "Cash/Treasury", "SUNAT", "Customers", "Marketing", "Administration", "System", "Logistics", "Production", "Web", "HR", "Support", "Budgeting", "Management", "Corporation", "Finance", "Auditing", "Dashboard"],
+      "purchaseBtnTitle": "Choose Corporate",
+      "purchaseLink": "#",
+      "highlight": false
+    },
+    {
+      "name": "Ecosystem Plan",
+      "description": "Total Ecosystem (22 Modules)",
+      "price": "Custom",
+      "cents": "",
+      "billingFrequency": "Contact us",
+      "features": [
+        "Full Ecosystem",
+        "API Integrations",
+        "VIP Consulting",
+        "Tailored Customizations"
+      ],
+      "modules": ["Sales", "Purchasing", "Warehouse", "Cash/Treasury", "SUNAT", "Customers", "Marketing", "Administration", "System", "Logistics", "Production", "Web", "HR", "Support", "Budgeting", "Management", "Corporation", "Finance", "Auditing", "Dashboard", "Integrations", "Customizations"],
+      "purchaseBtnTitle": "Contact Sales",
+      "purchaseLink": "/contact",
+      "highlight": false
+    }
+  ]
+}

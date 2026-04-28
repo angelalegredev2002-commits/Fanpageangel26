@@ -1,0 +1,29 @@
+{
+  "subTitle": "Ask us anything about our brand and products, and get factual responses.",
+  "faqs": [
+    {
+      "question": "What modules are included in the ERP Okanox starter package?",
+      "answer": "The starter package includes essential modules for Commercial Management, Sales, Purchasing, and basic inventory, along with SUNAT integration for electronic invoicing."
+    },
+    {
+      "question": "Can I add more modules to Sakad RMS later?",
+      "answer": "Absolutely! The system is fully scalable. You can add modules like Payroll, Advanced Logistics, or Full Accounting at any time as your business grows."
+    },
+    {
+      "question": "What kind of customer support can I expect?",
+      "answer": "All our customers receive dedicated support. We provide technical assistance via WhatsApp and email to resolve operational and technical queries quickly."
+    },
+    {
+      "question": "How are SUNAT updates handled?",
+      "answer": "Our software is automatically updated with every regulatory change from SUNAT. You don't have to worry about legal changes; we ensure your invoicing is always valid."
+    },
+    {
+      "question": "Are the tutorials and help resources up to date?",
+      "answer": "We constantly update our knowledge base with step-by-step guides and videos on the use of each module so your team always knows how to get the most out of the system."
+    },
+    {
+      "question": "Do you offer solutions for companies with multiple locations?",
+      "answer": "Yes, our Enterprise solutions allow you to manage multiple locations, warehouses, and points of sale centrally and in real-time from anywhere."
+    }
+  ]
+}

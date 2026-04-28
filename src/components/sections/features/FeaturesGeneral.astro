@@ -1,0 +1,88 @@
+---
+// Import the necessary dependencies
+import { Image } from 'astro:assets';
+import IconBlock from '@components/ui/blocks/IconBlock.astro';
+import Icon from '@components/ui/icons/Icon.astro';
+
+interface Feature {
+  heading: string;
+  content: string;
+  svg: string;
+}
+
+interface Props {
+  title?: string;
+  subTitle?: string;
+  features?: Feature[];
+  src?: any;
+  alt?: string;
+}
+// Define props from Astro
+const { title, subTitle, src, alt, features } = Astro.props;
+---
+
+<section
+  class="mx-auto max-w-[85rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-full"
+>
+  <div class="relative overflow-hidden">
+    {/* Decorative background glow */}
+    <div class="absolute -right-20 -top-20 -z-10 size-64 bg-orange-500/10 blur-[100px] rounded-full"></div>
+    
+    <div class="grid grid-cols-2 items-center gap-6 mb-10 sm:block sm:mb-16">
+      {/* Block for title and subtitle - Premium Side by Side on mobile */}
+      <div class="flex flex-col gap-y-2 sm:gap-y-6">
+        <h2
+          class="text-xl sm:text-5xl font-black text-neutral-800 dark:text-neutral-100 tracking-tight leading-tight"
+        >
+          {title}
+        </h2>
+        {
+          subTitle && (
+            <p class="text-[9px] sm:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed font-medium">
+              {subTitle}
+            </p>
+          )
+        }
+      </div>
+
+      {/* Feature image - High presence on mobile side-by-side */}
+      <div class="relative overflow-hidden rounded-3xl shadow-[0_10px_30px_rgba(249,115,22,0.08)] sm:mt-16 group/feat-img transition-all duration-700 border border-neutral-200 dark:border-neutral-800">
+        {
+          src && alt && (
+            <Image
+              src={src}
+              alt={alt}
+              class="h-full w-full object-cover object-center transition-transform duration-1000 group-hover/feat-img:scale-110"
+              draggable={'false'}
+              format={'avif'}
+              loading={'eager'}
+            />
+          )
+        }
+        <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
+      </div>
+    </div>
+
+    {/* IconBlocks Grid - Organized into 4 distinct blocks */}
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-2 xl:grid-cols-4 lg:gap-6 mt-8">
+      {
+        features &&
+          features.map(feature => (
+            <div class="group flex flex-col gap-y-2 p-3 rounded-2xl border border-neutral-200 bg-neutral-50/50 dark:border-neutral-800 dark:bg-neutral-900/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <div class="flex items-center gap-x-2">
+                <div class="text-orange-500">
+                    <Icon name={feature.svg} />
+                </div>
+                <h3 class="text-[11px] sm:text-base font-black text-neutral-800 dark:text-neutral-100 tracking-tight leading-tight">
+                  {feature.heading}
+                </h3>
+              </div>
+              <p class="text-[9px] sm:text-sm text-neutral-600 dark:text-neutral-400 leading-tight">
+                {feature.content}
+              </p>
+            </div>
+          ))
+      }
+    </div>
+  </div>
+</section>

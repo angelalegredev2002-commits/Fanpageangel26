@@ -1,0 +1,29 @@
+{
+  "subTitle": "Pregúntanos cualquier cosa sobre nuestros sistemas y servicios, y obtén respuestas directas.",
+  "faqs": [
+    {
+      "question": "¿Qué módulos incluye el paquete básico de ERP Okanox?",
+      "answer": "El paquete básico incluye los módulos esenciales de Gestión Comercial, Ventas, Compras e inventarios básicos, además de la integración con la SUNAT para facturación electrónica."
+    },
+    {
+      "question": "¿Puedo agregar más módulos a Sakad RMS más adelante?",
+      "answer": "¡Por supuesto! El sistema es totalmente escalable. Puedes añadir módulos como Planillas, Logística Avanzada o Contabilidad Completa en cualquier momento según crezca tu negocio."
+    },
+    {
+      "question": "¿Qué tipo de soporte técnico puedo esperar?",
+      "answer": "Todos nuestros clientes reciben soporte dedicado. Ofrecemos asistencia técnica por WhatsApp y correo electrónico para resolver dudas operativas y técnicas de forma rápida."
+    },
+    {
+      "question": "¿Cómo se manejan las actualizaciones de la SUNAT?",
+      "answer": "Nuestro software se actualiza automáticamente con cada cambio normativo de la SUNAT. No tienes que preocuparte por cambios legales; nosotros nos encargamos de que tu facturación siempre sea válida."
+    },
+    {
+      "question": "¿Los tutoriales y recursos de ayuda están actualizados?",
+      "answer": "Actualizamos constantemente nuestra base de conocimientos con guías paso a paso y videos sobre el uso de cada módulo para que tu equipo siempre sepa cómo sacar el máximo provecho al sistema."
+    },
+    {
+      "question": "¿Ofrecen soluciones para empresas con múltiples sedes?",
+      "answer": "Sí, nuestras soluciones Enterprise permiten gestionar múltiples locales, almacenes y puntos de venta de forma centralizada y en tiempo real desde cualquier lugar."
+    }
+  ]
+}

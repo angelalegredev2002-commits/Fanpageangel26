@@ -1,0 +1,301 @@
+---
+// Importing necessary components
+import Meta from '@components/Meta.astro';
+import Navbar from '@components/sections/navbar&footer/Navbar.astro';
+import FooterSection from '@components/sections/navbar&footer/FooterSection.astro';
+import ContactHub from '@components/ui/buttons/ContactHub.astro';
+import BrandLogo from '@components/BrandLogo.astro';
+import { SITE } from '@data/constants';
+import '@styles/global.css';
+
+// Setting expected props
+const {
+  title = SITE.title,
+  meta,
+  structuredData,
+  lang = 'en',
+  customDescription = null,
+  customOgTitle = null,
+} = Astro.props;
+
+// Interface to type-check the properties
+interface Props {
+  title?: string;
+  meta?: string;
+  structuredData?: object;
+  lang?: string;
+  customDescription?: string | null;
+  customOgTitle?: string | null;
+}
+---
+
+<html lang={lang} class="scrollbar-hide lenis lenis-smooth scroll-pt-16">
+  <head>
+    {/* Adding metadata to the HTML document */}
+    <Meta
+      meta={meta}
+      structuredData={structuredData}
+      customDescription={customDescription}
+      customOgTitle={customOgTitle}
+    />
+    {/* Define the title of the page */}
+    <title>{title}</title>
+    <script is:inline>
+      // Script to handle dark mode. It will check if the theme is stored in localStorage or if dark theme is preferred by system settings
+      if (
+        localStorage.getItem('hs_theme') === 'dark' ||
+        (!('hs_theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+    <script>
+      import '@scripts/lenisSmoothScroll.js';
+    </script>
+  </head>
+  <body
+    class="flex min-h-screen flex-col bg-neutral-200 selection:bg-yellow-400 selection:text-neutral-700 dark:bg-neutral-950"
+  >
+    {
+      /*
+    Setting up the main structure of the page.
+    The Navbar is placed at the top, with a slot for the main content and FooterSection at the bottom.
+    */
+    }
+    <div
+      class="mx-auto w-full max-w-(--breakpoint-2xl) px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen"
+    >
+      <Navbar />
+      <main class="grow">
+        <slot />
+      </main>
+    </div>
+    <FooterSection />
+    <ContactHub />
+
+    {/* Loading Transition Overlay */}
+    <div id="loading-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-neutral-950 overflow-hidden">
+      <video id="loading-video" class="absolute size-full object-cover opacity-0 transition-opacity duration-1000" playsinline muted loop>
+        <source src="/videos/loading.mp4" type="video/mp4" />
+      </video>
+      <audio id="loading-audio" src="/music/loading.mp3" loop></audio>
+      
+      {/* Center Content (Empty or minimal if needed, currently removing bar) */}
+      <div id="loading-content" class="relative z-10 flex flex-col items-center">
+      </div>
+
+      {/* Brand Logo at the bottom */}
+      <div id="loading-footer" class="absolute bottom-12 z-10 opacity-60">
+        <BrandLogo class="h-10 w-auto" />
+      </div>
+    </div>
+
+    {/* Tech Grid, Noise & Custom Cursor */}
+    <div class="tech-grid" id="tech-grid"></div>
+    <div class="noise-overlay"></div>
+    <div class="custom-cursor hidden lg:block" id="cursor"></div>
+
+    {/* Organic Morphing Blobs */}
+    <div class="blob top-[-10%] right-[-10%] opacity-50"></div>
+    <div class="blob bottom-[-10%] left-[-10%] opacity-30" style="animation-delay: -5s; background: linear-gradient(135deg, rgba(234, 88, 12, 0.2), rgba(249, 115, 22, 0.1));"></div>
+    <div class="blob top-[40%] left-[20%] opacity-20" style="animation-delay: -10s; width: 300px; height: 300px;"></div>
+
+    <audio id="bg-music" src="/music/in-the-end.mp3" loop transition:persist></audio>
+
+    <script>
+      // https://preline.co
+      import 'preline';
+      import gsap from 'gsap';
+      import { initPremiumAnimations } from '@scripts/premiumAnimations.js';
+      
+      const init = () => {
+        (
+          window as Window & { 
+            HSStaticMethods?: { autoInit?: () => void };
+            hasPlayedLoading?: boolean;
+          }
+        ).HSStaticMethods?.autoInit?.();
+
+        const win = window as any;
+        initPremiumAnimations();
+
+        // Loading Screen Logic
+        const overlay = document.getElementById('loading-overlay');
+        const video = document.getElementById('loading-video') as HTMLVideoElement;
+        const audio = document.getElementById('loading-audio') as HTMLAudioElement;
+        
+        const isHomePage = window.location.pathname === '/' || window.location.pathname === '/es' || window.location.pathname === '/es/';
+
+        // Only play if on Home page AND it hasn't played in this 'internal session'
+        if (overlay && isHomePage && !win.hasPlayedLoading) {
+          overlay.style.display = 'flex';
+          video.classList.remove('opacity-0');
+          video.play().catch(() => {});
+          
+          setTimeout(() => {
+            const tl = gsap.timeline();
+            tl.to(['#loading-content', '#loading-footer'], { opacity: 0, y: 10, duration: 0.5 });
+            tl.to(overlay, { 
+              clipPath: 'inset(0% 0% 100% 0%)', 
+              duration: 1.2, 
+              ease: 'power4.inOut',
+              onComplete: () => {
+                overlay.style.display = 'none';
+                win.hasPlayedLoading = true;
+              }
+            });
+          }, 2500);
+
+          const playAudio = () => {
+            audio.volume = 0.5;
+            audio.play().catch(() => {});
+            window.removeEventListener('click', playAudio);
+          };
+          window.addEventListener('click', playAudio);
+        } else if (overlay) {
+          overlay.style.display = 'none';
+        }
+
+        // Background Music (Services Page) Logic
+        const bgMusic = document.getElementById('bg-music') as HTMLAudioElement;
+        const isServicesPage = window.location.pathname.includes('/services');
+        
+        if (bgMusic) {
+          bgMusic.volume = 0.4;
+          
+          if (isServicesPage) {
+            const playBG = () => {
+              bgMusic.play().catch(() => {});
+            };
+            window.addEventListener('click', playBG, { once: true });
+            window.addEventListener('scroll', playBG, { once: true });
+            playBG();
+          } else {
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+          }
+        }
+
+        // Scroll Reveal & Focus Observer
+        const observerOptions = {
+          threshold: [0, 0.1, 0.9, 1],
+          rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const rect = entry.boundingClientRect;
+            const isAbove = rect.top < 0;
+
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              entry.target.classList.remove('is-leaving');
+            } else if (isAbove) {
+              entry.target.classList.add('is-leaving');
+            } else {
+              entry.target.classList.remove('is-revealed');
+              entry.target.classList.remove('is-leaving');
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // 3D Mouse Tilt, Cursor, Grid & Magnetic Logic
+        const cursor = document.getElementById('cursor');
+        const techGrid = document.getElementById('tech-grid');
+        const magneticElements = document.querySelectorAll('.magnetic-wrap');
+        
+        document.addEventListener('mousemove', (e) => {
+          const { clientX, clientY } = e;
+
+          // Update Grid Mask
+          if (techGrid) {
+            const xPercent = (clientX / window.innerWidth) * 100;
+            const yPercent = (clientY / window.innerHeight) * 100;
+            techGrid.style.setProperty('--mouse-x', `${xPercent}%`);
+            techGrid.style.setProperty('--mouse-y', `${yPercent}%`);
+          }
+
+          // Update Tilt
+          const elements = document.querySelectorAll('.tilt-element');
+          elements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            (el as HTMLElement).style.setProperty('--rotate-x', `${rotateX}deg`);
+            (el as HTMLElement).style.setProperty('--rotate-y', `${rotateY}deg`);
+          });
+
+          // Update Magnetic Elements
+          magneticElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const distance = Math.hypot(clientX - centerX, clientY - centerY);
+            
+            if (distance < 100) {
+              const moveX = (clientX - centerX) * 0.4;
+              const moveY = (clientY - centerY) * 0.4;
+              (el as HTMLElement).style.transform = `translate(${moveX}px, ${moveY}px)`;
+            } else {
+              (el as HTMLElement).style.transform = `translate(0px, 0px)`;
+            }
+          });
+
+          // Update Cursor
+          if (cursor) {
+            cursor.style.transform = `translate(${clientX - 10}px, ${clientY - 10}px)`;
+          }
+        });
+
+        // Cursor Hover Effect
+        const hoverables = document.querySelectorAll('a, button, [role="button"]');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor?.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor?.classList.remove('active'));
+        });
+      };
+      
+      // Support for both regular load and Astro view transitions
+      document.addEventListener('DOMContentLoaded', init);
+      document.addEventListener('astro:page-load', init);
+    </script>
+    <style is:global>
+      /* Cinematic Reveal Masks */
+      .reveal-text span {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: bottom;
+      }
+      
+      /* Smooth clip-path transitions for images */
+      .reveal-image {
+        clip-path: inset(100% 0% 0% 0%);
+        transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      
+      .reveal-image.is-in-view {
+        clip-path: inset(0% 0% 0% 0%);
+      }
+
+      /* CSS rules for the page scrollbar */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </body>
+</html>

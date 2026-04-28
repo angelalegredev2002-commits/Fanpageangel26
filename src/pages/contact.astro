@@ -1,0 +1,36 @@
+---
+// Import the necessary components
+import MainLayout from '@/layouts/MainLayout.astro';
+import ContactSection from '@components/sections/misc/ContactSection.astro';
+import { SITE } from '@data/constants';
+
+const pageTitle: string = `Contact | ${SITE.title}`;
+const metaDescription =
+  "Have questions or want to discuss a project? Reach out, and let's craft the perfect solution with our tools and services.";
+const ogTitle = 'Contact Us | ERP Okanox & Sakad RMS';
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': 'https://okanox.com/contact',
+    url: 'https://okanox.com/contact',
+    name: 'Contact Us | ERP Okanox & Sakad RMS',
+    description:
+      "Have questions or want to discuss a project? Reach out, and let's craft the perfect solution with our tools and services.",
+    isPartOf: {
+      '@type': 'WebSite',
+      url: 'https://okanox.com',
+      name: 'ERP Okanox & Sakad RMS',
+      description:
+        'ERP Okanox and Sakad RMS offer comprehensive business management solutions with 22 specialized modules to empower your business.',
+    },
+    inLanguage: 'en-US',
+  }}
+>
+  <ContactSection />
+</MainLayout>

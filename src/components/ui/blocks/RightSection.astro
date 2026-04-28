@@ -1,0 +1,104 @@
+---
+// Import the required modules
+import { Image } from 'astro:assets';
+import PrimaryCTA from '@components/ui/buttons/PrimaryCTA.astro';
+// Extract properties from Astro.props
+const {
+  title,
+  subTitle,
+  btnExists,
+  btnTitle,
+  btnURL,
+  single,
+  imgOne,
+  imgOneAlt,
+  imgTwo,
+  imgTwoAlt,
+} = Astro.props;
+// Define TypeScript interface for the properties
+interface Props {
+  title: string;
+  subTitle: string;
+  btnExists?: boolean;
+  btnTitle?: string;
+  btnURL?: string;
+  single?: boolean;
+  imgOne?: any;
+  imgOneAlt?: any;
+  imgTwo?: any;
+  imgTwoAlt?: any;
+}
+---
+
+{/* Root section of the component */}
+<section
+  class="mx-auto max-w-[85rem] items-center gap-16 px-4 py-8 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8 lg:py-10 2xl:max-w-full overflow-hidden"
+>
+  {/* Text container with reveal animation */}
+  <div class="">
+    <div class="inline-block px-3 py-1 mb-4 text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-500/10 rounded-full dark:text-blue-400">
+      Tecnología de Vanguardia
+    </div>
+    <h2
+      class="reveal-text mb-4 text-3xl font-black tracking-tight text-balance text-neutral-800 dark:text-neutral-100 md:text-4xl lg:text-5xl"
+    >
+      {title}
+    </h2>
+    <p
+      class="mb-6 max-w-prose font-medium leading-relaxed text-pretty text-neutral-600 sm:text-lg dark:text-neutral-400"
+    >
+      {subTitle}
+    </p>
+    {btnExists ? (
+      <div class="magnetic-effect inline-block pt-2">
+        <PrimaryCTA title={btnTitle} url={btnURL} />
+      </div>
+    ) : null}
+  </div>
+
+  {/* Image container with cinematic reveal */}
+  {
+    single ? (
+      <div class="reveal-image mt-8">
+        <div class="group relative">
+          <div class="absolute -inset-1 bg-linear-to-r from-blue-500/20 to-orange-500/20 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+          <div class="relative overflow-hidden rounded-[2rem] border border-neutral-200 dark:border-neutral-800 shadow-2xl tilt-element">
+            <Image
+              class="w-full transform transition-transform duration-700 group-hover:scale-110"
+              src={imgOne}
+              alt={imgOneAlt}
+              format={'avif'}
+            />
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="mt-8 grid grid-cols-2 gap-4">
+        <div class="reveal-image group relative">
+          <div class="relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-lg tilt-element">
+            <Image
+              class="w-full transform transition-transform duration-700 group-hover:scale-125"
+              src={imgOne}
+              alt={imgOneAlt}
+              draggable={'false'}
+              format={'avif'}
+            />
+          </div>
+        </div>
+        <div class="reveal-image group relative">
+          <div class="relative mt-4 overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-lg lg:mt-10 tilt-element">
+            <Image
+              class="w-full transform transition-transform duration-700 group-hover:scale-125"
+              src={imgTwo}
+              alt={imgTwoAlt}
+              draggable={'false'}
+              format={'avif'}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
+</section>
+
+

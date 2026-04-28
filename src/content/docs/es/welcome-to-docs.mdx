@@ -1,0 +1,48 @@
+---
+title: Documentación de ERP Okanox
+head:
+  - tag: title
+    content: Documentación de ERP Okanox & Sakad RMS
+description: Explora la documentación completa de ERP Okanox y Sakad RMS para una visión profunda de nuestras herramientas de gestión empresarial.
+template: splash
+editUrl: false
+lastUpdated: false
+next: false
+hero:
+  title: Centro de Soporte y Guías
+  tagline: Tu recurso central para dominar los 22 módulos integrados, guías de configuración y optimización de procesos.
+  image:
+      alt: Logotipo de Sakad RMS
+      dark: ../../../images/starlight/screwfast_hero.svg
+      light: ../../../images/starlight/screwfast_hero_dark.svg
+  actions:
+    - text: Comenzar ahora
+      icon: right-arrow
+      variant: primary
+      link: /es/guides/getting-started/
+    - text: Ver en GitHub
+      icon: external
+      variant: minimal
+      link: https://github.com/mearashadowfax/ScrewFast
+---
+import "@styles/starlight_main.css";
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+
+  <Card title="Guías de Inicio Rápido" icon="document">
+    Configura tu entorno en minutos con nuestras guías paso a paso, diseñadas para administradores y usuarios finales.
+  </Card>
+
+  <Card title="Módulos del ERP" icon="seti:eslint">
+    Explora los 22 módulos integrados, desde Ventas y SUNAT hasta Producción y BI, con especificaciones técnicas completas.
+  </Card>
+
+   <Card title="Configuración y Ajustes" icon="seti:puppet">
+    Aprende a personalizar el sistema según las necesidades de tu empresa, gestionando usuarios, permisos y flujos de trabajo.
+  </Card>
+
+   <Card title="Integraciones y API" icon="seti:terraform">
+    Conecta ERP Okanox con otras herramientas mediante nuestra robusta API y servicios web escalables.
+  </Card>
+</CardGrid>

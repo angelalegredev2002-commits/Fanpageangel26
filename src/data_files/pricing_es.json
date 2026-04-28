@@ -1,0 +1,102 @@
+{
+  "title": "Membresías Flexibles y Transparentes",
+  "subTitle": "Impulsa tu eficiencia con planes diseñados para escalar junto a tu negocio.",
+  "badge": "Más Popular",
+  "thirdOption": "¿Necesitas una solución a medida?",
+  "btnText": "Contactar con Angel",
+
+  "plans": [
+    {
+      "name": "Plan Emprendedor",
+      "description": "5 Módulos esenciales",
+      "price": "S/ 99",
+      "cents": ".00",
+      "billingFrequency": "PEN / mes",
+      "features": [
+        "Ventas e Ingresos",
+        "Compras y Gastos",
+        "Almacén Básico",
+        "Caja y Tesorería",
+        "Facturación SUNAT"
+      ],
+      "modules": ["Ventas", "Compras", "Almacén", "Caja/Tesorería", "SUNAT"],
+      "purchaseBtnTitle": "Empezar ahora",
+      "purchaseLink": "#",
+      "highlight": false
+    },
+    {
+      "name": "Plan Negocio",
+      "description": "10 Módulos de gestión",
+      "price": "S/ 199",
+      "cents": ".00",
+      "billingFrequency": "PEN / mes",
+      "features": [
+        "Todo en Emprendedor",
+        "Clientes (CRM)",
+        "Marketing Digital",
+        "Administración",
+        "Configuración Sistema"
+      ],
+      "modules": ["Ventas", "Compras", "Almacén", "Caja/Tesorería", "SUNAT", "Clientes", "Marketing", "Administración", "Sistema"],
+      "purchaseBtnTitle": "Elegir Plan Negocio",
+      "purchaseLink": "#",
+      "highlight": false
+    },
+    {
+      "name": "Plan Profesional",
+      "description": "15 Módulos operativos",
+      "price": "S/ 349",
+      "cents": ".00",
+      "billingFrequency": "PEN / mes",
+      "features": [
+        "Todo en Negocio",
+        "Logística Avanzada",
+        "Producción y Recetas",
+        "Gestión Página Web",
+        "RRHH y Planillas",
+        "Soporte Técnico",
+        "Presupuestos"
+      ],
+      "modules": ["Ventas", "Compras", "Almacén", "Caja/Tesorería", "SUNAT", "Clientes", "Marketing", "Administración", "Sistema", "Logística", "Producción", "Web", "RRHH", "Soporte", "Presupuesto"],
+      "purchaseBtnTitle": "Elegir Plan Pro",
+      "purchaseLink": "#",
+      "highlight": true
+    },
+    {
+      "name": "Plan Corporativo",
+      "description": "20 Módulos estratégicos",
+      "price": "S/ 599",
+      "cents": ".00",
+      "billingFrequency": "PEN / mes",
+      "features": [
+        "Todo en Profesional",
+        "Gerencia General",
+        "Gobierno Corporativo",
+        "Finanzas y Auditoría",
+        "Tablero de Control",
+        "Dashboard BI"
+      ],
+      "modules": ["Ventas", "Compras", "Almacén", "Caja/Tesorería", "SUNAT", "Clientes", "Marketing", "Web", "Administración", "Sistema", "Logística", "Producción", "RRHH", "Soporte", "Presupuesto", "Gerencia", "Corporación", "Finanzas", "Auditoría", "Tablero"],
+      "purchaseBtnTitle": "Elegir Plan Corp",
+      "purchaseLink": "#",
+      "highlight": false
+    },
+    {
+      "name": "Plan Ecosistema",
+      "description": "Ecosistema Total (22 Módulos)",
+      "price": "Personalizado",
+      "cents": "",
+      "billingFrequency": "Consultar",
+      "features": [
+        "Ecosistema Completo",
+        "Integraciones API",
+        "Consultoría VIP",
+        "Personalización a Medida"
+      ],
+      "modules": ["Ventas", "Compras", "Almacén", "Caja/Tesorería", "SUNAT", "Clientes", "Marketing", "Web", "Administración", "Sistema", "Logística", "Producción", "RRHH", "Soporte", "Presupuesto", "Gerencia", "Corporación", "Finanzas", "Auditoría", "Tablero", "Integraciones", "Personalizaciones"],
+      "purchaseBtnTitle": "Contactar Ventas",
+      "purchaseLink": "/es/contact",
+      "highlight": false
+    }
+  ]
+}

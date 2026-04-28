@@ -1,0 +1,29 @@
+{
+  "subTitle": "Pregúntanos cualquier cosa sobre nuestra marca y productos, y obtén respuestas precisas.",
+  "faqs": [
+    {
+      "question": "¿Qué tipos de herramientas incluye el Kit de Inicio?",
+      "answer": "El Kit de Inicio incluye herramientas manuales y eléctricas esenciales para diversos proyectos de bricolaje, como martillos, taladros, destornilladores y una variedad de fijaciones. Es una selección cuidadosamente diseñada para ayudar tanto a principiantes como a bricoladores experimentados a abordar la mayoría de las tareas de mejora del hogar."
+    },
+    {
+      "question": "¿Puedo actualizar del Kit de Inicio al Maletín Profesional?",
+      "answer": "¡Por supuesto! Puedes actualizar al Maletín Profesional en cualquier momento para acceder a una gama más amplia de herramientas de alta calidad, disfrutar de soporte al cliente prioritario y recibir contenido exclusivo. Contacta a nuestro equipo de soporte para una transición sin problemas."
+    },
+    {
+      "question": "¿Qué descuentos están disponibles para pedidos al por mayor en el plan Maletín Profesional?",
+      "answer": "Los miembros del Maletín Profesional tienen derecho a descuentos exclusivos en pedidos al por mayor, cuyo porcentaje puede variar según el volumen del pedido. Contáctanos para hablar sobre tus necesidades y te proporcionaremos una estructura de descuento personalizada."
+    },
+    {
+      "question": "¿Qué tipo de soporte al cliente puedo esperar?",
+      "answer": "Todos nuestros clientes reciben soporte por correo electrónico dedicado. Con el Kit de Inicio, recibirás nuestro soporte estándar, mientras que el plan Maletín Profesional te actualiza a soporte prioritario, lo que significa tiempos de respuesta más rápidos y asistencia especializada."
+    },
+    {
+      "question": "¿Con qué frecuencia se actualizan los recursos en línea y tutoriales?",
+      "answer": "Actualizamos regularmente nuestros recursos en línea y tutoriales para reflejar las últimas tendencias en bricolaje y construcción, así como la introducción de nuevas herramientas y técnicas. Nuestro material busca ser completo y fácil de usar para todos los niveles de habilidad."
+    },
+    {
+      "question": "¿Equipo Sakad ofrece servicios para proyectos de construcción a gran escala?",
+      "answer": "Sí, nuestras Soluciones Empresariales están diseñadas para empresas más grandes que requieren servicios integrales. Proporcionamos consultoría, planificación y suministro de herramientas y materiales de alta calidad, así como soluciones de personal para necesidades de construcción considerables. Contáctanos para una cotización personalizada."
+    }
+  ]
+}

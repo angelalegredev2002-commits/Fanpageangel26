@@ -1,0 +1,86 @@
+---
+// Import the necessary dependencies
+import TabNav from '@components/ui/blocks/TabNav.astro';
+import TabContent from '@components/ui/blocks/TabContent.astro';
+import Icon from '@components/ui/icons/Icon.astro';
+
+// Define props from Astro
+const { title, tabs } = Astro.props;
+
+// Define TypeScript interface for tab object
+interface Tab {
+  heading: string;
+  content: string;
+  svg: string;
+  src: any;
+  alt: string;
+  first?: boolean;
+  second?: boolean;
+}
+
+// Define TypeScript interface for props
+interface Props {
+  title?: string;
+  tabs: Tab[];
+}
+---
+
+<section
+  class="mx-auto max-w-[85rem] py-12 lg:py-24 2xl:max-w-full sm:px-6 lg:px-8"
+>
+  <div class="relative p-4 sm:p-6 md:p-16 overflow-hidden">
+    {/* Decorative background glow */}
+    <div class="absolute -left-20 -bottom-20 -z-10 size-96 bg-orange-500/5 blur-[120px] rounded-full"></div>
+    
+    <div class="relative z-10">
+      {/* Section's heading - Filler tags removed */}
+      <div class="mb-12 text-center">
+        <h2
+          class="text-2xl font-black text-neutral-800 sm:text-4xl lg:text-5xl leading-tight dark:text-neutral-100 tracking-tight"
+        >
+          <Fragment set:html={title} />
+        </h2>
+      </div>
+      
+      {/* Tab navigation - Organized into 3 blocks/boxes */}
+      <nav class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12" aria-label="Tabs" role="tablist">
+        {
+          tabs.map((tab, index) => (
+            <div class="h-full">
+                <TabNav
+                  id={`tabs-with-card-item-${index + 1}`}
+                  dataTab={`#tabs-with-card-${index + 1}`}
+                  aria={`tabs-with-card-${index + 1}`}
+                  heading={tab.heading}
+                  content={tab.content}
+                  first={tab.first}
+                >
+                  <Icon name={tab.svg} />
+                </TabNav>
+            </div>
+          ))
+        }
+      </nav>
+
+      {/* Contents Column - Full width image display */}
+      <div class="relative overflow-hidden">
+        <div class="overflow-hidden rounded-[2.5rem] shadow-2xl">
+          {
+            tabs.map((tab, index) => (
+              <TabContent
+                id={`tabs-with-card-${index + 1}`}
+                aria={`tabs-with-card-item-${index + 1}`}
+                src={tab.src}
+                alt={tab.alt}
+                first={tab.first}
+                second={tab.second}
+              />
+            ))
+          }
+        </div>
+        <!-- Decorative Glow behind image -->
+        <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-full bg-orange-500/10 blur-[120px] rounded-full"></div>
+      </div>
+    </div>
+  </div>
+</section>

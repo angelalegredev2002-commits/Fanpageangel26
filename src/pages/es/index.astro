@@ -1,0 +1,161 @@
+---
+// Import the necessary components
+import MainLayout from '@/layouts/MainLayout.astro';
+import HeroSection from '@components/sections/landing/HeroSection.astro';
+import HeroSectionAlt from '@components/sections/landing/HeroSectionAlt.astro';
+import ClientsSection from '@components/sections/landing/ClientsSection.astro';
+import FeaturesGeneral from '@components/sections/features/FeaturesGeneral.astro';
+import FeaturesNavs from '@components/sections/features/FeaturesNavs.astro';
+import TestimonialsSection from '@components/sections/testimonials/TestimonialsSection.astro';
+import PricingSection from '@components/sections/pricing/PricingSection.astro';
+import FAQ from '@components/sections/misc/FAQ.astro';
+import AnnouncementBanner from '@components/ui/banners/AnnouncementBanner.astro';
+import heroImageRaw from '@images/hero-image.svg?raw';
+import faqs from '@data/faqs_es.json';
+import features from '@data/features_es.json';
+import pricing from '@data/pricing_es.json';
+import featureImage from '@images/features-image.png';
+import construction from '@images/construction-image.avif';
+import tools from '@images/automated-tools.jpg';
+import dashboard from '@images/dashboard-image.avif';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { partnersData } from '@/data_files/constants';
+import { Image } from 'astro:assets';
+
+const avatarSrcs: Array<string> = [
+  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80',
+  'https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80',
+  'https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80',
+  'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80',
+];
+---
+
+<MainLayout lang="es">
+  <AnnouncementBanner
+    btnId="dismiss-button"
+    btnTitle="Descubre Equipo Sakad en GitHub"
+    url="https://github.com/angelalegredev2002-commits"
+  />
+
+  <HeroSection
+    title=`Gestiona tu éxito con <span class="text-orange-500 dark:text-orange-400">Angel Alegre</span>`
+    subTitle="Creador de ERP Okanox y Sakad RMS. Un ecosistema completo de 22 módulos diseñados para transformar la gestión de tu empresa y llevarla al siguiente nivel."
+    primaryBtn="Ver Módulos"
+    primaryBtnURL={getRelativeLocaleUrl('es', 'products')}
+    secondaryBtn="Contactar a Angel"
+    secondaryBtnURL={getRelativeLocaleUrl('es', 'contact')}
+    withReview={true}
+    avatars={avatarSrcs}
+    rating=`<span class="font-bold">5.0</span> / 5`
+    starCount={5}
+    reviews=`Basado en más de <span class="font-bold">10 años</span> de experiencia`
+    svgRaw={heroImageRaw}
+  />
+
+  <div class="reveal-on-scroll">
+    <ClientsSection
+      title="Sistemas con el respaldo de la industria"
+      subTitle="Implementaciones exitosas en diversos sectores empresariales."
+      partners={partnersData}
+    />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <FeaturesGeneral
+      title="La Potencia de 22 Módulos Integrados"
+      subTitle="Desde la Gerencia hasta la SUNAT, ERP Okanox y Sakad RMS cubren cada rincón de tu operación empresarial con precisión y eficiencia."
+      src={featureImage}
+      alt="Módulos del sistema ERP Okanox"
+      features={features}
+    />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <FeaturesNavs
+      title=`Descubre la Arquitectura de <span class="text-orange-500 dark:text-orange-400">ERP Okanox & Sakad RMS</span>`
+      tabs={[
+        {
+          heading: 'Gestión Operativa',
+          content:
+            'Control total sobre Almacén, Logística, Producción/Recetas y Compras. Optimiza tu cadena de suministro y procesos de fabricación con herramientas automatizadas.',
+          svg: 'tools',
+          src: tools,
+          alt: 'Gestión de almacén y logística',
+          first: true,
+        },
+        {
+          heading: 'Finanzas y SUNAT',
+          content:
+            'Manejo experto de Contabilidad, Caja/Tesorería, Finanzas, Auditoría y Cumplimiento con SUNAT. Todo lo que necesitas para una salud financiera impecable.',
+          svg: 'dashboard',
+          src: dashboard,
+          alt: 'Panel de control financiero y contable',
+          second: true,
+        },
+        {
+          heading: 'Estrategia y Ventas',
+          content:
+            'Potencia tus Ingresos, Marketing, Clientes (CRM) y presencia Web. Desde la Gerencia hasta el Soporte, un sistema diseñado para el crecimiento.',
+          svg: 'house',
+          src: tools,
+          alt: 'Gestión estratégica y comercial',
+        },
+      ]}
+    />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <TestimonialsSection
+      title="Transformando la Gestión"
+      subTitle="Descubre cómo Angel Alegre Benito ha ayudado a empresas a centralizar sus operaciones con tecnología de punta."
+      testimonials={[
+        {
+          content:
+            'ERP Okanox ha sido fundamental para escalar nuestro negocio. La integración de los 22 módulos nos permite tener visibilidad total en tiempo real de cada departamento.',
+          author: 'Angel Alegre Benito',
+          role: 'Fundador | ERP Okanox & Sakad RMS',
+          avatarSrc:
+            'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&q=80&w=320&h=320&auto=format&fit=facearea&facepad=2',
+        },
+      ]}
+      statistics={[
+        {
+          count: '22',
+          description:
+            'Módulos integrados en un solo ecosistema ERP',
+        },
+        {
+          count: '100%',
+          description:
+            'Cumplimiento con normativas SUNAT y Auditoría',
+        },
+        {
+          count: '24/7',
+          description:
+            'Soporte técnico y monitoreo de sistema constante',
+        },
+        {
+          count: 'SaaS',
+          description:
+            'Plataforma lista para la nube y escalabilidad total',
+        },
+      ]}
+    />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <PricingSection pricing={pricing} />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <FAQ title="Preguntas<br />frecuentes" faqs={faqs} />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <HeroSectionAlt
+      title="Impulsa tu Empresa Hoy"
+      subTitle="Conoce más sobre la arquitectura de ERP Okanox y Sakad RMS creado por Angel Alegre Benito."
+      url="https://github.com/angelalegredev2002-commits"
+    />
+  </div>
+</MainLayout>

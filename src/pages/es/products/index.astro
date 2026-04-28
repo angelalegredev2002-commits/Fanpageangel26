@@ -1,0 +1,183 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE } from '@data/constants';
+import { Image } from 'astro:assets';
+import FeaturesStatsAlt from '@components/sections/features/FeaturesStatsAlt.astro';
+
+import bannerOkanox   from '@images/productbannerokanox.png';
+import bannerPersonal from '@images/productbannerpersonal.png';
+import bannerOk       from '@images/productbannerok.png';
+import bannerOkas     from '@images/productbannerokas.png';
+import bannerFeatures from '@images/features-image.png';
+
+const products = [
+  {
+    id: 1,
+    title: 'ERP Okanox',
+    description: 'El núcleo de tu gestión empresarial con 22 módulos integrados.',
+    detail: 'Centraliza Almacén, Contabilidad, SUNAT, CRM y más en un solo ecosistema SaaS de alto rendimiento.',
+    img: bannerOkanox,
+    accent: '#f97316',
+    wide: false,
+  },
+  {
+    id: 2,
+    title: 'Sakad RMS',
+    description: 'Gestión inteligente de recursos y mantenimiento especializado.',
+    detail: 'Seguimiento detallado del ciclo de vida de activos con alertas automáticas y reportes de eficiencia.',
+    img: bannerPersonal,
+    accent: '#8b5cf6',
+    wide: true,
+  },
+  {
+    id: 3,
+    title: 'Módulos Integrados',
+    description: 'Sincronización perfecta entre todos los departamentos.',
+    detail: '22 módulos que trabajan en armonía: un dato, cero silos, visibilidad total en tiempo real.',
+    img: bannerOk,
+    accent: '#10b981',
+    wide: true,
+  },
+  {
+    id: 4,
+    title: 'Soporte & Consultoría',
+    description: 'Acompañamiento experto para tu transformación digital.',
+    detail: 'Consultoría estratégica, implementación a medida y soporte 24/7 directo con Angel Alegre.',
+    img: bannerOkas,
+    accent: '#3b82f6',
+    wide: false,
+  },
+  {
+    id: 5,
+    title: 'Ecosistema Digital',
+    description: 'Visión completa para escalar tu empresa.',
+    detail: 'Arquitectura SaaS cloud-native con 99.9% uptime, backups diarios y desarrollo ágil continuo.',
+    img: bannerFeatures,
+    accent: '#ec4899',
+    wide: false,
+  },
+];
+
+const pageTitle = `Productos | ${SITE.title}`;
+---
+
+<MainLayout title={pageTitle} lang="es">
+
+  <!-- Header -->
+  <section class="ph">
+    <h1 class="ph__title">Productos y <span class="ph__grad">Soluciones</span></h1>
+    <p class="ph__sub">Explora el ecosistema ERP Okanox y Sakad RMS creado por Angel Alegre Benito.</p>
+  </section>
+
+  <!-- Products Grid -->
+  <section class="pg-wrap">
+    <div class="pg-grid">
+      {products.map((p, i) => (
+        <a href={`/es/contact`} class={`pc${p.wide ? ' pc--wide' : ''}`} style={`--ac:${p.accent};--d:${i*60}ms`}>
+          <div class="pc__img-wrap">
+            <Image src={p.img} alt={p.title} class="pc__img" format="avif" />
+            <div class="pc__overlay" />
+          </div>
+          <div class="pc__content">
+            <span class="pc__badge">{`0${p.id}`}</span>
+            <h2 class="pc__name">{p.title}</h2>
+            <p class="pc__desc">{p.description}</p>
+            <p class="pc__detail">{p.detail}</p>
+            <span class="pc__cta">
+              Ver más
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <FeaturesStatsAlt
+    title="¿Por qué elegir nuestras soluciones?"
+    subTitle="Herramientas diseñadas para el mundo real. Control financiero, logística impecable y cumplimiento SUNAT en un solo lugar."
+    benefits={[
+      'Sistemas robustos y confiables con cumplimiento SUNAT.',
+      'Soluciones SaaS innovadoras listas para la nube.',
+      'Soporte directo y consultoría experta de Angel Alegre.',
+    ]}
+  />
+
+</MainLayout>
+
+<style>
+/* ── Header ── */
+.ph { text-align: center; padding: 4rem 1.5rem 2.5rem; }
+.ph__title { font-size: clamp(2rem,5vw,3rem); font-weight:900; color:#111827; margin:0; }
+:global(.dark) .ph__title { color:#f9fafb; }
+.ph__grad { background:linear-gradient(120deg,#f97316 0%,#8b5cf6 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.ph__sub { font-size:1rem; color:#6b7280; margin-top:.5rem; }
+:global(.dark) .ph__sub { color:#9ca3af; }
+
+/* ── Grid ── */
+.pg-wrap { max-width:1200px; margin:0 auto; padding:0 1.5rem 5rem; }
+.pg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1.25rem;
+}
+
+/* wide cards span 2 cols */
+.pc--wide { grid-column: span 2; }
+
+/* ── Card ── */
+.pc {
+  position: relative; overflow: hidden; border-radius: 1rem;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 320px;
+  border: 1px solid rgba(0,0,0,.08);
+  opacity: 0; animation: fadeUp .5s ease forwards; animation-delay: var(--d);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+:global(.dark) .pc { border-color: rgba(255,255,255,.1); }
+.pc:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.15); }
+
+/* Image */
+.pc__img-wrap { position: absolute; inset: 0; }
+.pc__img { width:100%; height:100%; object-fit:cover; transition: transform .6s ease; }
+.pc:hover .pc__img { transform: scale(1.05); }
+.pc__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.3) 50%, rgba(0,0,0,0) 100%);
+}
+
+/* Content */
+.pc__content {
+  position: relative; z-index: 1;
+  padding: 1.5rem;
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.pc__badge {
+  font-size: .65rem; font-weight: 800; color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ac) 30%, transparent);
+  padding: .15rem .5rem; border-radius: 999px;
+  width: fit-content; letter-spacing:.08em;
+}
+.pc__name { font-size: 1.35rem; font-weight: 800; color: #fff; margin:0; line-height:1.2; }
+.pc__desc { font-size: .8rem; color: rgba(255,255,255,.7); margin:0; }
+.pc__detail { font-size: .78rem; color: rgba(255,255,255,.55); margin:0; line-height:1.45;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.pc__cta {
+  display:inline-flex; align-items:center; gap:.35rem;
+  font-size:.75rem; font-weight:700; color: var(--ac);
+  margin-top: .4rem;
+  transition: gap .2s ease;
+}
+.pc:hover .pc__cta { gap: .6rem; }
+
+@media (max-width: 768px) {
+  .pg-grid { grid-template-columns: 1fr; }
+  .pc--wide { grid-column: span 1; }
+  .pc { min-height: 260px; }
+}
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+</style>

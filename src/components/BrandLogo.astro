@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import logoLight from '@images/starlight/Logo-sakad-v2.svg';
+import logoDark from '@images/starlight/Logo-sakad-v2-dark.svg';
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class={`${className || ''}`}>
+  <Image 
+    src={logoLight} 
+    alt="Brand Logo" 
+    class="dark:hidden h-full w-auto" 
+    {...rest} 
+  />
+  <Image 
+    src={logoDark} 
+    alt="Brand Logo" 
+    class="hidden dark:block h-full w-auto" 
+    {...rest} 
+  />
+</div>

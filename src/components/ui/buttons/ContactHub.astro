@@ -2,6 +2,8 @@
 import Icon from "@components/ui/icons/Icon.astro";
 import enStrings from "@utils/navigation.ts";
 import esStrings from "@utils/es/navigation.ts";
+import supportImage from "@images/starlight/suportchat.jpg";
+import { Image } from "astro:assets";
 
 const strings = Astro.currentLocale === "es" ? esStrings : enStrings;
 
@@ -24,8 +26,8 @@ const whatsappURL = `https://wa.me/51954711074?text=${whatsappMsg}`;
       aria-label="Contact options"
     >
       <!-- Support Lady Image (JPG) -->
-      <img 
-        src="/src/images/starlight/suportchat.jpg" 
+      <Image 
+        src={supportImage} 
         alt="Support" 
         class="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" 
       />
@@ -53,8 +55,8 @@ const whatsappURL = `https://wa.me/51954711074?text=${whatsappMsg}`;
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 10px 10px;"></div>
         
         <div class="relative z-10 size-12 shrink-0 rounded-full border-2 border-white/30 p-0.5 bg-white/10 backdrop-blur-sm">
-            <img 
-                src="/src/images/starlight/suportchat.jpg" 
+            <Image 
+                src={supportImage} 
                 alt="Sofía" 
                 class="size-full rounded-full object-cover"
             />

@@ -57,7 +57,7 @@ interface PricingSectionProps {
     </p>
   </div>
   {/* Plans Grid / Carousel on Mobile */}
-  <div class="stagger-children flex items-stretch gap-4 overflow-x-auto pt-8 pb-16 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 md:gap-6 sm:overflow-visible sm:pt-0 sm:pb-0">
+  <div class="flex items-stretch gap-4 overflow-x-auto pt-8 pb-16 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 md:gap-6 sm:overflow-visible sm:pt-0 sm:pb-0">
     {
       pricing.plans.map((plan: Product & { highlight: boolean }, index: number) => (
         <div

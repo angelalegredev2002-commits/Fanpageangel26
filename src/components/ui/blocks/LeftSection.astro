@@ -24,9 +24,9 @@ interface Props {
   {/* Image with reveal effect */}
   <div class="reveal-image group relative">
     <div class="absolute -inset-1 bg-linear-to-r from-orange-500/20 to-blue-500/20 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-    <div class="relative overflow-hidden rounded-[2rem] border border-neutral-200 dark:border-neutral-800 shadow-xl tilt-element">
+    <div class="relative overflow-hidden rounded-[2rem] border border-neutral-200 dark:border-neutral-800 shadow-xl">
       <Image
-        class="w-full transform transition-transform duration-700 group-hover:scale-110"
+        class="w-full transition-all duration-700"
         src={img}
         alt={imgAlt}
         draggable={'false'}

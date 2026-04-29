@@ -62,9 +62,9 @@ interface Props {
       <div class="reveal-image mt-8">
         <div class="group relative">
           <div class="absolute -inset-1 bg-linear-to-r from-blue-500/20 to-orange-500/20 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-          <div class="relative overflow-hidden rounded-[2rem] border border-neutral-200 dark:border-neutral-800 shadow-2xl tilt-element">
+          <div class="relative overflow-hidden rounded-[2rem] border border-neutral-200 dark:border-neutral-800 shadow-2xl">
             <Image
-              class="w-full transform transition-transform duration-700 group-hover:scale-110"
+              class="w-full transition-all duration-700"
               src={imgOne}
               alt={imgOneAlt}
               format={'avif'}
@@ -75,9 +75,9 @@ interface Props {
     ) : (
       <div class="mt-8 grid grid-cols-2 gap-4">
         <div class="reveal-image group relative">
-          <div class="relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-lg tilt-element">
+          <div class="relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-lg">
             <Image
-              class="w-full transform transition-transform duration-700 group-hover:scale-125"
+              class="w-full transition-all duration-700"
               src={imgOne}
               alt={imgOneAlt}
               draggable={'false'}
@@ -86,9 +86,9 @@ interface Props {
           </div>
         </div>
         <div class="reveal-image group relative">
-          <div class="relative mt-4 overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-lg lg:mt-10 tilt-element">
+          <div class="relative mt-4 overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-lg lg:mt-10">
             <Image
-              class="w-full transform transition-transform duration-700 group-hover:scale-125"
+              class="w-full transition-all duration-700"
               src={imgTwo}
               alt={imgTwoAlt}
               draggable={'false'}

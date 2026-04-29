@@ -127,30 +127,49 @@ interface Props {
         const video = document.getElementById('loading-video') as HTMLVideoElement;
         const audio = document.getElementById('loading-audio') as HTMLAudioElement;
         
-        const isHomePage = window.location.pathname === '/' || window.location.pathname === '/es' || window.location.pathname === '/es/';
+        const currentPath = window.location.pathname.replace(/\/$/, '');
+        const isHomePage = currentPath === '' || currentPath === '/es' || currentPath === '/en';
 
         // Only play if on Home page AND it hasn't played in this 'internal session'
         if (overlay && isHomePage && !win.hasPlayedLoading) {
           overlay.style.display = 'flex';
-          video.classList.remove('opacity-0');
-          video.play().catch(() => {});
           
+          // Ensure video starts playing
+          video.classList.remove('opacity-0');
+          const playPromise = video.play();
+          
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              // Fallback if autoplay is blocked: still animate the overlay out
+              console.log("Autoplay blocked, proceeding with animation");
+            });
+          }
+          
+          // Wait for a reasonable time to show the cinematic
           setTimeout(() => {
-            const tl = gsap.timeline();
-            tl.to(['#loading-content', '#loading-footer'], { opacity: 0, y: 10, duration: 0.5 });
-            tl.to(overlay, { 
-              clipPath: 'inset(0% 0% 100% 0%)', 
-              duration: 1.2, 
-              ease: 'power4.inOut',
+            const tl = gsap.timeline({
               onComplete: () => {
                 overlay.style.display = 'none';
                 win.hasPlayedLoading = true;
               }
             });
-          }, 2500);
+
+            tl.to(['#loading-content', '#loading-footer'], { 
+              opacity: 0, 
+              y: 20, 
+              duration: 0.5,
+              ease: 'power2.in'
+            });
+
+            tl.to(overlay, { 
+              clipPath: 'inset(0% 0% 100% 0%)', 
+              duration: 1.5, 
+              ease: 'expo.inOut'
+            });
+          }, 2800); // Slightly longer for a more cinematic feel
 
           const playAudio = () => {
-            audio.volume = 0.5;
+            audio.volume = 0.3;
             audio.play().catch(() => {});
             window.removeEventListener('click', playAudio);
           };

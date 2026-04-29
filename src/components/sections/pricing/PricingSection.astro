@@ -61,12 +61,11 @@ interface PricingSectionProps {
     {
       pricing.plans.map((plan: Product & { highlight: boolean }, index: number) => (
         <div
-          class={`tilt-element group relative flex w-[85vw] shrink-0 snap-center flex-col rounded-3xl p-6 transition-all duration-700 sm:w-auto hover:z-20 ${
+          class={`group relative flex w-[85vw] shrink-0 snap-center flex-col rounded-3xl p-6 transition-all duration-500 sm:w-auto ${
             plan.highlight
-              ? "bg-orange-500/10 backdrop-blur-2xl ring-2 ring-orange-500/50 shadow-[0_20px_50px_rgba(249,115,22,0.15)]"
-              : "bg-white/10 dark:bg-neutral-900/30 backdrop-blur-xl border border-white/20 dark:border-neutral-800/50 shadow-sm hover:shadow-2xl"
-          } hover:-rotate-y-6 hover:scale-[1.02] perspective-1000 transform-style-3d`}
-          style="perspective: 1000px;"
+              ? "bg-orange-500/5 dark:bg-orange-500/10 ring-2 ring-orange-500/50 shadow-xl"
+              : "bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm"
+          } hover:shadow-lg`}
         >
           {plan.highlight && (
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-linear-to-r from-orange-500 to-orange-600 text-white text-[8px] sm:text-[10px] font-bold uppercase tracking-widest py-1 px-3 sm:py-1.5 sm:px-4 rounded-full shadow-lg z-30">
@@ -136,9 +135,6 @@ interface PricingSectionProps {
           >
             <span class="relative z-10">{plan.purchaseBtnTitle}</span>
           </a>
-
-          {/* Leaf folding effect decoration */}
-          <div class="absolute top-0 right-0 size-16 bg-linear-to-bl from-white/10 to-transparent rounded-tr-3xl transition-all duration-500 group-hover:size-24 group-hover:from-white/20"></div>
         </div>
       ))
     }

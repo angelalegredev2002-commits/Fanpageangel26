@@ -13,22 +13,22 @@ export default defineConfig({
     domains: ['images.unsplash.com'],
   },
   i18n: {
-    defaultLocale: "en",
+    defaultLocale: "es",
     locales: ["en", "es"],
     fallback: {
-      es: "en",
+      en: "es",
     },
     routing: {
-      prefixDefaultLocale: false,
+      prefixDefaultLocale: true,
     },
   },
   prefetch: true,
   integrations: [
     sitemap({
       i18n: {
-        defaultLocale: 'en', // All urls that don't contain language prefix will be treated as default locale
+        defaultLocale: 'es',
         locales: {
-          en: 'en', // The `defaultLocale` value must present in `locales` keys
+          en: 'en',
           es: 'es',
         },
       },

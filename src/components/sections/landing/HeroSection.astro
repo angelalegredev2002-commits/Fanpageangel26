@@ -111,16 +111,15 @@ interface Props {
     </div>
   </div>
 
-  {/* Visual Column: Hero image with premium presence */}
   <div class="flex items-center justify-center order-2 animate-reveal-up [animation-delay:600ms]">
-    <div class="animate-float tilt-element relative w-full max-w-[130px] sm:max-w-[350px] transition-all duration-1000 group/hero-img">
-      <div class="overflow-hidden rounded-3xl transition-all duration-700 group-hover/hero-img:scale-105">
+    <div class="relative w-full max-w-[130px] sm:max-w-[350px] transition-all duration-1000 group/hero-img">
+      <div class="overflow-hidden rounded-3xl transition-all duration-700 group-hover/hero-img:shadow-2xl">
         {
           src && alt && (
             <Image
               src={src}
               alt={alt}
-              class="h-auto w-full object-contain transition-transform duration-1000 group-hover/hero-img:scale-110"
+              class="h-auto w-full object-contain transition-transform duration-1000"
               draggable={'false'}
               loading={'eager'}
               format={'avif'}
@@ -129,7 +128,7 @@ interface Props {
         }
         {
           svgRaw && (
-            <div class="w-full h-auto text-neutral-800 dark:text-white fill-current transition-transform duration-1000 group-hover/hero-img:scale-110" set:html={svgRaw} />
+            <div class="w-full h-auto text-neutral-800 dark:text-white fill-current transition-transform duration-1000" set:html={svgRaw} />
           )
         }
       </div>

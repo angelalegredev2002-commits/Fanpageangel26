@@ -78,7 +78,7 @@ interface Props {
 
     {/* Loading Transition Overlay */}
     <div id="loading-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-neutral-950 overflow-hidden">
-      <video id="loading-video" class="absolute size-full object-cover opacity-0 transition-opacity duration-1000" playsinline muted loop>
+      <video id="loading-video" class="absolute size-full object-cover opacity-0 transition-opacity duration-1000" playsinline muted loop preload="auto">
         <source src="/videos/loandingtransition.mp4" type="video/mp4" />
       </video>
       <audio id="loading-audio" src="/music/loading.mp3" loop></audio>
@@ -127,25 +127,21 @@ interface Props {
         const video = document.getElementById('loading-video') as HTMLVideoElement;
         const audio = document.getElementById('loading-audio') as HTMLAudioElement;
         
-        const currentPath = window.location.pathname.replace(/\/$/, '');
-        const isHomePage = currentPath === '' || currentPath === '/es' || currentPath === '/en';
-
-        // Only play if on Home page AND it hasn't played in this 'internal session'
-        if (overlay && isHomePage && !win.hasPlayedLoading) {
+        // Removed isHomePage check to allow loading screen on any page refresh
+        if (overlay && !win.hasPlayedLoading) {
           overlay.style.display = 'flex';
           
-          // Ensure video starts playing
+          // Ensure video starts playing immediately
           video.classList.remove('opacity-0');
           const playPromise = video.play();
           
           if (playPromise !== undefined) {
             playPromise.catch(() => {
-              // Fallback if autoplay is blocked: still animate the overlay out
-              console.log("Autoplay blocked, proceeding with animation");
+              console.log("Autoplay prevented, but animating out.");
             });
           }
           
-          // Wait for a reasonable time to show the cinematic
+          // Cinematic timing
           setTimeout(() => {
             const tl = gsap.timeline({
               onComplete: () => {
@@ -166,7 +162,7 @@ interface Props {
               duration: 1.5, 
               ease: 'expo.inOut'
             });
-          }, 2800); // Slightly longer for a more cinematic feel
+          }, 2800);
 
           const playAudio = () => {
             audio.volume = 0.3;

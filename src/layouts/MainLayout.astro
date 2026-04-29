@@ -219,13 +219,53 @@ interface Props {
 
         document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-        // 3D Mouse Tilt, Cursor, Grid & Magnetic Logic
+        // Premium Particle Cursor (Sparks/Bubbles)
+        const createParticle = (x: number, y: number) => {
+          const particle = document.createElement('div');
+          particle.className = 'cursor-particle';
+          document.body.appendChild(particle);
+
+          const size = Math.random() * 8 + 4;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          
+          const destinationX = x + (Math.random() - 0.5) * 40;
+          const destinationY = y + (Math.random() - 0.5) * 40;
+
+          gsap.set(particle, {
+            x: x - size / 2,
+            y: y - size / 2,
+            opacity: 1,
+            scale: 1,
+            backgroundColor: Math.random() > 0.5 ? '#f97316' : '#fbbf24'
+          });
+
+          gsap.to(particle, {
+            x: destinationX,
+            y: destinationY,
+            opacity: 0,
+            scale: 0,
+            duration: Math.random() * 1 + 0.5,
+            ease: 'power2.out',
+            onComplete: () => particle.remove()
+          });
+        };
+
         const cursor = document.getElementById('cursor');
         const techGrid = document.getElementById('tech-grid');
         const magneticElements = document.querySelectorAll('.magnetic-wrap');
+        let lastX = 0;
+        let lastY = 0;
         
         document.addEventListener('mousemove', (e) => {
           const { clientX, clientY } = e;
+
+          // Create particles on move
+          if (Math.abs(clientX - lastX) > 5 || Math.abs(clientY - lastY) > 5) {
+            createParticle(clientX, clientY);
+            lastX = clientX;
+            lastY = clientY;
+          }
 
           // Update Grid Mask
           if (techGrid) {
@@ -266,9 +306,14 @@ interface Props {
             }
           });
 
-          // Update Cursor
+          // Update Main Cursor (Glow)
           if (cursor) {
-            cursor.style.transform = `translate(${clientX - 10}px, ${clientY - 10}px)`;
+            gsap.to(cursor, {
+              x: clientX - 10,
+              y: clientY - 10,
+              duration: 0.1,
+              ease: 'power2.out'
+            });
           }
         });
 

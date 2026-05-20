@@ -72,7 +72,7 @@ const statistics = db.landing?.statistics || [];
     </form>
   </div>
 
-  <script>
+  <script is:inline>
     const app = document.getElementById('testimonials-app');
     if (app) {
       let dataTestimonials = JSON.parse(app.dataset.testimonials);

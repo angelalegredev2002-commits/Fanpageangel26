@@ -56,7 +56,7 @@ const pricingEN = db.landing?.pricing_en || { plans: [] };
     </form>
   </div>
 
-  <script>
+  <script is:inline>
     const app = document.getElementById('pricing-app');
     if (app) {
       let data = {

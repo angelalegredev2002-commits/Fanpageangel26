@@ -1,0 +1,27 @@
+<script>
+  import ThemeIcon from '../../components/ThemeIcon.astro';
+  let dark = false;
+  const toggle = () => {
+    dark = !dark;
+    document.documentElement.classList.toggle('dark', dark);
+  };
+</script>
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background: var(--theme-bg, #f3f4f6);
+    color: var(--theme-fg, #111827);
+    transition: background 0.2s;
+  }
+  button:hover { background: var(--theme-bg-hover, #e5e7eb); }
+</style>
+
+<button on:click={toggle} aria-label="Toggle theme">
+  <ThemeIcon />
+</button>

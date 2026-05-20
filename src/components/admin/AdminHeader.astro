@@ -1,6 +1,6 @@
 ---
 import LanguagePicker from '../ui/LanguagePicker.astro';
-import ThemeBtn from '../ui/buttons/ThemeBtn.astro';
+import ThemeIcon from '../../components/ThemeIcon.astro';
 ---
 <header class="h-16 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between px-6 z-50 relative shrink-0 transition-colors duration-300">
   <button class="md:hidden sidebar-toggle text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200">
@@ -13,7 +13,7 @@ import ThemeBtn from '../ui/buttons/ThemeBtn.astro';
     </div>
 
     <!-- Theme Toggle for Admin Panel -->
-    <ThemeBtn />
+    <ThemeIcon />
 
     <div class="relative">
       <span class="absolute top-0 right-0 w-2 h-2 bg-orange-500 rounded-full"></span>

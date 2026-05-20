@@ -49,7 +49,7 @@ const partners = db.landing?.partners || [];
     </form>
   </div>
 
-  <script>
+  <script is:inline>
     const app = document.getElementById('partners-app');
     if (app) {
       let dataPartners = JSON.parse(app.dataset.partners);

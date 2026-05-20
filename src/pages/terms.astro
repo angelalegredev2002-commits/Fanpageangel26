@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 import MainLayout from '@layouts/MainLayout.astro';
-import { getDB } from '../../utils/db';
+import { getDB } from '../utils/db';
 
 const db = getDB();
 const content = db.legal?.terms || "Contenido no configurado.";

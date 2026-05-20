@@ -64,11 +64,17 @@ const faqsEN = db.landing?.faqs_en || [];
       let currentLang = 'es';
 
       const container = document.getElementById('faqs-container');
+      if (!container) return;
       const btnEs = document.getElementById('btn-es');
+      if (!btnEs) return;
       const btnEn = document.getElementById('btn-en');
+      if (!btnEn) return;
       const addBtn = document.getElementById('add-faq');
+      if (!addBtn) return;
       const form = document.getElementById('faqs-form');
+      if (!form) return;
       const input = document.getElementById('faqs-data-input');
+      if (!input) return;
 
       function escapeHtml(unsafe) {
         return (unsafe||'').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");

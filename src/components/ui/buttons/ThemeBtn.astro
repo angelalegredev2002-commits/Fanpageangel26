@@ -1,11 +1,11 @@
-<script>
-  import ThemeIcon from '../../components/ThemeIcon.astro';
-  let dark = false;
-  const toggle = () => {
-    dark = !dark;
-    document.documentElement.classList.toggle('dark', dark);
-  };
-</script>
+---
+import ThemeIcon from '../../ThemeIcon.astro';
+let dark = false;
+const toggle = () => {
+  dark = !dark;
+  document.documentElement.classList.toggle('dark', dark);
+};
+---
 
 <style>
   button {

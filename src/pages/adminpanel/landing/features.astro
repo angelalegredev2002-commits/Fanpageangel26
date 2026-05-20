@@ -102,6 +102,7 @@ const featureTabs = db.landing?.featureTabs || [];
       const form = document.getElementById('features-form');
 
       function renderFeatures() {
+        if (!fContainer) return;
         fContainer.innerHTML = '';
         const list = dataFeat[currentLang] || [];
         list.forEach((feat, index) => {

@@ -1,0 +1,52 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const content = formData.get('content') as string;
+  const content_en = formData.get('content_en') as string;
+  if (content !== null || content_en !== null) {
+    if (!db.legal) db.legal = {};
+    if (content !== null) db.legal.privacyPolicy = content;
+    if (content_en !== null) db.legal.privacyPolicy_en = content_en;
+    saveDB(db);
+    success = true;
+  }
+}
+---
+
+<AdminLayout title="Privacy Policy">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Privacy Policy</h1>
+      <p class="text-neutral-400">Edit your site's Privacy Policy page content (HTML supported).</p>
+    </div>
+    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+  </div>
+
+  <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 flex flex-col h-[600px]">
+    <form method="POST" class="flex flex-col h-full space-y-4">
+      <div class="flex-1 flex flex-col gap-4 overflow-y-auto pr-2">
+        <div>
+          <label for="content" class="block text-sm font-medium text-neutral-300 mb-2">Contenido (Español)</label>
+          <textarea name="content" id="content" class="w-full h-48 bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-4 text-white font-mono text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors resize-none">{db.legal?.privacyPolicy || ''}</textarea>
+        </div>
+        <div>
+          <label for="content_en" class="block text-sm font-medium text-neutral-300 mb-2">Content (English)</label>
+          <textarea name="content_en" id="content_en" class="w-full h-48 bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-4 text-white font-mono text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors resize-none">{db.legal?.privacyPolicy_en || ''}</textarea>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-orange-500/25">
+          Publish Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</AdminLayout>

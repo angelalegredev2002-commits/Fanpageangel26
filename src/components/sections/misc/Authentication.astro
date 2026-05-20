@@ -1,17 +1,8 @@
 ---
 // Import the necessary components from their respective component files
-import LoginModal from '@components/ui/forms/LoginModal.astro';
-import RegisterModal from '@components/ui/forms/RegisterModal.astro';
-import RecoverModal from '@components/ui/forms/RecoverModal.astro';
 import LoginBtn from '@components/ui/buttons/LoginBtn.astro';
 const loginBtnText = Astro.currentLocale === 'es' ? 'Iniciar sesión' : 'Log in';
 ---
 
-{/* Login Button */}
+{/* Login Button linked directly to /login */}
 <LoginBtn title={loginBtnText} />
-{/* Login Modal */}
-<LoginModal />
-{/* Register Modal */}
-<RegisterModal />
-{/* Password Recovery Modal */}
-<RecoverModal />

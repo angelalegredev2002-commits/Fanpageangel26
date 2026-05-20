@@ -1,0 +1,226 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  
+  const rawFeatures = formData.get('featuresData');
+  if (rawFeatures) {
+    try {
+      const parsedFeatures = JSON.parse(rawFeatures.toString());
+      if (!db.landing) db.landing = {};
+      db.landing.features_es = parsedFeatures.es;
+      db.landing.features_en = parsedFeatures.en;
+      saveDB(db);
+      success = true;
+    } catch(e) {
+      console.error("Error saving features", e);
+    }
+  }
+
+  const rawTabs = formData.get('featureTabsData');
+  if (rawTabs) {
+    try {
+      const parsedTabs = JSON.parse(rawTabs.toString());
+      db.landing.featureTabs = parsedTabs;
+      saveDB(db);
+      success = true;
+    } catch(e) {
+      console.error("Error saving tabs", e);
+    }
+  }
+}
+
+const featuresES = db.landing?.features_es || [];
+const featuresEN = db.landing?.features_en || [];
+const featureTabs = db.landing?.featureTabs || [];
+---
+
+<AdminLayout title="Manage Features">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Características Principales</h1>
+      <p class="text-neutral-400">Administra las características generales y las pestañas interactivas.</p>
+    </div>
+    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+  </div>
+
+  <div id="features-app" class="space-y-12" data-features-es={JSON.stringify(featuresES)} data-features-en={JSON.stringify(featuresEN)} data-tabs={JSON.stringify(featureTabs)}>
+    
+    <!-- FEATURES SECTION -->
+    <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-3xl p-8">
+      <h2 class="text-2xl font-bold text-orange-500 mb-6 border-b border-neutral-800 pb-4">Lista de Características</h2>
+      
+      <div class="flex gap-4 mb-6">
+         <button id="feat-btn-es" type="button" class="px-4 py-2 bg-neutral-800 text-white rounded-lg border border-orange-500">Español</button>
+         <button id="feat-btn-en" type="button" class="px-4 py-2 bg-neutral-800 text-neutral-400 rounded-lg border border-transparent">English</button>
+      </div>
+
+      <div id="features-container" class="space-y-4 mb-6"></div>
+      <button id="add-feature" type="button" class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl border border-neutral-700 hover:border-neutral-500 transition-colors w-full">+ Añadir Característica</button>
+    </div>
+
+    <!-- TABS SECTION -->
+    <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-3xl p-8">
+      <h2 class="text-2xl font-bold text-orange-500 mb-6 border-b border-neutral-800 pb-4">Pestañas Interactivas (Compartido ambos idiomas por ahora)</h2>
+      
+      <div id="tabs-container" class="space-y-6 mb-6 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      <button id="add-tab" type="button" class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl border border-neutral-700 hover:border-neutral-500 transition-colors w-full">+ Añadir Pestaña</button>
+    </div>
+
+    <!-- FORM -->
+    <form method="POST" id="features-form" class="pt-8 border-t border-neutral-800 flex justify-end">
+      <input type="hidden" name="featuresData" id="features-data-input" />
+      <input type="hidden" name="featureTabsData" id="tabs-data-input" />
+      <button type="submit" class="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/25 text-lg">
+        Guardar Configuración
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const app = document.getElementById('features-app');
+    if (app) {
+      let dataFeat = {
+        es: JSON.parse(app.dataset.featuresEs),
+        en: JSON.parse(app.dataset.featuresEn)
+      };
+      let dataTabs = JSON.parse(app.dataset.tabs);
+      let currentLang = 'es';
+
+      function escapeHtml(unsafe) {
+        return (unsafe||'').toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
+
+      const fContainer = document.getElementById('features-container');
+      const tContainer = document.getElementById('tabs-container');
+      const form = document.getElementById('features-form');
+
+      function renderFeatures() {
+        fContainer.innerHTML = '';
+        const list = dataFeat[currentLang] || [];
+        list.forEach((feat, index) => {
+          const div = document.createElement('div');
+          div.className = 'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-4 flex gap-4 items-start';
+          div.innerHTML = `
+            <div class="flex-1 space-y-3">
+              <input type="text" placeholder="Título (ej: Robust Features)" value="${escapeHtml(feat.heading)}" data-type="feat" data-field="heading" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              <textarea placeholder="Descripción" rows="2" data-type="feat" data-field="content" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">${escapeHtml(feat.content)}</textarea>
+              <input type="text" placeholder="Ícono SVG (ej: tools, dashboard, house)" value="${escapeHtml(feat.svg)}" data-type="feat" data-field="svg" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+            </div>
+            <button type="button" class="text-red-400 hover:text-red-300 pt-2" onclick="window.removeFeat(${index})">X</button>
+          `;
+          fContainer.appendChild(div);
+        });
+        attachFeatEvents();
+      }
+
+      function renderTabs() {
+        tContainer.innerHTML = '';
+        dataTabs.forEach((tab, index) => {
+          const div = document.createElement('div');
+          div.className = 'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-5 relative';
+          div.innerHTML = `
+            <button type="button" class="absolute top-4 right-4 text-red-400 hover:text-red-300" onclick="window.removeTab(${index})">Eliminar</button>
+            <div class="space-y-4 mt-6">
+              <div>
+                <label class="text-xs text-neutral-400">Título de la Pestaña</label>
+                <input type="text" value="${escapeHtml(tab.heading)}" data-type="tab" data-field="heading" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              </div>
+              <div>
+                <label class="text-xs text-neutral-400">Contenido descriptivo</label>
+                <textarea rows="3" data-type="tab" data-field="content" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">${escapeHtml(tab.content)}</textarea>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="text-xs text-neutral-400">Icono SVG (tools, dashboard, house)</label>
+                  <input type="text" value="${escapeHtml(tab.svg)}" data-type="tab" data-field="svg" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+                </div>
+                <div>
+                  <label class="text-xs text-neutral-400">URL de la Imagen</label>
+                  <input type="text" value="${escapeHtml(tab.src)}" data-type="tab" data-field="src" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+                </div>
+              </div>
+              <div>
+                <label class="flex items-center gap-2 text-sm text-neutral-300">
+                  <input type="checkbox" ${tab.first ? 'checked' : ''} data-type="tab" data-field="first" data-index="${index}"> ¿Es la primera pestaña (activa por defecto)?
+                </label>
+              </div>
+            </div>
+          `;
+          tContainer.appendChild(div);
+        });
+        attachTabEvents();
+      }
+
+      function attachFeatEvents() {
+        fContainer.querySelectorAll('input, textarea').forEach(el => {
+          el.addEventListener('input', (e) => {
+            const idx = e.target.dataset.index;
+            dataFeat[currentLang][idx][e.target.dataset.field] = e.target.value;
+          });
+        });
+      }
+
+      function attachTabEvents() {
+        tContainer.querySelectorAll('input, textarea').forEach(el => {
+          el.addEventListener('input', (e) => {
+            const idx = e.target.dataset.index;
+            const field = e.target.dataset.field;
+            if (e.target.type === 'checkbox') {
+              dataTabs[idx][field] = e.target.checked;
+              if (field === 'first' && e.target.checked) {
+                 // uncheck others
+                 dataTabs.forEach((t, i) => { if(i != idx) t.first = false; });
+                 renderTabs();
+              }
+            } else {
+              dataTabs[idx][field] = e.target.value;
+            }
+          });
+        });
+      }
+
+      window.removeFeat = (idx) => { dataFeat[currentLang].splice(idx, 1); renderFeatures(); };
+      window.removeTab = (idx) => { dataTabs.splice(idx, 1); renderTabs(); };
+
+      document.getElementById('add-feature').onclick = () => {
+        dataFeat[currentLang].push({ heading: 'Nuevo', content: '', svg: 'tools' });
+        renderFeatures();
+      };
+      
+      document.getElementById('add-tab').onclick = () => {
+        dataTabs.push({ heading: 'Nueva Pestaña', content: '', svg: 'tools', src: '/images/automated-tools.jpg' });
+        renderTabs();
+      };
+
+      const btnEs = document.getElementById('feat-btn-es');
+      const btnEn = document.getElementById('feat-btn-en');
+      btnEs.onclick = () => {
+        currentLang = 'es';
+        btnEs.classList.replace('border-transparent', 'border-orange-500'); btnEs.classList.replace('text-neutral-400', 'text-white');
+        btnEn.classList.replace('border-orange-500', 'border-transparent'); btnEn.classList.replace('text-white', 'text-neutral-400');
+        renderFeatures();
+      };
+      btnEn.onclick = () => {
+        currentLang = 'en';
+        btnEn.classList.replace('border-transparent', 'border-orange-500'); btnEn.classList.replace('text-neutral-400', 'text-white');
+        btnEs.classList.replace('border-orange-500', 'border-transparent'); btnEs.classList.replace('text-white', 'text-neutral-400');
+        renderFeatures();
+      };
+
+      form.onsubmit = () => {
+        document.getElementById('features-data-input').value = JSON.stringify(dataFeat);
+        document.getElementById('tabs-data-input').value = JSON.stringify(dataTabs);
+      };
+
+      renderFeatures();
+      renderTabs();
+    }
+  </script>
+</AdminLayout>

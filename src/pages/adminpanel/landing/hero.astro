@@ -1,0 +1,96 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  if (!db.landing) db.landing = {};
+  
+  db.landing.heroTitle_es = formData.get('heroTitle_es') as string;
+  db.landing.heroSubtitle_es = formData.get('heroSubtitle_es') as string;
+  db.landing.heroPrimaryBtn_es = formData.get('heroPrimaryBtn_es') as string;
+  db.landing.heroSecondaryBtn_es = formData.get('heroSecondaryBtn_es') as string;
+
+  db.landing.heroTitle_en = formData.get('heroTitle_en') as string;
+  db.landing.heroSubtitle_en = formData.get('heroSubtitle_en') as string;
+  db.landing.heroPrimaryBtn_en = formData.get('heroPrimaryBtn_en') as string;
+  db.landing.heroSecondaryBtn_en = formData.get('heroSecondaryBtn_en') as string;
+
+  saveDB(db);
+  success = true;
+}
+---
+
+<AdminLayout title="Manage Hero Section">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Hero Section Configuration</h1>
+      <p class="text-neutral-400">Manage the main text and buttons of your landing page.</p>
+    </div>
+    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+  </div>
+
+  <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6">
+    <form method="POST" class="space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Español -->
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-orange-400 border-b border-neutral-800 pb-2">Español</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Título Principal (HTML permitido)</label>
+            <input type="text" name="heroTitle_es" value={db.landing?.heroTitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Subtítulo</label>
+            <textarea name="heroSubtitle_es" rows="3" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.landing?.heroSubtitle_es || ''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Botón Principal</label>
+              <input type="text" name="heroPrimaryBtn_es" value={db.landing?.heroPrimaryBtn_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Botón Secundario</label>
+              <input type="text" name="heroSecondaryBtn_es" value={db.landing?.heroSecondaryBtn_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+          </div>
+        </div>
+
+        <!-- English -->
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-orange-400 border-b border-neutral-800 pb-2">English</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Main Title (HTML allowed)</label>
+            <input type="text" name="heroTitle_en" value={db.landing?.heroTitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Subtitle</label>
+            <textarea name="heroSubtitle_en" rows="3" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.landing?.heroSubtitle_en || ''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Primary Button</label>
+              <input type="text" name="heroPrimaryBtn_en" value={db.landing?.heroPrimaryBtn_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Secondary Button</label>
+              <input type="text" name="heroSecondaryBtn_en" value={db.landing?.heroSecondaryBtn_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-4 mt-6 border-t border-neutral-800">
+        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-orange-500/25">
+          Save Settings
+        </button>
+      </div>
+    </form>
+  </div>
+</AdminLayout>

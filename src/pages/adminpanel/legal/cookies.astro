@@ -1,0 +1,101 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  
+  if (!db.legal) db.legal = {};
+  
+  db.legal.cookiesEnabled = formData.get('enable_banner') ? 'on' : 'off';
+  db.legal.cookiesTitle_es = formData.get('title_es') as string;
+  db.legal.cookiesText_es = formData.get('text_es') as string;
+  db.legal.cookiesAccept_es = formData.get('accept_es') as string;
+  db.legal.cookiesDecline_es = formData.get('decline_es') as string;
+
+  db.legal.cookiesTitle_en = formData.get('title_en') as string;
+  db.legal.cookiesText_en = formData.get('text_en') as string;
+  db.legal.cookiesAccept_en = formData.get('accept_en') as string;
+  db.legal.cookiesDecline_en = formData.get('decline_en') as string;
+
+  saveDB(db);
+  success = true;
+}
+---
+
+<AdminLayout title="Manage Cookies Banner">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Cookies Banner</h1>
+      <p class="text-neutral-400">Configure the GDPR/CCPA cookies consent banner text and settings.</p>
+    </div>
+    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+  </div>
+
+  <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6">
+    <form method="POST" class="space-y-6">
+      <div class="flex items-center gap-3 mb-6">
+        <input type="checkbox" id="enable_banner" name="enable_banner" checked={db.legal?.cookiesEnabled !== 'off'} class="w-5 h-5 rounded border-neutral-700 bg-neutral-800 text-orange-500 focus:ring-orange-500 focus:ring-offset-neutral-900">
+        <label for="enable_banner" class="text-lg font-medium text-white">Enable Cookies Banner</label>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Español -->
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-orange-400 border-b border-neutral-800 pb-2">Español</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Título del Banner</label>
+            <input type="text" name="title_es" value={db.legal?.cookiesTitle_es} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Mensaje del Banner</label>
+            <textarea name="text_es" rows="3" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.legal?.cookiesText_es}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Botón Aceptar</label>
+              <input type="text" name="accept_es" value={db.legal?.cookiesAccept_es} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Botón Rechazar</label>
+              <input type="text" name="decline_es" value={db.legal?.cookiesDecline_es} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+          </div>
+        </div>
+
+        <!-- English -->
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-orange-400 border-b border-neutral-800 pb-2">English</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Banner Title</label>
+            <input type="text" name="title_en" value={db.legal?.cookiesTitle_en} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-2">Banner Message</label>
+            <textarea name="text_en" rows="3" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.legal?.cookiesText_en}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Accept Button</label>
+              <input type="text" name="accept_en" value={db.legal?.cookiesAccept_en} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-2">Decline Button</label>
+              <input type="text" name="decline_en" value={db.legal?.cookiesDecline_en} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 mt-6 border-t border-neutral-800">
+        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-orange-500/25">
+          Save Settings
+        </button>
+      </div>
+    </form>
+  </div>
+</AdminLayout>

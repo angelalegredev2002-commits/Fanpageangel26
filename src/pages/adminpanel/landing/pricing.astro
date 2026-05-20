@@ -1,0 +1,182 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  
+  const rawPricing = formData.get('pricingData');
+  if (rawPricing) {
+    try {
+      const parsedPricing = JSON.parse(rawPricing.toString());
+      if (!db.landing) db.landing = {};
+      db.landing.pricing_es = parsedPricing.es;
+      db.landing.pricing_en = parsedPricing.en;
+      saveDB(db);
+      success = true;
+    } catch(e) {
+      console.error("Error saving pricing", e);
+    }
+  }
+}
+
+const pricingES = db.landing?.pricing_es || { plans: [] };
+const pricingEN = db.landing?.pricing_en || { plans: [] };
+---
+
+<AdminLayout title="Manage Pricing">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Planes de Precios</h1>
+      <p class="text-neutral-400">Administra los paquetes y precios que se muestran en la página.</p>
+    </div>
+    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+  </div>
+
+  <div id="pricing-app" class="space-y-8" data-es={JSON.stringify(pricingES)} data-en={JSON.stringify(pricingEN)}>
+    <div class="flex gap-4 mb-6">
+       <button id="btn-es" type="button" class="px-4 py-2 bg-neutral-800 text-white rounded-lg border border-orange-500">Español</button>
+       <button id="btn-en" type="button" class="px-4 py-2 bg-neutral-800 text-neutral-400 rounded-lg border border-transparent">English</button>
+    </div>
+
+    <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-3xl p-8">
+      <div id="plans-container" class="space-y-6 mb-6"></div>
+      <button id="add-plan" type="button" class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl border border-neutral-700 hover:border-neutral-500 transition-colors w-full">+ Añadir Plan</button>
+    </div>
+
+    <form method="POST" id="pricing-form" class="pt-8 border-t border-neutral-800 flex justify-end">
+      <input type="hidden" name="pricingData" id="pricing-data-input" />
+      <button type="submit" class="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/25 text-lg">
+        Guardar Configuración
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const app = document.getElementById('pricing-app');
+    if (app) {
+      let data = {
+        es: JSON.parse(app.dataset.es),
+        en: JSON.parse(app.dataset.en)
+      };
+      // Asegurar estructura
+      if (!data.es.plans) data.es.plans = [];
+      if (!data.en.plans) data.en.plans = [];
+
+      let currentLang = 'es';
+
+      function escapeHtml(unsafe) {
+        return (unsafe||'').toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
+
+      const container = document.getElementById('plans-container');
+      const form = document.getElementById('pricing-form');
+      const input = document.getElementById('pricing-data-input');
+
+      function renderPlans() {
+        container.innerHTML = '';
+        const list = data[currentLang].plans || [];
+        list.forEach((plan, index) => {
+          const div = document.createElement('div');
+          div.className = 'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-6 relative';
+          div.innerHTML = `
+            <button type="button" class="absolute top-4 right-4 text-red-400 hover:text-red-300" onclick="window.removePlan(${index})">Eliminar Plan</button>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <div>
+                <label class="text-xs text-neutral-400">Nombre del Plan</label>
+                <input type="text" value="${escapeHtml(plan.name)}" data-field="name" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              </div>
+              <div>
+                <label class="text-xs text-neutral-400">Descripción (Subtítulo)</label>
+                <input type="text" value="${escapeHtml(plan.description)}" data-field="description" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              </div>
+              <div>
+                <label class="text-xs text-neutral-400">Precio (ej: S/ 99)</label>
+                <input type="text" value="${escapeHtml(plan.price)}" data-field="price" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              </div>
+              <div>
+                <label class="text-xs text-neutral-400">Céntimos (ej: .00)</label>
+                <input type="text" value="${escapeHtml(plan.cents)}" data-field="cents" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              </div>
+              <div>
+                <label class="text-xs text-neutral-400">Frecuencia (ej: PEN / mes)</label>
+                <input type="text" value="${escapeHtml(plan.billingFrequency)}" data-field="billingFrequency" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              </div>
+              <div>
+                <label class="text-xs text-neutral-400">Texto del Botón</label>
+                <input type="text" value="${escapeHtml(plan.purchaseBtnTitle)}" data-field="purchaseBtnTitle" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              </div>
+              <div class="md:col-span-2">
+                <label class="text-xs text-neutral-400">Link del Botón</label>
+                <input type="text" value="${escapeHtml(plan.purchaseLink)}" data-field="purchaseLink" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+              </div>
+              <div class="md:col-span-2">
+                <label class="text-xs text-neutral-400">Características (Una por línea)</label>
+                <textarea rows="4" data-field="features" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">${escapeHtml((plan.features||[]).join('\\n'))}</textarea>
+              </div>
+              <div class="md:col-span-2 flex items-center gap-2 mt-2">
+                <input type="checkbox" ${plan.highlight ? 'checked' : ''} data-field="highlight" data-index="${index}" class="w-4 h-4 accent-orange-500">
+                <label class="text-sm text-neutral-300">Resaltar este plan (Más Popular)</label>
+              </div>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+        attachEvents();
+      }
+
+      function attachEvents() {
+        container.querySelectorAll('input, textarea').forEach(el => {
+          el.addEventListener('input', (e) => {
+            const idx = e.target.dataset.index;
+            const field = e.target.dataset.field;
+            
+            if (e.target.type === 'checkbox') {
+              data[currentLang].plans[idx][field] = e.target.checked;
+            } else if (field === 'features') {
+              data[currentLang].plans[idx][field] = e.target.value.split('\\n').filter(s=>s.trim());
+            } else {
+              data[currentLang].plans[idx][field] = e.target.value;
+            }
+          });
+        });
+      }
+
+      window.removePlan = (idx) => { data[currentLang].plans.splice(idx, 1); renderPlans(); };
+
+      document.getElementById('add-plan').onclick = () => {
+        data[currentLang].plans.push({
+          name: 'Nuevo Plan', description: '', price: '0', cents: '.00', billingFrequency: '/ mes',
+          features: [], purchaseBtnTitle: 'Comprar', purchaseLink: '#', highlight: false
+        });
+        renderPlans();
+      };
+
+      const btnEs = document.getElementById('btn-es');
+      const btnEn = document.getElementById('btn-en');
+      btnEs.onclick = () => {
+        currentLang = 'es';
+        btnEs.classList.replace('border-transparent', 'border-orange-500'); btnEs.classList.replace('text-neutral-400', 'text-white');
+        btnEn.classList.replace('border-orange-500', 'border-transparent'); btnEn.classList.replace('text-white', 'text-neutral-400');
+        renderPlans();
+      };
+      btnEn.onclick = () => {
+        currentLang = 'en';
+        btnEn.classList.replace('border-transparent', 'border-orange-500'); btnEn.classList.replace('text-neutral-400', 'text-white');
+        btnEs.classList.replace('border-orange-500', 'border-transparent'); btnEs.classList.replace('text-white', 'text-neutral-400');
+        renderPlans();
+      };
+
+      form.onsubmit = () => {
+        input.value = JSON.stringify(data);
+      };
+
+      renderPlans();
+    }
+  </script>
+</AdminLayout>

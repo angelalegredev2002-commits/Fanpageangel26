@@ -19,7 +19,7 @@ export default defineConfig({
       en: "es",
     },
     routing: {
-      prefixDefaultLocale: true,
+      prefixDefaultLocale: false,
     },
   },
   prefetch: true,
@@ -106,6 +106,7 @@ export default defineConfig({
     }),
     mdx(),
   ],
+  output: 'static',
   experimental: {
     clientPrerender: true,
   },

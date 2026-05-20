@@ -1,0 +1,271 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  if (!db.landing) db.landing = {};
+  
+  // Spanish
+  db.landing.announcementBtn_es = formData.get('announcementBtn_es') as string;
+  db.landing.announcementUrl = formData.get('announcementUrl') as string; // shared
+  db.landing.clientsTitle_es = formData.get('clientsTitle_es') as string;
+  db.landing.clientsSubtitle_es = formData.get('clientsSubtitle_es') as string;
+  db.landing.featuresTitle_es = formData.get('featuresTitle_es') as string;
+  db.landing.featuresSubtitle_es = formData.get('featuresSubtitle_es') as string;
+  db.landing.featuresNavsTitle_es = formData.get('featuresNavsTitle_es') as string;
+  db.landing.testimonialsTitle_es = formData.get('testimonialsTitle_es') as string;
+  db.landing.testimonialsSubtitle_es = formData.get('testimonialsSubtitle_es') as string;
+  db.landing.pricingTitle_es = formData.get('pricingTitle_es') as string;
+  db.landing.pricingSubtitle_es = formData.get('pricingSubtitle_es') as string;
+  db.landing.pricingThirdOption_es = formData.get('pricingThirdOption_es') as string;
+  db.landing.pricingBtnText_es = formData.get('pricingBtnText_es') as string;
+  db.landing.faqTitle_es = formData.get('faqTitle_es') as string;
+  db.landing.ctaTitle_es = formData.get('ctaTitle_es') as string;
+  db.landing.ctaSubtitle_es = formData.get('ctaSubtitle_es') as string;
+
+  // English
+  db.landing.announcementBtn_en = formData.get('announcementBtn_en') as string;
+  db.landing.clientsTitle_en = formData.get('clientsTitle_en') as string;
+  db.landing.clientsSubtitle_en = formData.get('clientsSubtitle_en') as string;
+  db.landing.featuresTitle_en = formData.get('featuresTitle_en') as string;
+  db.landing.featuresSubtitle_en = formData.get('featuresSubtitle_en') as string;
+  db.landing.featuresNavsTitle_en = formData.get('featuresNavsTitle_en') as string;
+  db.landing.testimonialsTitle_en = formData.get('testimonialsTitle_en') as string;
+  db.landing.testimonialsSubtitle_en = formData.get('testimonialsSubtitle_en') as string;
+  db.landing.pricingTitle_en = formData.get('pricingTitle_en') as string;
+  db.landing.pricingSubtitle_en = formData.get('pricingSubtitle_en') as string;
+  db.landing.pricingThirdOption_en = formData.get('pricingThirdOption_en') as string;
+  db.landing.pricingBtnText_en = formData.get('pricingBtnText_en') as string;
+  db.landing.faqTitle_en = formData.get('faqTitle_en') as string;
+  db.landing.ctaTitle_en = formData.get('ctaTitle_en') as string;
+  db.landing.ctaSubtitle_en = formData.get('ctaSubtitle_en') as string;
+
+  saveDB(db);
+  success = true;
+}
+---
+
+<AdminLayout title="Manage Landing Sections">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Secciones del Landing Page</h1>
+      <p class="text-neutral-400">Configura los títulos y subtítulos de todas las secciones de la página principal.</p>
+    </div>
+    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+  </div>
+
+  <form method="POST" class="space-y-8">
+    <!-- Announcement & URL -->
+    <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6">
+      <h3 class="text-xl font-bold text-orange-400 border-b border-neutral-800 pb-2 mb-4">Banner de Anuncios (Top)</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label class="block text-sm font-medium text-neutral-300 mb-2">Botón (ES)</label>
+          <input type="text" name="announcementBtn_es" value={db.landing?.announcementBtn_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-neutral-300 mb-2">Botón (EN)</label>
+          <input type="text" name="announcementBtn_en" value={db.landing?.announcementBtn_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-neutral-300 mb-2">URL del Botón</label>
+          <input type="url" name="announcementUrl" value={db.landing?.announcementUrl || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- ESPAÑOL -->
+      <div class="space-y-6">
+        <h2 class="text-2xl font-black text-white bg-neutral-800 py-2 px-4 rounded-xl border border-neutral-700 text-center">ESPAÑOL</h2>
+        
+        <!-- Clientes -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Sección: Clientes / Partners</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Título</label>
+            <input type="text" name="clientsTitle_es" value={db.landing?.clientsTitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Subtítulo</label>
+            <input type="text" name="clientsSubtitle_es" value={db.landing?.clientsSubtitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+        </div>
+
+        <!-- Características -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Sección: Características</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Título General</label>
+            <input type="text" name="featuresTitle_es" value={db.landing?.featuresTitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Subtítulo General</label>
+            <textarea name="featuresSubtitle_es" rows="2" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.landing?.featuresSubtitle_es || ''}</textarea>
+          </div>
+          <div class="border-t border-neutral-800 pt-4 mt-4">
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Título Interactivo (HTML Permitido)</label>
+            <input type="text" name="featuresNavsTitle_es" value={db.landing?.featuresNavsTitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+        </div>
+
+        <!-- Testimonios -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Sección: Testimonios</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Título</label>
+            <input type="text" name="testimonialsTitle_es" value={db.landing?.testimonialsTitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Subtítulo</label>
+            <textarea name="testimonialsSubtitle_es" rows="2" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.landing?.testimonialsSubtitle_es || ''}</textarea>
+          </div>
+        </div>
+
+        <!-- Precios -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Sección: Precios</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Título</label>
+            <input type="text" name="pricingTitle_es" value={db.landing?.pricingTitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Subtítulo</label>
+            <textarea name="pricingSubtitle_es" rows="2" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.landing?.pricingSubtitle_es || ''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-1">Tercera Opción (Texto inferior)</label>
+              <input type="text" name="pricingThirdOption_es" value={db.landing?.pricingThirdOption_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-1">Texto del Botón</label>
+              <input type="text" name="pricingBtnText_es" value={db.landing?.pricingBtnText_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ & CTA -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Sección: FAQ y CTA Final</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Título FAQ (HTML permitido)</label>
+            <input type="text" name="faqTitle_es" value={db.landing?.faqTitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div class="border-t border-neutral-800 pt-4 mt-4">
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Título CTA</label>
+            <input type="text" name="ctaTitle_es" value={db.landing?.ctaTitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Subtítulo CTA</label>
+            <input type="text" name="ctaSubtitle_es" value={db.landing?.ctaSubtitle_es || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ENGLISH -->
+      <div class="space-y-6">
+        <h2 class="text-2xl font-black text-white bg-neutral-800 py-2 px-4 rounded-xl border border-neutral-700 text-center">ENGLISH</h2>
+        
+        <!-- Clients -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Section: Clients / Partners</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Title</label>
+            <input type="text" name="clientsTitle_en" value={db.landing?.clientsTitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Subtitle</label>
+            <input type="text" name="clientsSubtitle_en" value={db.landing?.clientsSubtitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Section: Features</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">General Title</label>
+            <input type="text" name="featuresTitle_en" value={db.landing?.featuresTitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">General Subtitle</label>
+            <textarea name="featuresSubtitle_en" rows="2" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.landing?.featuresSubtitle_en || ''}</textarea>
+          </div>
+          <div class="border-t border-neutral-800 pt-4 mt-4">
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Interactive Title (HTML Allowed)</label>
+            <input type="text" name="featuresNavsTitle_en" value={db.landing?.featuresNavsTitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Section: Testimonials</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Title</label>
+            <input type="text" name="testimonialsTitle_en" value={db.landing?.testimonialsTitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Subtitle</label>
+            <textarea name="testimonialsSubtitle_en" rows="2" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.landing?.testimonialsSubtitle_en || ''}</textarea>
+          </div>
+        </div>
+
+        <!-- Precios -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Section: Pricing</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Title</label>
+            <input type="text" name="pricingTitle_en" value={db.landing?.pricingTitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">Subtitle</label>
+            <textarea name="pricingSubtitle_en" rows="2" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">{db.landing?.pricingSubtitle_en || ''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-1">Third Option</label>
+              <input type="text" name="pricingThirdOption_en" value={db.landing?.pricingThirdOption_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-1">Button Text</label>
+              <input type="text" name="pricingBtnText_en" value={db.landing?.pricingBtnText_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ & CTA -->
+        <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-lg font-bold text-orange-400">Section: FAQ & Final CTA</h3>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">FAQ Title (HTML allowed)</label>
+            <input type="text" name="faqTitle_en" value={db.landing?.faqTitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div class="border-t border-neutral-800 pt-4 mt-4">
+            <label class="block text-sm font-medium text-neutral-300 mb-1">CTA Title</label>
+            <input type="text" name="ctaTitle_en" value={db.landing?.ctaTitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-neutral-300 mb-1">CTA Subtitle</label>
+            <input type="text" name="ctaSubtitle_en" value={db.landing?.ctaSubtitle_en || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500 transition-colors">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="pt-4 mt-6 border-t border-neutral-800 flex justify-end">
+      <button type="submit" class="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/25 text-lg">
+        Guardar Configuración
+      </button>
+    </div>
+  </form>
+
+</AdminLayout>

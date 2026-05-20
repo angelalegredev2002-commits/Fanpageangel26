@@ -1,0 +1,17 @@
+{
+  "legal": {
+    "privacyPolicy": "\n      <div class=\"bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 shadow-xl\">\n        <h2 class=\"text-2xl font-bold text-neutral-900 dark:text-white mb-4\">1. Información que Recopilamos</h2>\n        <p>Recopilamos información que nos proporcionas directamente cuando utilizas nuestro sitio web, te registras para obtener una cuenta, te suscribes a nuestro boletín informativo o nos contactas.</p>\n      </div>\n      <div class=\"bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 shadow-xl mt-8\">\n        <h2 class=\"text-2xl font-bold text-neutral-900 dark:text-white mb-4\">2. Cómo Utilizamos tu Información</h2>\n        <p>Utilizamos la información recopilada para proporcionar, mantener y mejorar nuestros servicios.</p>\n      </div>",
+    "privacyPolicy_en": "\n      <div class=\"bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 shadow-xl\">\n        <h2 class=\"text-2xl font-bold text-neutral-900 dark:text-white mb-4\">1. Information We Collect</h2>\n        <p>We collect information you provide directly to us when you use our website, register for an account, subscribe to our newsletter, or contact us.</p>\n      </div>",
+    "terms": "\n      <div class=\"bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 shadow-xl\">\n        <h2 class=\"text-2xl font-bold text-neutral-900 dark:text-white mb-4\">1. Aceptación de los Términos</h2>\n        <p>Al acceder o utilizar nuestro sitio web y servicios, aceptas estar sujeto a estos Términos y Condiciones.</p>\n      </div>",
+    "terms_en": "\n      <div class=\"bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 shadow-xl\">\n        <h2 class=\"text-2xl font-bold text-neutral-900 dark:text-white mb-4\">1. Acceptance of Terms</h2>\n        <p>By accessing or using our website and services, you agree to be bound by these Terms and Conditions.</p>\n      </div>",
+    "cookiesTitle_es": "Valoramos tu privacidad",
+    "cookiesText_es": "Utilizamos cookies para mejorar tu experiencia de navegación, mostrar contenido personalizado y analizar nuestro tráfico. Al hacer clic en \"Aceptar\", aceptas nuestro uso de cookies.",
+    "cookiesAccept_es": "Aceptar Cookies",
+    "cookiesDecline_es": "Rechazar",
+    "cookiesTitle_en": "We value your privacy",
+    "cookiesText_en": "We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking \"Accept\", you consent to our use of cookies.",
+    "cookiesAccept_en": "Accept Cookies",
+    "cookiesDecline_en": "Decline",
+    "cookiesEnabled": "on"
+  }
+}

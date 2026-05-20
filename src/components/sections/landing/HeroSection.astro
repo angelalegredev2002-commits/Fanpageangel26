@@ -58,13 +58,8 @@ interface Props {
     <div class="space-y-1 sm:space-y-6">
       <h1
         class="block text-xl font-black tracking-tight text-neutral-800 sm:text-5xl lg:text-7xl lg:leading-[1.1] dark:text-neutral-100"
+        set:html={title}
       >
-        <span class="word-reveal"><span>Gestiona</span></span> 
-        <span class="word-reveal"><span>tu</span></span> 
-        <span id="cycling-text" class="text-orange-500 dark:text-orange-400 inline-block transition-all duration-500">éxito</span> 
-        <span class="word-reveal"><span>con</span></span> 
-        <span class="word-reveal"><span>Angel</span></span> 
-        <span class="word-reveal"><span>Alegre</span></span>
       </h1>
       {
         subTitle && (

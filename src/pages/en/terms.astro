@@ -1,0 +1,20 @@
+---
+export const prerender = false;
+import MainLayout from '@layouts/MainLayout.astro';
+import { getDB } from '../../utils/db';
+
+const db = getDB();
+const content = db.legal?.terms_en || "Content not available.";
+---
+
+<MainLayout title="Terms and Conditions">
+  <div class="max-w-3xl mx-auto px-4 py-24 sm:px-6 lg:px-8 mt-16">
+    <div class="mb-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">Terms and Conditions</h1>
+      <p class="text-lg text-neutral-600 dark:text-neutral-400">Last updated: 2026</p>
+    </div>
+
+    <div class="space-y-8 text-neutral-700 dark:text-neutral-300 leading-relaxed text-lg" set:html={content}>
+    </div>
+  </div>
+</MainLayout>

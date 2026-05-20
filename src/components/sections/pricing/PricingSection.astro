@@ -56,36 +56,36 @@ interface PricingSectionProps {
       {pricing.subTitle}
     </p>
   </div>
-  {/* Plans Grid / Carousel on Mobile */}
-  <div class="flex items-stretch gap-3 overflow-x-auto pt-8 pb-16 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 md:gap-6 sm:overflow-visible sm:pt-0 sm:pb-0">
+  {/* Plans Carousel */}
+  <div class="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pt-6 pb-12 snap-x snap-mandatory scrollbar-hide w-[100vw] relative left-1/2 -translate-x-1/2 px-4 sm:px-8 lg:px-[15vw]">
     {
       pricing.plans.map((plan: Product & { highlight: boolean }, index: number) => (
         <div
-          class={`group relative flex w-[80vw] shrink-0 snap-center flex-col rounded-3xl p-5 transition-all duration-500 sm:w-auto sm:p-6 ${
+          class={`group relative flex w-[70vw] sm:w-[250px] shrink-0 snap-center flex-col rounded-[20px] p-4 sm:p-5 transition-all duration-500 ${
             plan.highlight
               ? "bg-orange-500/5 dark:bg-orange-500/10 ring-2 ring-orange-500/50 shadow-xl"
               : "bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm"
           } hover:shadow-lg`}
         >
           {plan.highlight && (
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-linear-to-r from-orange-500 to-orange-600 text-white text-[8px] sm:text-[10px] font-bold uppercase tracking-widest py-1 px-3 sm:py-1.5 sm:px-4 rounded-full shadow-lg z-30">
+            <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-linear-to-r from-orange-500 to-orange-600 text-white text-[7px] sm:text-[8px] font-bold uppercase tracking-widest py-0.5 px-2.5 sm:py-1 sm:px-3 rounded-full shadow-lg z-30">
               Recomendado
             </div>
           )}
 
-          <div class="mb-4 sm:mb-6 relative z-10">
+          <div class="mb-3 sm:mb-4 relative z-10">
             <div class="flex items-start justify-between">
               <div>
-                <h3 class={`text-sm sm:text-lg font-extrabold tracking-tight ${plan.highlight ? "text-orange-600 dark:text-orange-400" : "text-neutral-900 dark:text-neutral-100"}`}>
+                <h3 class={`text-xs sm:text-sm font-extrabold tracking-tight ${plan.highlight ? "text-orange-600 dark:text-orange-400" : "text-neutral-900 dark:text-neutral-100"}`}>
                   {plan.name}
                 </h3>
-                <p class={`text-[10px] sm:text-xs mt-0.5 font-medium ${plan.highlight ? "text-orange-700/80 dark:text-orange-200/80" : "text-neutral-500 dark:text-neutral-400"}`}>
+                <p class={`text-[9px] sm:text-[10px] mt-0.5 font-medium leading-tight ${plan.highlight ? "text-orange-700/80 dark:text-orange-200/80" : "text-neutral-500 dark:text-neutral-400"}`}>
                   {plan.description}
                 </p>
               </div>
               <button
                 type="button"
-                class={`p-1.5 sm:p-2 shrink-0 rounded-xl transition-all duration-300 ${
+                class={`p-1.5 shrink-0 rounded-lg transition-all duration-300 ${
                   plan.highlight 
                     ? "bg-orange-500/20 hover:bg-orange-500/40 text-orange-600 dark:text-orange-400" 
                     : "bg-orange-50/50 dark:bg-orange-950/30 hover:bg-orange-100 text-orange-600 dark:text-orange-400"
@@ -93,30 +93,30 @@ interface PricingSectionProps {
                 data-hs-overlay={`#hs-pricing-modal-${index}`}
                 title="Ver desglose de módulos"
               >
-                <Icon name="info" class="size-3.5 sm:size-4" />
+                <Icon name="info" class="size-3" />
               </button>
             </div>
           </div>
 
-          <div class="mb-6 sm:mb-8 relative z-10">
-            <div class="flex items-baseline gap-1">
-              <span class={`text-2xl sm:text-4xl font-black ${plan.highlight ? "text-neutral-900 dark:text-white" : "text-neutral-900 dark:text-neutral-100"}`}>
+          <div class="mb-4 sm:mb-5 relative z-10">
+            <div class="flex items-baseline gap-0.5">
+              <span class={`text-xl sm:text-2xl font-black ${plan.highlight ? "text-neutral-900 dark:text-white" : "text-neutral-900 dark:text-neutral-100"}`}>
                 {plan.price}
               </span>
-              <span class={`text-xs sm:text-sm font-bold ${plan.highlight ? "text-orange-600 dark:text-orange-200" : "text-neutral-500 dark:text-neutral-400"}`}>
+              <span class={`text-[10px] font-bold ${plan.highlight ? "text-orange-600 dark:text-orange-200" : "text-neutral-500 dark:text-neutral-400"}`}>
                 {plan.cents}
               </span>
             </div>
-            <p class={`text-[8px] sm:text-[10px] mt-0.5 font-bold uppercase tracking-wider ${plan.highlight ? "text-orange-600 dark:text-orange-300" : "text-neutral-400"}`}>
+            <p class={`text-[7px] sm:text-[8px] mt-0 font-bold uppercase tracking-wider ${plan.highlight ? "text-orange-600 dark:text-orange-300" : "text-neutral-400"}`}>
               {plan.billingFrequency}
             </p>
           </div>
 
-          <ul class="mb-6 sm:mb-8 space-y-2 sm:space-y-4 grow relative z-10">
+          <ul class="mb-5 sm:mb-6 space-y-1.5 sm:space-y-2 grow relative z-10">
             {plan.features.map((feature: string) => (
-              <li class="flex items-start gap-2 text-[11px] sm:text-sm">
-                <div class={`mt-0.5 flex size-4 sm:size-5 shrink-0 items-center justify-center rounded-full ${plan.highlight ? "bg-orange-500/20 text-orange-600 dark:text-orange-400" : "bg-emerald-500/10 text-emerald-500"}`}>
-                  <Icon name="checkCircle" class="size-3 sm:size-3.5" />
+              <li class="flex items-start gap-1.5 text-[9px] sm:text-[10.5px]">
+                <div class={`mt-0.5 flex size-3 sm:size-3.5 shrink-0 items-center justify-center rounded-full ${plan.highlight ? "bg-orange-500/20 text-orange-600 dark:text-orange-400" : "bg-emerald-500/10 text-emerald-500"}`}>
+                  <Icon name="checkCircle" class="size-2 sm:size-2.5" />
                 </div>
                 <span class={`leading-tight ${plan.highlight ? "text-neutral-700 dark:text-neutral-200" : "text-neutral-600 dark:text-neutral-300"}`}>
                   {feature}
@@ -127,9 +127,9 @@ interface PricingSectionProps {
 
           <a
             href={plan.purchaseLink}
-            class={`relative inline-flex items-center justify-center rounded-xl sm:rounded-2xl px-4 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm font-bold transition-all duration-300 overflow-hidden group/btn z-10 ${
+            class={`relative inline-flex items-center justify-center rounded-lg sm:rounded-xl px-3 py-2 sm:px-4 sm:py-2.5 text-[10px] sm:text-[11px] font-bold transition-all duration-300 overflow-hidden group/btn z-10 ${
               plan.highlight
-                ? "bg-orange-500 text-white hover:bg-orange-600 shadow-[0_10px_20px_rgba(249,115,22,0.3)] hover:shadow-orange-500/40"
+                ? "bg-orange-500 text-white hover:bg-orange-600 shadow-[0_5px_15px_rgba(249,115,22,0.3)] hover:shadow-orange-500/40"
                 : "bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500"
             }`}
           >

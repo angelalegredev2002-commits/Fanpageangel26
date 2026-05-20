@@ -1,0 +1,45 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  if (!db.site) db.site = {};
+  db.site.brandText = formData.get('brandText') as string;
+  db.site.stickyHeader = formData.get('stickyHeader') ? 'on' : 'off';
+  saveDB(db);
+  success = true;
+}
+---
+
+<AdminLayout title="Manage Header">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Header Configuration</h1>
+      <p class="text-neutral-400">Manage your site's top navigation bar and logo.</p>
+    </div>
+    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+  </div>
+
+  <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6">
+    <form method="POST" class="space-y-6">
+      <div>
+        <label for="brandText" class="block text-sm font-medium text-neutral-300 mb-2">Brand Logo Text</label>
+        <input type="text" id="brandText" name="brandText" value={db.site?.brandText || ''} class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors">
+      </div>
+
+      <div class="flex items-center gap-3">
+        <input type="checkbox" id="stickyHeader" name="stickyHeader" checked={db.site?.stickyHeader !== 'off'} class="w-5 h-5 rounded border-neutral-700 bg-neutral-800 text-orange-500 focus:ring-orange-500 focus:ring-offset-neutral-900">
+        <label for="stickyHeader" class="text-sm font-medium text-neutral-300">Enable Sticky Header</label>
+      </div>
+
+      <button type="submit" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-orange-500/25">
+        Save Changes
+      </button>
+    </form>
+  </div>
+</AdminLayout>

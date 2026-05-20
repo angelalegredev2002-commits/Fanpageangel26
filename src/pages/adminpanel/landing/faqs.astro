@@ -1,0 +1,149 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const rawData = formData.get('faqsData');
+  if (rawData) {
+    try {
+      const parsed = JSON.parse(rawData.toString());
+      if (!db.landing) db.landing = {};
+      db.landing.faqs_es = parsed.es;
+      db.landing.faqs_en = parsed.en;
+      saveDB(db);
+      success = true;
+    } catch(e) {
+      console.error("Error saving FAQs", e);
+    }
+  }
+}
+
+const faqsES = db.landing?.faqs_es || [];
+const faqsEN = db.landing?.faqs_en || [];
+---
+
+<AdminLayout title="Manage FAQs">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-white mb-2">Preguntas Frecuentes (FAQs)</h1>
+      <p class="text-neutral-400">Administra las preguntas y respuestas de la landing page.</p>
+    </div>
+    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+  </div>
+
+  <div id="faqs-app" class="space-y-8" data-es={JSON.stringify(faqsES)} data-en={JSON.stringify(faqsEN)}>
+    <div class="flex gap-4 mb-6">
+       <button id="btn-es" class="px-4 py-2 bg-neutral-800 text-white rounded-lg border border-orange-500">Español</button>
+       <button id="btn-en" class="px-4 py-2 bg-neutral-800 text-neutral-400 rounded-lg border border-transparent">English</button>
+    </div>
+
+    <div id="faqs-container" class="space-y-4"></div>
+
+    <button id="add-faq" class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl border border-neutral-700 hover:border-neutral-500 transition-colors w-full">+ Añadir Pregunta</button>
+
+    <form method="POST" id="faqs-form" class="pt-8 border-t border-neutral-800 flex justify-end">
+      <input type="hidden" name="faqsData" id="faqs-data-input" />
+      <button type="submit" class="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/25 text-lg">
+        Guardar Configuración
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const app = document.getElementById('faqs-app');
+    if (app) {
+      let data = {
+        es: JSON.parse(app.dataset.es),
+        en: JSON.parse(app.dataset.en)
+      };
+      let currentLang = 'es';
+
+      const container = document.getElementById('faqs-container');
+      const btnEs = document.getElementById('btn-es');
+      const btnEn = document.getElementById('btn-en');
+      const addBtn = document.getElementById('add-faq');
+      const form = document.getElementById('faqs-form');
+      const input = document.getElementById('faqs-data-input');
+
+      function escapeHtml(unsafe) {
+        return (unsafe||'').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
+
+      function render() {
+        container.innerHTML = '';
+        const list = data[currentLang] || [];
+        list.forEach((faq, index) => {
+          const div = document.createElement('div');
+          div.className = 'bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 relative';
+          
+          const qEscaped = escapeHtml(faq.question);
+          const aEscaped = escapeHtml(faq.answer);
+
+          div.innerHTML = `
+            <button type="button" class="absolute top-4 right-4 text-red-400 hover:text-red-300" data-remove="${index}">Eliminar</button>
+            <div class="mb-4 pr-12">
+              <label class="block text-sm font-medium text-neutral-300 mb-1">Pregunta</label>
+              <input type="text" value="${qEscaped}" data-field="question" data-index="${index}" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-neutral-300 mb-1">Respuesta</label>
+              <textarea rows="3" data-field="answer" data-index="${index}" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500">${aEscaped}</textarea>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+
+        // Add event listeners
+        container.querySelectorAll('input, textarea').forEach(el => {
+          el.addEventListener('input', (e) => {
+            const idx = e.target.dataset.index;
+            const field = e.target.dataset.field;
+            data[currentLang][idx][field] = e.target.value;
+          });
+        });
+
+        container.querySelectorAll('[data-remove]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const idx = e.target.dataset.remove;
+            data[currentLang].splice(idx, 1);
+            render();
+          });
+        });
+      }
+
+      addBtn.onclick = () => {
+        data[currentLang].push({ question: 'Nueva Pregunta', answer: 'Nueva Respuesta' });
+        render();
+      };
+
+      btnEs.onclick = () => {
+        currentLang = 'es';
+        btnEs.classList.replace('border-transparent', 'border-orange-500');
+        btnEs.classList.replace('text-neutral-400', 'text-white');
+        btnEn.classList.replace('border-orange-500', 'border-transparent');
+        btnEn.classList.replace('text-white', 'text-neutral-400');
+        render();
+      };
+
+      btnEn.onclick = () => {
+        currentLang = 'en';
+        btnEn.classList.replace('border-transparent', 'border-orange-500');
+        btnEn.classList.replace('text-neutral-400', 'text-white');
+        btnEs.classList.replace('border-orange-500', 'border-transparent');
+        btnEs.classList.replace('text-white', 'text-neutral-400');
+        render();
+      };
+
+      form.onsubmit = () => {
+        input.value = JSON.stringify(data);
+      };
+
+      render();
+    }
+  </script>
+</AdminLayout>

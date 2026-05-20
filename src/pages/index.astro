@@ -11,39 +11,39 @@ import PricingSection from '@components/sections/pricing/PricingSection.astro';
 import FAQ from '@components/sections/misc/FAQ.astro';
 import AnnouncementBanner from '@components/ui/banners/AnnouncementBanner.astro';
 import heroImageRaw from '@images/hero-image.svg?raw';
-import faqs from '@data/faqs.json';
-import features from '@data/features.json';
-import pricing from '@data/pricing.json';
 import featureImage from '@images/features-image.png';
 import construction from '@images/construction-image.avif';
 import tools from '@images/automated-tools.jpg';
 import dashboard from '@images/dashboard-image.avif';
-import { partnersData } from '@/data_files/constants';
 import { Image } from 'astro:assets';
+import { getDB } from '../utils/db';
 
-const avatarSrcs: Array<string> = [
-  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80',
-  'https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80',
-  'https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80',
-  'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80',
-];
+const db = getDB();
+
+const faqs = db.landing?.faqs_es || [];
+const features = db.landing?.features_es || [];
+const pricing = db.landing?.pricing_es || { plans: [] };
+const partnersData = db.landing?.partners || [];
+const tabsData = db.landing?.featureTabs || [];
+const testimonialsData = db.landing?.testimonials || [];
+const statisticsData = db.landing?.statistics || [];
+const avatarSrcs = db.landing?.heroAvatars || [];
 ---
 
 <MainLayout>
   <AnnouncementBanner
     btnId="dismiss-button"
-    btnTitle="Explore ScrewFast on GitHub"
-    url="https://github.com/angelalegredev2002-commits"
+    btnTitle={db.landing?.announcementBtn_es || ''}
+    url={db.landing?.announcementUrl || ''}
   />
 
   <div class="reveal-on-scroll">
     <HeroSection
-      title=`Power Your Business with <span
-          class="text-orange-500 dark:text-orange-400">Equipo Sakad</span>`
-      subTitle="Software solutions, systems sales, SaaS platforms, ERP and more — everything your business needs to scale and succeed."
-      primaryBtn="Start Exploring"
+      title={db.landing?.heroTitle_es || ''}
+      subTitle={db.landing?.heroSubtitle_es || ''}
+      primaryBtn={db.landing?.heroPrimaryBtn_es || ''}
       primaryBtnURL="/products"
-      secondaryBtn="Contact Sales Team"
+      secondaryBtn={db.landing?.heroSecondaryBtn_es || ''}
       secondaryBtnURL="/contact"
       withReview={true}
       avatars={avatarSrcs}
@@ -56,16 +56,16 @@ const avatarSrcs: Array<string> = [
 
   <div class="reveal-on-scroll">
     <ClientsSection
-      title="Trusted by Industry Leaders"
-      subTitle="Experience the reliability chosen by industry giants."
+      title={db.landing?.clientsTitle_es || ''}
+      subTitle={db.landing?.clientsSubtitle_es || ''}
       partners={partnersData}
     />
   </div>
 
   <div class="reveal-on-scroll">
     <FeaturesGeneral
-      title="Meeting Business Demands"
-      subTitle="At Equipo Sakad, we tackle the unique challenges encountered in the technology and management sectors. From custom software tools to expert systems, we're dedicated to helping you optimize workflows and achieve your goals."
+      title={db.landing?.featuresTitle_es || ''}
+      subTitle={db.landing?.featuresSubtitle_es || ''}
       src={featureImage}
       alt="Equipo Sakad solutions in floating boxes"
       features={features}
@@ -74,89 +74,39 @@ const avatarSrcs: Array<string> = [
 
   <div class="reveal-on-scroll">
     <FeaturesNavs
-      title=`Customize <span class="text-orange-500 dark:text-orange-400">Equipo Sakad</span>'s offerings to perfectly suit your software and business systems needs.`
-      tabs={[
-        {
-          heading: 'Cutting-Edge Tools',
-          content:
-            "Empower your business with Equipo Sakad's cutting-edge tools. Experience enhanced efficiency in enterprise management with our sophisticated automated solutions.",
-          svg: 'tools',
-          src: tools,
-          alt: 'Representation of automated software tools and business management systems',
-          first: true,
-        },
-        {
-          heading: 'Intuitive Dashboards',
-          content:
-            "Navigate with ease using Equipo Sakad's intuitive dashboards. Set up and oversee your operations seamlessly, with user-friendly interfaces designed for quick and effective workflow management.",
-          svg: 'dashboard',
-          src: dashboard,
-          alt: 'A screenshot or graphic representation of the intuitive dashboard',
-          second: true,
-        },
-        {
-          heading: 'Robust Features',
-          content:
-            "Minimize complexity, maximize productivity. Equipo Sakad's robust features are engineered to streamline your business processes, delivering results that stand out for their excellence.",
-          svg: 'house',
-          src: tools,
-          alt: 'Robust software features for business process optimization',
-        },
-      ]}
+      title={db.landing?.featuresNavsTitle_es || `Customize <span class="text-orange-500 dark:text-orange-400">Equipo Sakad</span>'s offerings to perfectly suit your software and business systems needs.`}
+      tabs={tabsData}
     />
   </div>
 
   <div class="reveal-on-scroll">
     <TestimonialsSection
-      title="Fast-Track Your Business"
-      subTitle="At Equipo Sakad, we ensure a swift start with instant deployment. Experience the speed of software development redefined."
-      testimonials={[
-        {
-          content:
-            'Equipo Sakad dramatically boosted our business efficiency. Deployment was instant, and their rapid response times are phenomenal. Truly a game-changer in software and systems support!',
-          author: 'Samantha Ruiz',
-          role: 'Chief Operating Officer | ConstructIt Inc.',
-          avatarSrc:
-            'https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?q=80&w=1453&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80',
-        },
-      ]}
-      statistics={[
-        {
-          count: '70k+',
-          description:
-            'customers equipped — from DIY to major construction firms',
-        },
-        {
-          count: '35%',
-          description:
-            'uptick in project efficiency with ScrewFast tools and services',
-        },
-        {
-          count: '15.3%',
-          description:
-            'reduction in maintenance costs reported by long-term clients',
-        },
-        {
-          count: '2x',
-          description: 'quicker assembly using innovative fastening solutions',
-        },
-      ]}
+      title={db.landing?.testimonialsTitle_es || ''}
+      subTitle={db.landing?.testimonialsSubtitle_es || ''}
+      testimonials={testimonialsData}
+      statistics={statisticsData}
     />
   </div>
 
   <div class="reveal-on-scroll">
-    <PricingSection pricing={pricing} />
+    <PricingSection pricing={{
+      ...pricing,
+      title: db.landing?.pricingTitle_es || pricing.title,
+      subTitle: db.landing?.pricingSubtitle_es || pricing.subTitle,
+      thirdOption: db.landing?.pricingThirdOption_es || pricing.thirdOption,
+      btnText: db.landing?.pricingBtnText_es || pricing.btnText
+    }} />
   </div>
 
   <div class="reveal-on-scroll">
-    <FAQ title="Frequently<br />asked questions" faqs={faqs} />
+    <FAQ title={db.landing?.faqTitle_es || ''} faqs={faqs} />
   </div>
 
   <div class="reveal-on-scroll">
     <HeroSectionAlt
-      title="Let's Build Together"
-      subTitle="Equipo Sakad is a premium software solution, meticulously crafted with Astro, Tailwind CSS, and Preline UI frameworks."
-      url="https://github.com/angelalegredev2002-commits"
+      title={db.landing?.ctaTitle_es || ''}
+      subTitle={db.landing?.ctaSubtitle_es || ''}
+      url={db.landing?.announcementUrl || ''}
     />
   </div>
 </MainLayout>

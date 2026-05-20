@@ -4,6 +4,8 @@ import Meta from '@components/Meta.astro';
 import Navbar from '@components/sections/navbar&footer/Navbar.astro';
 import FooterSection from '@components/sections/navbar&footer/FooterSection.astro';
 import ContactHub from '@components/ui/buttons/ContactHub.astro';
+import LoadingTransition from '@components/ui/LoadingTransition.astro';
+import CookieBanner from '@components/ui/CookieBanner.astro';
 import BrandLogo from '@components/BrandLogo.astro';
 import { SITE } from '@data/constants';
 import '@styles/global.css';
@@ -75,23 +77,9 @@ interface Props {
     </div>
     <FooterSection />
     <ContactHub />
+    <CookieBanner />
 
-    {/* Loading Transition Overlay */}
-    <div id="loading-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-neutral-950 overflow-hidden">
-      <video id="loading-video" class="absolute size-full object-cover opacity-0 transition-opacity duration-1000" playsinline muted loop preload="auto">
-        <source src="/videos/loandingtransition.mp4" type="video/mp4" />
-      </video>
-      <audio id="loading-audio" src="/music/loading.mp3" loop></audio>
-      
-      {/* Center Content (Empty or minimal if needed, currently removing bar) */}
-      <div id="loading-content" class="relative z-10 flex flex-col items-center">
-      </div>
-
-      {/* Brand Logo at the bottom */}
-      <div id="loading-footer" class="absolute bottom-12 z-10 opacity-60">
-        <BrandLogo class="h-10 w-auto" />
-      </div>
-    </div>
+    <LoadingTransition />
 
     {/* Tech Grid, Noise & Custom Cursor */}
     <div class="tech-grid" id="tech-grid"></div>
@@ -121,58 +109,6 @@ interface Props {
 
         const win = window as any;
         initPremiumAnimations();
-
-        // Loading Screen Logic
-        const overlay = document.getElementById('loading-overlay');
-        const video = document.getElementById('loading-video') as HTMLVideoElement;
-        const audio = document.getElementById('loading-audio') as HTMLAudioElement;
-        
-        // Removed isHomePage check to allow loading screen on any page refresh
-        if (overlay && !win.hasPlayedLoading) {
-          overlay.style.display = 'flex';
-          
-          // Ensure video starts playing immediately
-          video.classList.remove('opacity-0');
-          const playPromise = video.play();
-          
-          if (playPromise !== undefined) {
-            playPromise.catch(() => {
-              console.log("Autoplay prevented, but animating out.");
-            });
-          }
-          
-          // Cinematic timing
-          setTimeout(() => {
-            const tl = gsap.timeline({
-              onComplete: () => {
-                overlay.style.display = 'none';
-                win.hasPlayedLoading = true;
-              }
-            });
-
-            tl.to(['#loading-content', '#loading-footer'], { 
-              opacity: 0, 
-              y: 20, 
-              duration: 0.5,
-              ease: 'power2.in'
-            });
-
-            tl.to(overlay, { 
-              clipPath: 'inset(0% 0% 100% 0%)', 
-              duration: 1.5, 
-              ease: 'expo.inOut'
-            });
-          }, 2800);
-
-          const playAudio = () => {
-            audio.volume = 0.3;
-            audio.play().catch(() => {});
-            window.removeEventListener('click', playAudio);
-          };
-          window.addEventListener('click', playAudio);
-        } else if (overlay) {
-          overlay.style.display = 'none';
-        }
 
         // Background Music (Services Page) Logic
         const bgMusic = document.getElementById('bg-music') as HTMLAudioElement;

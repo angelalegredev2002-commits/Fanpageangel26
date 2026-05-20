@@ -7,19 +7,25 @@ import esStrings from '@utils/es/navigation.ts';
 import Icon from '@components/ui/icons/Icon.astro';
 import BrandLogo from '@components/BrandLogo.astro';
 import { SITE } from '@data/constants';
+import { getDB } from '../../../utils/db';
 
 // Select the correct translation based on the page's lang prop:
-const strings = Astro.currentLocale === 'es' ? esStrings : enStrings;
+const lang = Astro.currentLocale || 'es';
+const strings = lang === 'es' ? esStrings : enStrings;
+
+// DB Content
+const db = getDB();
+const footerText = lang === 'es' 
+  ? (db.site?.footerText_es || '© 2026 Angel Alegre. Todos los derechos reservados.') 
+  : (db.site?.footerText_en || '© 2026 Angel Alegre. All rights reserved.');
 
 // Define the variables that will be used in this component
 const sectionThreeTitle: string =
-  Astro.currentLocale === 'es' ? 'Mantente actualizado' : 'Stay up to date';
+  lang === 'es' ? 'Mantente actualizado' : 'Stay up to date';
 const sectionThreeContent: string =
-  Astro.currentLocale === 'es'
+  lang === 'es'
     ? 'Mantente informado con las últimas herramientas y ofertas exclusivas.'
     : 'Stay updated with the latest tools and exclusive deals.';
-const crafted: string =
-  Astro.currentLocale === 'es' ? 'Creado por' : 'Crafted by';
 ---
 
 <footer class="w-full bg-neutral-300 dark:bg-neutral-950">
@@ -76,8 +82,7 @@ const crafted: string =
     >
       <div class="flex items-center justify-between">
         <p class="text-sm text-neutral-600 dark:text-neutral-400">
-          © <span id="current-year"></span>
-          {SITE.title}. {crafted}
+          {footerText}
           <a
             class="rounded-lg font-medium underline underline-offset-2 ring-zinc-500 outline-hidden transition duration-300 hover:text-neutral-700 hover:decoration-dashed focus:outline-hidden focus-visible:ring-3 dark:ring-zinc-200 dark:hover:text-neutral-300"
             href="https://github.com/angelalegredev2002-commits"

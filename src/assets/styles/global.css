@@ -101,6 +101,8 @@
   --color-zinc-800: oklch(0.274 0.006 286.033);
   --color-zinc-900: oklch(0.21 0.006 285.885);
   --color-zinc-950: oklch(0.141 0.005 285.823);
+
+  --animate-marquee: marquee 30s linear infinite;
 }
 
 @layer base {
@@ -261,16 +263,6 @@
     100% {
       transform: translateX(-50%);
     }
-  }
-
-  .animate-marquee {
-    display: flex;
-    width: max-content;
-    animation: marquee 30s linear infinite;
-  }
-
-  .animate-marquee:hover {
-    animation-play-state: paused;
   }
 
   /* Noise Texture Overlay */

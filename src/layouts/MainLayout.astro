@@ -68,7 +68,7 @@ interface Props {
     */
     }
     <div
-      class="mx-auto w-full max-w-(--breakpoint-2xl) px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen"
+      class="mx-auto flex min-h-screen w-full max-w-(--breakpoint-2xl) flex-col px-4 sm:px-6 lg:px-8"
     >
       <Navbar />
       <main class="grow">
@@ -88,20 +88,29 @@ interface Props {
 
     {/* Organic Morphing Blobs */}
     <div class="blob top-[-10%] right-[-10%] opacity-50"></div>
-    <div class="blob bottom-[-10%] left-[-10%] opacity-30" style="animation-delay: -5s; background: linear-gradient(135deg, rgba(234, 88, 12, 0.2), rgba(249, 115, 22, 0.1));"></div>
-    <div class="blob top-[40%] left-[20%] opacity-20" style="animation-delay: -10s; width: 300px; height: 300px;"></div>
+    <div
+      class="blob bottom-[-10%] left-[-10%] opacity-30"
+      style="animation-delay: -5s; background: linear-gradient(135deg, rgba(234, 88, 12, 0.2), rgba(249, 115, 22, 0.1));"
+    >
+    </div>
+    <div
+      class="blob top-[40%] left-[20%] opacity-20"
+      style="animation-delay: -10s; width: 300px; height: 300px;"
+    >
+    </div>
 
-    <audio id="bg-music" src="/music/in-the-end.mp3" loop transition:persist></audio>
+    <audio id="bg-music" src="/music/in-the-end.mp3" loop transition:persist
+    ></audio>
 
     <script>
       // https://preline.co
       import 'preline';
       import gsap from 'gsap';
       import { initPremiumAnimations } from '@scripts/premiumAnimations.js';
-      
+
       const init = () => {
         (
-          window as Window & { 
+          window as Window & {
             HSStaticMethods?: { autoInit?: () => void };
             hasPlayedLoading?: boolean;
           }
@@ -113,10 +122,10 @@ interface Props {
         // Background Music (Services Page) Logic
         const bgMusic = document.getElementById('bg-music') as HTMLAudioElement;
         const isServicesPage = window.location.pathname.includes('/services');
-        
+
         if (bgMusic) {
           bgMusic.volume = 0.4;
-          
+
           if (isServicesPage) {
             const playBG = () => {
               bgMusic.play().catch(() => {});
@@ -133,10 +142,10 @@ interface Props {
         // Scroll Reveal & Focus Observer
         const observerOptions = {
           threshold: [0, 0.1, 0.9, 1],
-          rootMargin: '0px'
+          rootMargin: '0px',
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             const rect = entry.boundingClientRect;
             const isAbove = rect.top < 0;
@@ -153,7 +162,9 @@ interface Props {
           });
         }, observerOptions);
 
-        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        document
+          .querySelectorAll('.reveal-on-scroll')
+          .forEach(el => observer.observe(el));
 
         // Premium Particle Cursor (Sparks/Bubbles)
         const createParticle = (x: number, y: number) => {
@@ -164,7 +175,7 @@ interface Props {
           const size = Math.random() * 8 + 4;
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
-          
+
           const destinationX = x + (Math.random() - 0.5) * 40;
           const destinationY = y + (Math.random() - 0.5) * 40;
 
@@ -173,7 +184,7 @@ interface Props {
             y: y - size / 2,
             opacity: 1,
             scale: 1,
-            backgroundColor: Math.random() > 0.5 ? '#f97316' : '#fbbf24'
+            backgroundColor: Math.random() > 0.5 ? '#f97316' : '#fbbf24',
           });
 
           gsap.to(particle, {
@@ -183,7 +194,7 @@ interface Props {
             scale: 0,
             duration: Math.random() * 1 + 0.5,
             ease: 'power2.out',
-            onComplete: () => particle.remove()
+            onComplete: () => particle.remove(),
           });
         };
 
@@ -192,8 +203,8 @@ interface Props {
         const magneticElements = document.querySelectorAll('.magnetic-wrap');
         let lastX = 0;
         let lastY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
+
+        document.addEventListener('mousemove', e => {
           const { clientX, clientY } = e;
 
           // Create particles on move
@@ -222,8 +233,14 @@ interface Props {
             const rotateX = ((y - centerY) / centerY) * -10;
             const rotateY = ((x - centerX) / centerX) * 10;
 
-            (el as HTMLElement).style.setProperty('--rotate-x', `${rotateX}deg`);
-            (el as HTMLElement).style.setProperty('--rotate-y', `${rotateY}deg`);
+            (el as HTMLElement).style.setProperty(
+              '--rotate-x',
+              `${rotateX}deg`
+            );
+            (el as HTMLElement).style.setProperty(
+              '--rotate-y',
+              `${rotateY}deg`
+            );
           });
 
           // Update Magnetic Elements
@@ -232,11 +249,12 @@ interface Props {
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             const distance = Math.hypot(clientX - centerX, clientY - centerY);
-            
+
             if (distance < 100) {
               const moveX = (clientX - centerX) * 0.4;
               const moveY = (clientY - centerY) * 0.4;
-              (el as HTMLElement).style.transform = `translate(${moveX}px, ${moveY}px)`;
+              (el as HTMLElement).style.transform =
+                `translate(${moveX}px, ${moveY}px)`;
             } else {
               (el as HTMLElement).style.transform = `translate(0px, 0px)`;
             }
@@ -248,19 +266,25 @@ interface Props {
               x: clientX - 10,
               y: clientY - 10,
               duration: 0.1,
-              ease: 'power2.out'
+              ease: 'power2.out',
             });
           }
         });
 
         // Cursor Hover Effect
-        const hoverables = document.querySelectorAll('a, button, [role="button"]');
+        const hoverables = document.querySelectorAll(
+          'a, button, [role="button"]'
+        );
         hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor?.classList.add('active'));
-            el.addEventListener('mouseleave', () => cursor?.classList.remove('active'));
+          el.addEventListener('mouseenter', () =>
+            cursor?.classList.add('active')
+          );
+          el.addEventListener('mouseleave', () =>
+            cursor?.classList.remove('active')
+          );
         });
       };
-      
+
       // Support for both regular load and Astro view transitions
       document.addEventListener('DOMContentLoaded', init);
       document.addEventListener('astro:page-load', init);
@@ -272,13 +296,13 @@ interface Props {
         overflow: hidden;
         vertical-align: bottom;
       }
-      
+
       /* Smooth clip-path transitions for images */
       .reveal-image {
         clip-path: inset(100% 0% 0% 0%);
         transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
       }
-      
+
       .reveal-image.is-in-view {
         clip-path: inset(0% 0% 0% 0%);
       }

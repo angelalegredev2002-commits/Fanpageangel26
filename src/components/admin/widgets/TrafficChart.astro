@@ -1,26 +1,35 @@
 ---
 const mockBars = [40, 70, 45, 90, 65, 85, 100];
 ---
-<div class="lg:col-span-2 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6">
-  <div class="flex items-center justify-between mb-6">
+
+<div
+  class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm lg:col-span-2"
+>
+  <div class="mb-6 flex items-center justify-between">
     <h2 class="text-xl font-bold text-white">Traffic Overview</h2>
-    <select class="bg-neutral-800 border border-neutral-700 text-sm text-neutral-300 rounded-lg px-3 py-1 outline-none focus:border-orange-500">
+    <select
+      class="rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm text-neutral-300 outline-none focus:border-orange-500"
+    >
       <option>Last 7 days</option>
       <option>Last 30 days</option>
       <option>This Year</option>
     </select>
   </div>
-  <div class="h-64 flex items-end justify-between gap-2">
-    {mockBars.map((height) => (
-      <div class="w-full bg-neutral-800 rounded-t-lg relative group">
-        <div 
-          class="absolute bottom-0 w-full bg-gradient-to-t from-orange-600 to-orange-400 rounded-t-lg transition-all duration-500 group-hover:opacity-80" 
-          style={`height: ${height}%`}
-        ></div>
-      </div>
-    ))}
+  <div class="flex h-64 items-end justify-between gap-2">
+    {
+      mockBars.map(height => (
+        <div class="group relative w-full rounded-t-lg bg-neutral-800">
+          <div
+            class="absolute bottom-0 w-full rounded-t-lg bg-gradient-to-t from-orange-600 to-orange-400 transition-all duration-500 group-hover:opacity-80"
+            style={`height: ${height}%`}
+          />
+        </div>
+      ))
+    }
   </div>
-  <div class="flex justify-between mt-4 text-xs text-neutral-500">
-    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+  <div class="mt-4 flex justify-between text-xs text-neutral-500">
+    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span
+      >Fri</span
+    ><span>Sat</span><span>Sun</span>
   </div>
 </div>

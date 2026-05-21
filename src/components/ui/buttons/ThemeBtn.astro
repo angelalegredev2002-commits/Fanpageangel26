@@ -1,10 +1,5 @@
 ---
 import ThemeIcon from '../../ThemeIcon.astro';
-let dark = false;
-const toggle = () => {
-  dark = !dark;
-  document.documentElement.classList.toggle('dark', dark);
-};
 ---
 
 <style>
@@ -19,9 +14,19 @@ const toggle = () => {
     color: var(--theme-fg, #111827);
     transition: background 0.2s;
   }
-  button:hover { background: var(--theme-bg-hover, #e5e7eb); }
+  button:hover {
+    background: var(--theme-bg-hover, #e5e7eb);
+  }
 </style>
 
-<button on:click={toggle} aria-label="Toggle theme">
+<button id="theme-btn" aria-label="Toggle theme">
   <ThemeIcon />
 </button>
+
+<script>
+  const btn = document.getElementById('theme-btn');
+  btn?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('hs_theme', isDark ? 'dark' : 'light');
+  });
+</script>

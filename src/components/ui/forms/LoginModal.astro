@@ -11,8 +11,12 @@ import GoogleBtn from '@components/ui/buttons/GoogleBtn.astro';
 const config = {
   id: 'hs-toggle-between-modals-login-modal', // Modal IDENTIFIER
   title: Astro.currentLocale === 'es' ? 'Iniciar sesión' : 'Sign in', // Main HEADING
-  subTitle: Astro.currentLocale === 'es' ? '¿Aún no tienes una cuenta?' : "Don't have an account yet?", // Sub-Heading TEXT
-  registerBtn: Astro.currentLocale === 'es' ? 'Regístrate aquí' : 'Sign up here', // Text for REGISTRATION BUTTON
+  subTitle:
+    Astro.currentLocale === 'es'
+      ? '¿Aún no tienes una cuenta?'
+      : "Don't have an account yet?", // Sub-Heading TEXT
+  registerBtn:
+    Astro.currentLocale === 'es' ? 'Regístrate aquí' : 'Sign up here', // Text for REGISTRATION BUTTON
   registerBtnDataHS: '#hs-toggle-between-modals-register-modal', // TARGET LINK for registration button
 };
 ---
@@ -49,7 +53,11 @@ const config = {
             </p>
           </div>
           <div class="mt-5">
-            <GoogleBtn title={Astro.currentLocale === 'es' ? 'Acceder con Google' : 'Sign in with Google'} />
+            <GoogleBtn
+              title={Astro.currentLocale === 'es'
+                ? 'Acceder con Google'
+                : 'Sign in with Google'}
+            />
 
             <div
               class="flex items-center py-3 text-xs text-neutral-400 uppercase before:me-6 before:flex-[1_1_0%] before:border-t before:border-neutral-200 after:ms-6 after:flex-[1_1_0%] after:border-t after:border-neutral-200 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600"
@@ -67,12 +75,18 @@ const config = {
                   forgot={true}
                   id="password"
                   errorId="login-password-error"
-                  content={Astro.currentLocale === 'es' ? 'Más de 8 caracteres' : '8+ characters required'}
+                  content={Astro.currentLocale === 'es'
+                    ? 'Más de 8 caracteres'
+                    : '8+ characters required'}
                 />
                 {/* The remember-me checkbox */}
                 <Checkbox id="remember-me" />
                 {/* The sign-in button */}
-                <AuthBtn title={Astro.currentLocale === 'es' ? 'Iniciar sesión' : 'Sign in'} />
+                <AuthBtn
+                  title={Astro.currentLocale === 'es'
+                    ? 'Iniciar sesión'
+                    : 'Sign in'}
+                />
               </div>
             </form>
           </div>

@@ -5,24 +5,30 @@ import starlight from '@astrojs/starlight';
 
 import mdx from '@astrojs/mdx';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
   site: 'https://screwfast.uk',
+
   image: {
     domains: ['images.unsplash.com'],
   },
+
   i18n: {
-    defaultLocale: "es",
-    locales: ["en", "es"],
+    defaultLocale: 'es',
+    locales: ['en', 'es'],
     fallback: {
-      en: "es",
+      en: 'es',
     },
     routing: {
       prefixDefaultLocale: false,
     },
   },
+
   prefetch: true,
+
   integrations: [
     sitemap({
       i18n: {
@@ -106,11 +112,18 @@ export default defineConfig({
     }),
     mdx(),
   ],
+
   output: 'static',
+
   experimental: {
     clientPrerender: true,
   },
+
   vite: {
     plugins: [tailwindcss()],
   },
+
+  adapter: vercel({
+    imageService: true,
+  }),
 });

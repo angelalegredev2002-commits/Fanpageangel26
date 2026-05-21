@@ -26,37 +26,44 @@ interface Props {
 ---
 
 <section
-  class="mx-auto max-w-[85rem] py-12 lg:py-24 2xl:max-w-full sm:px-6 lg:px-8"
+  class="mx-auto max-w-[85rem] py-12 sm:px-6 lg:px-8 lg:py-24 2xl:max-w-full"
 >
-  <div class="relative p-4 sm:p-6 md:p-16 overflow-hidden">
+  <div class="relative overflow-hidden p-4 sm:p-6 md:p-16">
     {/* Decorative background glow */}
-    <div class="absolute -left-20 -bottom-20 -z-10 size-96 bg-orange-500/5 blur-[120px] rounded-full"></div>
-    
+    <div
+      class="absolute -bottom-20 -left-20 -z-10 size-96 rounded-full bg-orange-500/5 blur-[120px]"
+    >
+    </div>
+
     <div class="relative z-10">
       {/* Section's heading - Filler tags removed */}
       <div class="mb-12 text-center">
         <h2
-          class="text-2xl font-black text-neutral-800 sm:text-4xl lg:text-5xl leading-tight dark:text-neutral-100 tracking-tight"
+          class="text-2xl leading-tight font-black tracking-tight text-neutral-800 sm:text-4xl lg:text-5xl dark:text-neutral-100"
         >
           <Fragment set:html={title} />
         </h2>
       </div>
-      
+
       {/* Tab navigation - Organized into 3 blocks/boxes */}
-      <nav class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12" aria-label="Tabs" role="tablist">
+      <nav
+        class="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-3"
+        aria-label="Tabs"
+        role="tablist"
+      >
         {
           tabs.map((tab, index) => (
             <div class="h-full">
-                <TabNav
-                  id={`tabs-with-card-item-${index + 1}`}
-                  dataTab={`#tabs-with-card-${index + 1}`}
-                  aria={`tabs-with-card-${index + 1}`}
-                  heading={tab.heading}
-                  content={tab.content}
-                  first={tab.first}
-                >
-                  <Icon name={tab.svg} />
-                </TabNav>
+              <TabNav
+                id={`tabs-with-card-item-${index + 1}`}
+                dataTab={`#tabs-with-card-${index + 1}`}
+                aria={`tabs-with-card-${index + 1}`}
+                heading={tab.heading}
+                content={tab.content}
+                first={tab.first}
+              >
+                <Icon name={tab.svg} />
+              </TabNav>
             </div>
           ))
         }
@@ -79,7 +86,10 @@ interface Props {
           }
         </div>
         <!-- Decorative Glow behind image -->
-        <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-full bg-orange-500/10 blur-[120px] rounded-full"></div>
+        <div
+          class="absolute top-1/2 left-1/2 -z-10 size-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/10 blur-[120px]"
+        >
+        </div>
       </div>
     </div>
   </div>

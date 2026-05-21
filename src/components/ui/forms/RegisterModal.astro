@@ -9,8 +9,12 @@ import AuthBtn from '@components/ui/buttons/AuthBtn.astro';
 const config = {
   id: 'hs-toggle-between-modals-register-modal', // Modal identifier
   title: Astro.currentLocale === 'es' ? 'Regístrate' : 'Sign up', // Main heading
-  subTitle: Astro.currentLocale === 'es' ? '¿Ya tienes una cuenta?' : 'Already have an account?', // Sub-heading text
-  loginBtn: Astro.currentLocale === 'es' ? 'Inicia sesión aquí' : 'Sign in here', // Text for login button
+  subTitle:
+    Astro.currentLocale === 'es'
+      ? '¿Ya tienes una cuenta?'
+      : 'Already have an account?', // Sub-heading text
+  loginBtn:
+    Astro.currentLocale === 'es' ? 'Inicia sesión aquí' : 'Sign in here', // Text for login button
   loginBtnDataHS: '#hs-toggle-between-modals-login-modal', // Target link for login button
 };
 ---
@@ -52,7 +56,11 @@ const config = {
           {/* The form for user registration */}
           <div class="mt-5">
             {/* Google signup button */}
-            <GoogleBtn title={Astro.currentLocale === 'es' ? 'Regístrate con Google' : 'Sign up with Google'} />
+            <GoogleBtn
+              title={Astro.currentLocale === 'es'
+                ? 'Regístrate con Google'
+                : 'Sign up with Google'}
+            />
             {/* Dividing line with 'Or' text */}
             <div
               class="flex items-center py-3 text-xs text-neutral-400 uppercase before:me-6 before:flex-[1_1_0%] before:border-t before:border-neutral-200 after:ms-6 after:flex-[1_1_0%] after:border-t after:border-neutral-200 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600"
@@ -71,26 +79,46 @@ const config = {
                 <PasswordInput
                   id="create-password"
                   errorId="register-password-error"
-                  content={Astro.currentLocale === 'es' ? 'Más de 8 caracteres' : '8+ characters required'}
+                  content={Astro.currentLocale === 'es'
+                    ? 'Más de 8 caracteres'
+                    : '8+ characters required'}
                 />
                 {/* Password confirmation input field */}
                 <PasswordInput
-                  label={Astro.currentLocale === 'es' ? 'Confirmar contraseña' : 'Confirm Password'}
+                  label={Astro.currentLocale === 'es'
+                    ? 'Confirmar contraseña'
+                    : 'Confirm Password'}
                   id="confirm-password"
                   errorId="confirm-password-error"
-                  content={Astro.currentLocale === 'es' ? 'Las contraseñas no coinciden' : 'Password does not match the password'}
+                  content={Astro.currentLocale === 'es'
+                    ? 'Las contraseñas no coinciden'
+                    : 'Password does not match the password'}
                 />
                 {
                   /* Checkbox with a label and a link for accepting the terms and conditions */
                 }
-                <Checkbox label={Astro.currentLocale === 'es' ? 'Acepto los ' : 'I accept the '} id="terms-agree">
+                <Checkbox
+                  label={Astro.currentLocale === 'es'
+                    ? 'Acepto los '
+                    : 'I accept the '}
+                  id="terms-agree"
+                >
                   <a
                     class="font-medium text-orange-400 decoration-2 hover:underline dark:text-orange-400 dark:focus:outline-hidden"
-                    href="#">{Astro.currentLocale === 'es' ? 'Términos y Condiciones' : 'Terms and Conditions'}</a
+                    href="#"
+                    >{
+                      Astro.currentLocale === 'es'
+                        ? 'Términos y Condiciones'
+                        : 'Terms and Conditions'
+                    }</a
                   >
                 </Checkbox>
                 {/* Submit button for the registration form */}
-                <AuthBtn title={Astro.currentLocale === 'es' ? 'Regístrate' : 'Sign up'} />
+                <AuthBtn
+                  title={Astro.currentLocale === 'es'
+                    ? 'Regístrate'
+                    : 'Sign up'}
+                />
               </div>
             </form>
           </div>

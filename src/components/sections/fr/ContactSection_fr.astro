@@ -19,54 +19,88 @@ const formSubTitle: string =
 
 <section class="relative overflow-hidden bg-neutral-200 dark:bg-neutral-950">
   {/* Decorative Background Elements */}
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none -z-10 overflow-hidden">
-    <div class="absolute top-[-5%] left-[-5%] w-[30%] h-[30%] rounded-full bg-orange-500/10 blur-[100px]"></div>
-    <div class="absolute bottom-[-5%] right-[-5%] w-[30%] h-[30%] rounded-full bg-blue-500/10 blur-[100px]"></div>
+  <div
+    class="pointer-events-none absolute top-0 left-1/2 -z-10 h-full w-full -translate-x-1/2 overflow-hidden"
+  >
+    <div
+      class="absolute top-[-5%] left-[-5%] h-[30%] w-[30%] rounded-full bg-orange-500/10 blur-[100px]"
+    >
+    </div>
+    <div
+      class="absolute right-[-5%] bottom-[-5%] h-[30%] w-[30%] rounded-full bg-blue-500/10 blur-[100px]"
+    >
+    </div>
   </div>
 
   <div class="mx-auto max-w-[85rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
     <div class="mx-auto max-w-2xl lg:max-w-5xl">
-      
       {/* Header Section Compressed */}
-      <div class="text-center mb-10 space-y-2 animate-in fade-in slide-in-from-top-4 duration-700">
-        <h1 class="text-3xl font-black tracking-tight text-neutral-800 dark:text-neutral-200 sm:text-4xl lg:text-5xl text-balance">
+      <div
+        class="animate-in fade-in slide-in-from-top-4 mb-10 space-y-2 text-center duration-700"
+      >
+        <h1
+          class="text-3xl font-black tracking-tight text-balance text-neutral-800 sm:text-4xl lg:text-5xl dark:text-neutral-200"
+        >
           {title}
         </h1>
-        <p class="mt-2 text-base text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+        <p
+          class="mx-auto mt-2 max-w-2xl text-base leading-relaxed text-neutral-600 dark:text-neutral-400"
+        >
           {subTitle}
         </p>
       </div>
 
       {/* Main Responsive Grid Compressed */}
-      <div class="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-        
+      <div class="grid items-start gap-6 lg:grid-cols-12 lg:gap-10">
         {/* Left Column: Form (7/12) */}
-        <div class="lg:col-span-7 animate-in fade-in slide-in-from-left-8 duration-700 delay-100">
-          <div class="group relative bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md border border-neutral-300 dark:border-neutral-800 rounded-[2rem] p-5 sm:p-8 shadow-xl transition-all duration-500 hover:border-orange-500/30">
-            
+        <div
+          class="animate-in fade-in slide-in-from-left-8 delay-100 duration-700 lg:col-span-7"
+        >
+          <div
+            class="group relative rounded-[2rem] border border-neutral-300 bg-white/50 p-5 shadow-xl backdrop-blur-md transition-all duration-500 hover:border-orange-500/30 sm:p-8 dark:border-neutral-800 dark:bg-neutral-900/50"
+          >
             <form class="space-y-5">
               <div class="space-y-1">
-                <h2 class="text-lg font-black text-neutral-800 dark:text-neutral-200">
+                <h2
+                  class="text-lg font-black text-neutral-800 dark:text-neutral-200"
+                >
                   {formTitle}
                 </h2>
-                <div class="h-1 w-10 bg-orange-500 rounded-full"></div>
+                <div class="h-1 w-10 rounded-full bg-orange-500"></div>
               </div>
-              
+
               <div class="grid gap-4 sm:grid-cols-2">
-                <TextInput id="hs-firstname-contacts" label="Prénom" name="hs-firstname-contacts" />
-                <TextInput id="hs-lastname-contacts" label="Nom" name="hs-lastname-contacts" />
+                <TextInput
+                  id="hs-firstname-contacts"
+                  label="Prénom"
+                  name="hs-firstname-contacts"
+                />
+                <TextInput
+                  id="hs-lastname-contacts"
+                  label="Nom"
+                  name="hs-lastname-contacts"
+                />
               </div>
-              
+
               <div class="grid gap-4 sm:grid-cols-2">
-                <EmailContactInput id="hs-email-contacts" label="Adresse e-mail" />
+                <EmailContactInput
+                  id="hs-email-contacts"
+                  label="Adresse e-mail"
+                />
                 <PhoneInput id="hs-phone-number" label="Numéro de téléphone" />
               </div>
-              
-              <TextAreaInput id="hs-about-contacts" label="Détails de votre projet..." name="hs-about-contacts" />
+
+              <TextAreaInput
+                id="hs-about-contacts"
+                label="Détails de votre projet..."
+                name="hs-about-contacts"
+              />
 
               <div class="pt-2">
                 <AuthBtn title="Envoyer le message" />
-                <div class="mt-4 flex items-center justify-center gap-2 text-[12px] text-neutral-500 font-bold uppercase tracking-wider">
+                <div
+                  class="mt-4 flex items-center justify-center gap-2 text-[12px] font-bold tracking-wider text-neutral-500 uppercase"
+                >
                   <Icon name="chatBubble" class="size-3.5 text-orange-500" />
                   <span>{formSubTitle}</span>
                 </div>
@@ -76,23 +110,37 @@ const formSubTitle: string =
         </div>
 
         {/* Right Column: Info & Map (5/12) */}
-        <div class="lg:col-span-5 space-y-6 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
-          
+        <div
+          class="animate-in fade-in slide-in-from-right-8 space-y-6 delay-200 duration-700 lg:col-span-5"
+        >
           {/* Contact Details Grid Compressed */}
-          <div class="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
-            
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             {/* Office Block */}
-            <div class="group p-4 rounded-2xl bg-white/40 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg">
+            <div
+              class="group rounded-2xl border border-neutral-300 bg-white/40 p-4 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/40"
+            >
               <div class="flex items-center gap-4">
-                <div class="flex-shrink-0 size-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300">
+                <div
+                  class="flex size-10 flex-shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 transition-all duration-300 group-hover:bg-orange-500 group-hover:text-white dark:text-orange-400"
+                >
                   <Icon name="mapPin" class="size-5" />
                 </div>
-                <div class="space-y-0.5 min-w-0">
-                  <h3 class="font-bold text-neutral-800 dark:text-neutral-200 text-sm">Siège Social</h3>
-                  <p class="text-xs text-neutral-600 dark:text-neutral-400 truncate">
+                <div class="min-w-0 space-y-0.5">
+                  <h3
+                    class="text-sm font-bold text-neutral-800 dark:text-neutral-200"
+                  >
+                    Siège Social
+                  </h3>
+                  <p
+                    class="truncate text-xs text-neutral-600 dark:text-neutral-400"
+                  >
                     Jr. Los jacintos 2133, SJL, Lima
                   </p>
-                  <a href="https://maps.google.com/maps?q=Jr.+Los+jacintos+2133,+San+juan+de+lurigancho,+15434+Lima+Peru" target="_blank" class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-orange-600 dark:text-orange-500">
+                  <a
+                    href="https://maps.google.com/maps?q=Jr.+Los+jacintos+2133,+San+juan+de+lurigancho,+15434+Lima+Peru"
+                    target="_blank"
+                    class="inline-flex items-center gap-1 text-[10px] font-black tracking-widest text-orange-600 uppercase dark:text-orange-500"
+                  >
                     Voir Carte <Icon name="arrowUpRight" class="size-2.5" />
                   </a>
                 </div>
@@ -100,25 +148,37 @@ const formSubTitle: string =
             </div>
 
             {/* Email Block */}
-            <div class="group p-4 rounded-2xl bg-white/40 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg">
+            <div
+              class="group rounded-2xl border border-neutral-300 bg-white/40 p-4 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/40"
+            >
               <div class="flex items-center gap-4">
-                <div class="flex-shrink-0 size-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                <div
+                  class="flex size-10 flex-shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white dark:text-blue-400"
+                >
                   <Icon name="envelopeOpen" class="size-5" />
                 </div>
-                <div class="space-y-0.5 min-w-0">
-                  <h3 class="font-bold text-neutral-800 dark:text-neutral-200 text-sm">Contactez-nous</h3>
-                  <a href="mailto:angelalegredev2002@gmail.com" class="text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-orange-500 transition-colors block truncate">
+                <div class="min-w-0 space-y-0.5">
+                  <h3
+                    class="text-sm font-bold text-neutral-800 dark:text-neutral-200"
+                  >
+                    Contactez-nous
+                  </h3>
+                  <a
+                    href="mailto:angelalegredev2002@gmail.com"
+                    class="block truncate text-xs font-bold text-neutral-600 transition-colors hover:text-orange-500 dark:text-neutral-400"
+                  >
                     angelalegredev2002@gmail.com
                   </a>
                 </div>
               </div>
             </div>
-
           </div>
 
           {/* Interactive Map Container Smaller */}
-          <div class="relative group">
-            <div class="relative overflow-hidden rounded-2xl border border-neutral-300 dark:border-neutral-800 h-[220px] lg:h-[260px] shadow-sm">
+          <div class="group relative">
+            <div
+              class="relative h-[220px] overflow-hidden rounded-2xl border border-neutral-300 shadow-sm lg:h-[260px] dark:border-neutral-800"
+            >
               <iframe
                 title="Emplacement exact Okanox ERP"
                 src="https://maps.google.com/maps?q=Jr.%20Los%20jacintos%202133%20San%20juan%20de%20lurigancho%20Lima%20Peru&t=&z=18&ie=UTF8&iwloc=&output=embed"
@@ -128,23 +188,33 @@ const formSubTitle: string =
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
-                class="hover:scale-[1.03] transition-transform duration-[1500ms]"
+                class="transition-transform duration-[1500ms] hover:scale-[1.03]"
               ></iframe>
             </div>
           </div>
 
           {/* Quick Links Compressed */}
           <div class="flex gap-3">
-            <a href="/fr/faqs" class="flex-1 p-3 rounded-xl bg-white/40 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 text-center hover:border-orange-500/50 transition-all group">
-              <span class="text-[11px] font-black uppercase tracking-wider text-neutral-600 dark:text-neutral-400 group-hover:text-orange-500 transition-colors">FAQs</span>
+            <a
+              href="/fr/faqs"
+              class="group flex-1 rounded-xl border border-neutral-300 bg-white/40 p-3 text-center transition-all hover:border-orange-500/50 dark:border-neutral-800 dark:bg-neutral-900/40"
+            >
+              <span
+                class="text-[11px] font-black tracking-wider text-neutral-600 uppercase transition-colors group-hover:text-orange-500 dark:text-neutral-400"
+                >FAQs</span
+              >
             </a>
-            <a href="#" class="flex-1 p-3 rounded-xl bg-white/40 dark:bg-neutral-900/40 border border-neutral-300 dark:border-neutral-800 text-center hover:border-blue-500/50 transition-all group">
-              <span class="text-[11px] font-black uppercase tracking-wider text-neutral-600 dark:text-neutral-400 group-hover:text-blue-500 transition-colors">Support</span>
+            <a
+              href="#"
+              class="group flex-1 rounded-xl border border-neutral-300 bg-white/40 p-3 text-center transition-all hover:border-blue-500/50 dark:border-neutral-800 dark:bg-neutral-900/40"
+            >
+              <span
+                class="text-[11px] font-black tracking-wider text-neutral-600 uppercase transition-colors group-hover:text-blue-500 dark:text-neutral-400"
+                >Support</span
+              >
             </a>
           </div>
-
         </div>
-
       </div>
     </div>
   </div>

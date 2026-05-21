@@ -1,20 +1,37 @@
 ---
 import BrandLogo from '@components/BrandLogo.astro';
 ---
-<div id="loading-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-neutral-950 overflow-hidden transition-all duration-1000 ease-in-out">
-  
-  <div class="relative z-10 flex flex-col items-center transform transition-transform duration-1000" id="loading-content">
-    <div class="animate-pulse mb-8">
+
+<div
+  id="loading-overlay"
+  class="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-neutral-950 transition-all duration-1000 ease-in-out"
+>
+  <div
+    class="relative z-10 flex transform flex-col items-center transition-transform duration-1000"
+    id="loading-content"
+  >
+    <div class="mb-8 animate-pulse">
       <BrandLogo class="h-16 w-auto" />
     </div>
-    
+
     <div class="flex items-center gap-2">
-      <div class="w-2.5 h-2.5 rounded-full bg-orange-500 animate-bounce" style="animation-delay: 0s;"></div>
-      <div class="w-2.5 h-2.5 rounded-full bg-orange-500 animate-bounce" style="animation-delay: 0.2s;"></div>
-      <div class="w-2.5 h-2.5 rounded-full bg-orange-500 animate-bounce" style="animation-delay: 0.4s;"></div>
+      <div
+        class="h-2.5 w-2.5 animate-bounce rounded-full bg-orange-500"
+        style="animation-delay: 0s;"
+      >
+      </div>
+      <div
+        class="h-2.5 w-2.5 animate-bounce rounded-full bg-orange-500"
+        style="animation-delay: 0.2s;"
+      >
+      </div>
+      <div
+        class="h-2.5 w-2.5 animate-bounce rounded-full bg-orange-500"
+        style="animation-delay: 0.4s;"
+      >
+      </div>
     </div>
   </div>
-
 </div>
 
 <script is:inline>
@@ -30,9 +47,8 @@ import BrandLogo from '@components/BrandLogo.astro';
     const win = window as any;
     const overlay = document.getElementById('loading-overlay');
     const content = document.getElementById('loading-content');
-    
+
     if (overlay && !win.hasPlayedLoading) {
-      
       // Cinematic CSS timing
       setTimeout(() => {
         // Fade out content first
@@ -40,12 +56,12 @@ import BrandLogo from '@components/BrandLogo.astro';
           content.style.opacity = '0';
           content.style.transform = 'translateY(-20px)';
         }
-        
+
         // Then slide up the overlay
         setTimeout(() => {
           overlay.style.transform = 'translateY(-100%)';
           overlay.style.opacity = '0';
-          
+
           setTimeout(() => {
             overlay.style.display = 'none';
             win.hasPlayedLoading = true;

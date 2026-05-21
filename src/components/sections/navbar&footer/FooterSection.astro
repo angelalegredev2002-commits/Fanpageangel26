@@ -15,9 +15,11 @@ const strings = lang === 'es' ? esStrings : enStrings;
 
 // DB Content
 const db = getDB();
-const footerText = lang === 'es' 
-  ? (db.site?.footerText_es || '© 2026 Angel Alegre. Todos los derechos reservados.') 
-  : (db.site?.footerText_en || '© 2026 Angel Alegre. All rights reserved.');
+const footerText =
+  lang === 'es'
+    ? db.site?.footerText_es ||
+      '© 2026 Angel Alegre. Todos los derechos reservados.'
+    : db.site?.footerText_en || '© 2026 Angel Alegre. All rights reserved.';
 
 // Define the variables that will be used in this component
 const sectionThreeTitle: string =

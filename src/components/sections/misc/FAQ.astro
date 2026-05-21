@@ -41,14 +41,16 @@ const makeId = (base: any, index: any) => `${base}${index + 1}`;
     </p>
   </div>
 
-  <div class="hs-accordion-group stagger-children grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  <div
+    class="hs-accordion-group stagger-children grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+  >
     {
       faqs.faqs.map((question, i) => {
         let id = makeId('hs-faq-grid-heading-', i);
         let collapseId = makeId('hs-faq-grid-collapse-', i);
         return (
-          <div 
-            class="hs-accordion flex flex-col rounded-2xl border border-neutral-200 bg-white p-5 transition-all duration-300 hover:border-orange-500/50 dark:border-neutral-700 dark:bg-neutral-900" 
+          <div
+            class="hs-accordion flex flex-col rounded-2xl border border-neutral-200 bg-white p-5 transition-all duration-300 hover:border-orange-500/50 dark:border-neutral-700 dark:bg-neutral-900"
             id={id}
           >
             <button
@@ -56,7 +58,9 @@ const makeId = (base: any, index: any) => `${base}${index + 1}`;
               aria-expanded="false"
               aria-controls={collapseId}
             >
-              <span class="text-sm sm:text-base leading-snug">{question.question}</span>
+              <span class="text-sm leading-snug sm:text-base">
+                {question.question}
+              </span>
               <svg
                 class="hs-accordion-active:rotate-180 size-4 shrink-0 transition-transform duration-300"
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +83,7 @@ const makeId = (base: any, index: any) => `${base}${index + 1}`;
               aria-labelledby={id}
             >
               <div class="pt-4">
-                <p class="text-xs sm:text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+                <p class="text-xs leading-relaxed text-neutral-600 sm:text-sm dark:text-neutral-400">
                   {question.answer}
                 </p>
               </div>

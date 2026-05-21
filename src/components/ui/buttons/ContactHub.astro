@@ -1,148 +1,189 @@
 ---
-import Icon from "@components/ui/icons/Icon.astro";
-import enStrings from "@utils/navigation.ts";
-import esStrings from "@utils/es/navigation.ts";
-import supportImage from "@images/starlight/suportchat.jpg";
-import { Image } from "astro:assets";
+import Icon from '@components/ui/icons/Icon.astro';
+import enStrings from '@utils/navigation.ts';
+import esStrings from '@utils/es/navigation.ts';
+import supportImage from '@images/starlight/suportchat.jpg';
+import { Image } from 'astro:assets';
 
-const strings = Astro.currentLocale === "es" ? esStrings : enStrings;
+const strings = Astro.currentLocale === 'es' ? esStrings : enStrings;
 
-const hubTitle = Astro.currentLocale === "es" ? "Hablemos" : "Let's Talk";
-const hubSubTitle = Astro.currentLocale === "es" ? "¿Cómo prefieres contactarme?" : "How do you prefer to reach out?";
+const hubTitle = Astro.currentLocale === 'es' ? 'Hablemos' : "Let's Talk";
+const hubSubTitle =
+  Astro.currentLocale === 'es'
+    ? '¿Cómo prefieres contactarme?'
+    : 'How do you prefer to reach out?';
 
-const whatsappMsg = encodeURIComponent("Hola Angel, vengo de tu Fanpage y me interesa saber más sobre ERP Okanox / Sakad RMS.");
+const whatsappMsg = encodeURIComponent(
+  'Hola Angel, vengo de tu Fanpage y me interesa saber más sobre ERP Okanox / Sakad RMS.'
+);
 const whatsappURL = `https://wa.me/51954711074?text=${whatsappMsg}`;
 ---
 
 <!-- Contact Hub Button -->
-<div class="fixed bottom-6 right-6 z-50">
+<div class="fixed right-6 bottom-6 z-50">
   <div class="hs-dropdown relative inline-flex">
     <button
       id="hs-dropdown-contact-hub"
       type="button"
-      class="hs-dropdown-toggle relative inline-flex items-center justify-center h-16 w-16 rounded-full bg-linear-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-2xl hover:scale-110 transition-all duration-300 focus:outline-none group overflow-hidden border-2 border-white/50"
+      class="hs-dropdown-toggle group relative inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-white/50 bg-linear-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-2xl transition-all duration-300 hover:scale-110 focus:outline-none"
       aria-haspopup="menu"
       aria-expanded="false"
       aria-label="Contact options"
     >
       <!-- Support Lady Image (JPG) -->
-      <Image 
-        src={supportImage} 
-        alt="Support" 
-        class="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" 
+      <Image
+        src={supportImage}
+        alt="Support"
+        class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
       />
-      
+
       <!-- Overlay to maintain brand color hint -->
-      <div class="absolute inset-0 bg-orange-500/10 group-hover:bg-transparent transition-colors duration-300"></div>
+      <div
+        class="absolute inset-0 bg-orange-500/10 transition-colors duration-300 group-hover:bg-transparent"
+      >
+      </div>
 
       <!-- Pulsing Notification Dot -->
-      <span class="absolute top-1 right-1 flex h-4 w-4 z-20">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-white"></span>
+      <span class="absolute top-1 right-1 z-20 flex h-4 w-4">
+        <span
+          class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+        ></span>
+        <span
+          class="relative inline-flex h-4 w-4 rounded-full border-2 border-white bg-emerald-500"
+        ></span>
       </span>
     </button>
 
     <!-- Dropdown Menu -    <!-- Compact Dropdown Menu -->
     <div
-      class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-64 bg-white shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] rounded-3xl p-0 mt-2 dark:bg-neutral-900 dark:border dark:border-neutral-800 border border-neutral-100 bottom-full right-0 mb-4 overflow-hidden"
+      class="hs-dropdown-menu duration hs-dropdown-open:opacity-100 right-0 bottom-full mt-2 mb-4 hidden min-w-64 overflow-hidden rounded-3xl border border-neutral-100 bg-white p-0 opacity-0 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] transition-[opacity,margin] dark:border dark:border-neutral-800 dark:bg-neutral-900"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="hs-dropdown-contact-hub"
     >
       <!-- Sleek Compact Header -->
-      <div class="relative p-4 flex items-center gap-x-3 bg-linear-to-r from-orange-500 to-orange-600 overflow-hidden">
+      <div
+        class="relative flex items-center gap-x-3 overflow-hidden bg-linear-to-r from-orange-500 to-orange-600 p-4"
+      >
         <!-- Subtle Pattern Overlay -->
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 10px 10px;"></div>
-        
-        <div class="relative z-10 size-12 shrink-0 rounded-full border-2 border-white/30 p-0.5 bg-white/10 backdrop-blur-sm">
-            <Image 
-                src={supportImage} 
-                alt="Sofía" 
-                class="size-full rounded-full object-cover"
-            />
+        <div
+          class="absolute inset-0 opacity-10"
+          style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 10px 10px;"
+        >
         </div>
-        
+
+        <div
+          class="relative z-10 size-12 shrink-0 rounded-full border-2 border-white/30 bg-white/10 p-0.5 backdrop-blur-sm"
+        >
+          <Image
+            src={supportImage}
+            alt="Sofía"
+            class="size-full rounded-full object-cover"
+          />
+        </div>
+
         <div class="relative z-10 flex flex-col text-left">
-            <h3 class="text-sm font-bold text-white leading-tight">Sofía</h3>
-            <p class="text-[9px] font-medium text-orange-50 uppercase tracking-wider">Soporte Okanox</p>
-            <div class="flex items-center gap-x-1 mt-0.5">
-                <span class="size-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-[9px] text-emerald-50">En línea ahora</span>
-            </div>
+          <h3 class="text-sm leading-tight font-bold text-white">Sofía</h3>
+          <p
+            class="text-[9px] font-medium tracking-wider text-orange-50 uppercase"
+          >
+            Soporte Okanox
+          </p>
+          <div class="mt-0.5 flex items-center gap-x-1">
+            <span class="size-1.5 animate-pulse rounded-full bg-emerald-400"
+            ></span>
+            <span class="text-[9px] text-emerald-50">En línea ahora</span>
+          </div>
         </div>
       </div>
 
-      <div class="p-3 space-y-1.5">
-        <p class="text-[10px] font-medium text-neutral-400 dark:text-neutral-500 px-2 mb-1">
-            ¿Cómo puedo ayudarte hoy?
-        </p>
-   </p>
-
-    <div class="space-y-2">
-      <!-- WhatsApp Option -->
-      <a
-        href={whatsappURL}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex items-center gap-x-3.5 py-3 px-4 rounded-xl text-sm font-medium text-neutral-800 bg-emerald-50 hover:bg-emerald-100 transition-colors dark:text-neutral-200 dark:bg-emerald-950/30 dark:hover:bg-emerald-900/50"
-      >
-        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-white">
-            <Icon name="whatsappFooter" class="size-5" />
-        </div>
-        <div class="flex flex-col">
-            <span>WhatsApp</span>
-            <span class="text-[10px] text-emerald-600 dark:text-emerald-400">Respuesta rápida</span>
-        </div>
-      </a>
-
-      <!-- Instagram Option -->
-      <a
-        href={strings.socialLinks.instagram}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex items-center gap-x-3.5 py-3 px-4 rounded-xl text-sm font-medium text-neutral-800 bg-pink-50 hover:bg-pink-100 transition-colors dark:text-neutral-200 dark:bg-pink-950/30 dark:hover:bg-pink-900/50"
-      >
-        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 text-white">
-            <Icon name="instagramFooter" class="size-5" />
-        </div>
-        <div class="flex flex-col">
-            <span>Instagram</span>
-            <span class="text-[10px] text-pink-600 dark:text-pink-400">Mensaje directo</span>
-        </div>
-      </a>
-
-      <!-- Facebook Option -->
-      <a
-        href={strings.socialLinks.facebook}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex items-center gap-x-3.5 py-3 px-4 rounded-xl text-sm font-medium text-neutral-800 bg-blue-50 hover:bg-blue-100 transition-colors dark:text-neutral-200 dark:bg-blue-950/30 dark:hover:bg-blue-900/50"
-      >
-        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
-            <Icon name="facebookFooter" class="size-5" />
-        </div>
-        <div class="flex flex-col">
-            <span>Messenger</span>
-            <span class="text-[10px] text-blue-600 dark:text-blue-400">Hablemos por Facebook</span>
-        </div>
-      </a>
-    </div>
-
-    <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700">
-        <a 
-            href={Astro.currentLocale === 'es' ? '/es/contact' : '/contact'}
-            class="block w-full text-center py-2 text-xs font-semibold text-orange-500 hover:text-orange-600 dark:text-orange-400"
+      <div class="space-y-1.5 p-3">
+        <p
+          class="mb-1 px-2 text-[10px] font-medium text-neutral-400 dark:text-neutral-500"
         >
-            Ver otras formas de contacto
+          ¿Cómo puedo ayudarte hoy?
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <!-- WhatsApp Option -->
+        <a
+          href={whatsappURL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-x-3.5 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-medium text-neutral-800 transition-colors hover:bg-emerald-100 dark:bg-emerald-950/30 dark:text-neutral-200 dark:hover:bg-emerald-900/50"
+        >
+          <div
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-white"
+          >
+            <Icon name="whatsappFooter" class="size-5" />
+          </div>
+          <div class="flex flex-col">
+            <span>WhatsApp</span>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400"
+              >Respuesta rápida</span
+            >
+          </div>
         </a>
+
+        <!-- Instagram Option -->
+        <a
+          href={strings.socialLinks.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-x-3.5 rounded-xl bg-pink-50 px-4 py-3 text-sm font-medium text-neutral-800 transition-colors hover:bg-pink-100 dark:bg-pink-950/30 dark:text-neutral-200 dark:hover:bg-pink-900/50"
+        >
+          <div
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 text-white"
+          >
+            <Icon name="instagramFooter" class="size-5" />
+          </div>
+          <div class="flex flex-col">
+            <span>Instagram</span>
+            <span class="text-[10px] text-pink-600 dark:text-pink-400"
+              >Mensaje directo</span
+            >
+          </div>
+        </a>
+
+        <!-- Facebook Option -->
+        <a
+          href={strings.socialLinks.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-x-3.5 rounded-xl bg-blue-50 px-4 py-3 text-sm font-medium text-neutral-800 transition-colors hover:bg-blue-100 dark:bg-blue-950/30 dark:text-neutral-200 dark:hover:bg-blue-900/50"
+        >
+          <div
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white"
+          >
+            <Icon name="facebookFooter" class="size-5" />
+          </div>
+          <div class="flex flex-col">
+            <span>Messenger</span>
+            <span class="text-[10px] text-blue-600 dark:text-blue-400"
+              >Hablemos por Facebook</span
+            >
+          </div>
+        </a>
+      </div>
+
+      <div
+        class="mt-4 border-t border-neutral-200 pt-4 dark:border-neutral-700"
+      >
+        <a
+          href={Astro.currentLocale === 'es' ? '/es/contact' : '/contact'}
+          class="block w-full py-2 text-center text-xs font-semibold text-orange-500 hover:text-orange-600 dark:text-orange-400"
+        >
+          Ver otras formas de contacto
+        </a>
+      </div>
     </div>
   </div>
 </div>
-</div>
 
 <style>
-    /* Ensure the hub button floats on top of everything */
-    #hs-dropdown-contact-hub {
-        box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.4);
-    }
+  /* Ensure the hub button floats on top of everything */
+  #hs-dropdown-contact-hub {
+    box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.4);
+  }
 </style>

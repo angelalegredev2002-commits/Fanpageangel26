@@ -7,16 +7,16 @@ const { class: className, ...rest } = Astro.props;
 ---
 
 <div class={`${className || ''}`}>
-  <Image 
-    src={logoLight} 
-    alt="Brand Logo" 
-    class="dark:hidden h-full w-auto" 
-    {...rest} 
+  <Image
+    src={logoLight}
+    alt="Brand Logo"
+    class="h-full w-auto dark:hidden"
+    {...rest}
   />
-  <Image 
-    src={logoDark} 
-    alt="Brand Logo" 
-    class="hidden dark:block h-full w-auto" 
-    {...rest} 
+  <Image
+    src={logoDark}
+    alt="Brand Logo"
+    class="hidden h-full w-auto dark:block"
+    {...rest}
   />
 </div>

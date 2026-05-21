@@ -8,14 +8,23 @@ import pricing_es from '../data_files/pricing_es.json';
 import pricing_en from '../data_files/pricing.json';
 
 const defaultPartners = [
-  { icon: '<svg viewBox="0 0 100 42"><path d="M0 0h100v42H0z" fill="#ccc"/></svg>', name: 'Partner 1', href: '#' },
-  { icon: '<svg viewBox="0 0 100 42"><path d="M0 0h100v42H0z" fill="#aaa"/></svg>', name: 'Partner 2', href: '#' }
+  {
+    icon: '<svg viewBox="0 0 100 42"><path d="M0 0h100v42H0z" fill="#ccc"/></svg>',
+    name: 'Partner 1',
+    href: '#',
+  },
+  {
+    icon: '<svg viewBox="0 0 100 42"><path d="M0 0h100v42H0z" fill="#aaa"/></svg>',
+    name: 'Partner 2',
+    href: '#',
+  },
 ];
 
 const defaultFeatureTabs = [
   {
     heading: 'Cutting-Edge Tools',
-    content: "Empower your business with Equipo Sakad's cutting-edge tools. Experience enhanced efficiency in enterprise management with our sophisticated automated solutions.",
+    content:
+      "Empower your business with Equipo Sakad's cutting-edge tools. Experience enhanced efficiency in enterprise management with our sophisticated automated solutions.",
     svg: 'tools',
     src: '/images/automated-tools.jpg',
     alt: 'Representation of automated tools',
@@ -23,7 +32,8 @@ const defaultFeatureTabs = [
   },
   {
     heading: 'Intuitive Dashboards',
-    content: "Navigate with ease using Equipo Sakad's intuitive dashboards. Set up and oversee your operations seamlessly.",
+    content:
+      "Navigate with ease using Equipo Sakad's intuitive dashboards. Set up and oversee your operations seamlessly.",
     svg: 'dashboard',
     src: '/images/dashboard-image.avif',
     alt: 'Intuitive dashboard',
@@ -31,7 +41,8 @@ const defaultFeatureTabs = [
   },
   {
     heading: 'Robust Features',
-    content: "Minimize complexity, maximize productivity. Equipo Sakad's robust features are engineered to streamline your business processes.",
+    content:
+      "Minimize complexity, maximize productivity. Equipo Sakad's robust features are engineered to streamline your business processes.",
     svg: 'house',
     src: '/images/automated-tools.jpg',
     alt: 'Robust features',
@@ -40,10 +51,12 @@ const defaultFeatureTabs = [
 
 const defaultTestimonials = [
   {
-    content: 'Equipo Sakad dramatically boosted our business efficiency. Deployment was instant, and their rapid response times are phenomenal.',
+    content:
+      'Equipo Sakad dramatically boosted our business efficiency. Deployment was instant, and their rapid response times are phenomenal.',
     author: 'Samantha Ruiz',
     role: 'Chief Operating Officer | ConstructIt Inc.',
-    avatarSrc: 'https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?q=80&w=1453&auto=format&fit=crop&ixlib=rb-4.0.3&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80',
+    avatarSrc:
+      'https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?q=80&w=1453&auto=format&fit=crop&ixlib=rb-4.0.3&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80',
   },
 ];
 
@@ -90,28 +103,34 @@ const DEFAULT_DB = {
     <p>By accessing or using our website and services, you agree to be bound by these Terms and Conditions.</p>
   </div>`,
     cookiesTitle_es: 'Valoramos tu privacidad',
-    cookiesText_es: 'Utilizamos cookies para mejorar tu experiencia de navegación, mostrar contenido personalizado y analizar nuestro tráfico. Al hacer clic en "Aceptar", aceptas nuestro uso de cookies.',
+    cookiesText_es:
+      'Utilizamos cookies para mejorar tu experiencia de navegación, mostrar contenido personalizado y analizar nuestro tráfico. Al hacer clic en "Aceptar", aceptas nuestro uso de cookies.',
     cookiesAccept_es: 'Aceptar Cookies',
     cookiesDecline_es: 'Rechazar',
     cookiesTitle_en: 'We value your privacy',
-    cookiesText_en: 'We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies.',
+    cookiesText_en:
+      'We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies.',
     cookiesAccept_en: 'Accept Cookies',
     cookiesDecline_en: 'Decline',
-    cookiesEnabled: 'on'
+    cookiesEnabled: 'on',
   },
   site: {
     brandText: 'Angel Alegre',
     stickyHeader: 'on',
     footerText_es: '© 2026 Angel Alegre. Todos los derechos reservados.',
-    footerText_en: '© 2026 Angel Alegre. All rights reserved.'
+    footerText_en: '© 2026 Angel Alegre. All rights reserved.',
   },
   landing: {
-    heroTitle_es: '<span class="word-reveal"><span>Gestiona</span></span> <span class="word-reveal"><span>tu</span></span> <span id="cycling-text" class="text-orange-500 dark:text-orange-400 inline-block transition-all duration-500">éxito</span> <span class="word-reveal"><span>con</span></span> <span class="word-reveal"><span>Angel</span></span> <span class="word-reveal"><span>Alegre</span></span>',
-    heroSubtitle_es: 'Descubre las mejores herramientas y estrategias para escalar tu proyecto al siguiente nivel.',
+    heroTitle_es:
+      '<span class="word-reveal"><span>Gestiona</span></span> <span class="word-reveal"><span>tu</span></span> <span id="cycling-text" class="text-orange-500 dark:text-orange-400 inline-block transition-all duration-500">éxito</span> <span class="word-reveal"><span>con</span></span> <span class="word-reveal"><span>Angel</span></span> <span class="word-reveal"><span>Alegre</span></span>',
+    heroSubtitle_es:
+      'Descubre las mejores herramientas y estrategias para escalar tu proyecto al siguiente nivel.',
     heroPrimaryBtn_es: 'Empezar ahora',
     heroSecondaryBtn_es: 'Saber más',
-    heroTitle_en: '<span class="word-reveal"><span>Manage</span></span> <span class="word-reveal"><span>your</span></span> <span id="cycling-text" class="text-orange-500 dark:text-orange-400 inline-block transition-all duration-500">success</span> <span class="word-reveal"><span>with</span></span> <span class="word-reveal"><span>Angel</span></span> <span class="word-reveal"><span>Alegre</span></span>',
-    heroSubtitle_en: 'Discover the best tools and strategies to scale your project to the next level.',
+    heroTitle_en:
+      '<span class="word-reveal"><span>Manage</span></span> <span class="word-reveal"><span>your</span></span> <span id="cycling-text" class="text-orange-500 dark:text-orange-400 inline-block transition-all duration-500">success</span> <span class="word-reveal"><span>with</span></span> <span class="word-reveal"><span>Angel</span></span> <span class="word-reveal"><span>Alegre</span></span>',
+    heroSubtitle_en:
+      'Discover the best tools and strategies to scale your project to the next level.',
     heroPrimaryBtn_en: 'Get Started',
     heroSecondaryBtn_en: 'Learn More',
 
@@ -120,13 +139,17 @@ const DEFAULT_DB = {
     clientsTitle_es: 'Confiado por Líderes de la Industria',
     clientsSubtitle_es: 'Experimenta la fiabilidad elegida por gigantes.',
     featuresTitle_es: 'Satisfaciendo las Demandas del Negocio',
-    featuresSubtitle_es: 'Afrontamos los retos únicos encontrados en los sectores de tecnología y gestión.',
-    featuresNavsTitle_es: 'Personaliza las ofertas de <span class="text-orange-500 dark:text-orange-400">Angel Alegre</span> para adaptarlas perfectamente a tus necesidades de software.',
+    featuresSubtitle_es:
+      'Afrontamos los retos únicos encontrados en los sectores de tecnología y gestión.',
+    featuresNavsTitle_es:
+      'Personaliza las ofertas de <span class="text-orange-500 dark:text-orange-400">Angel Alegre</span> para adaptarlas perfectamente a tus necesidades de software.',
     testimonialsTitle_es: 'Acelera tu Negocio',
-    testimonialsSubtitle_es: 'Aseguramos un inicio rápido con despliegue instantáneo.',
+    testimonialsSubtitle_es:
+      'Aseguramos un inicio rápido con despliegue instantáneo.',
     faqTitle_es: 'Preguntas<br />Frecuentes',
     pricingTitle_es: 'Precios Simples y Transparentes',
-    pricingSubtitle_es: 'Impulsa la eficiencia con planes claros y diseñados para escalar con tu negocio.',
+    pricingSubtitle_es:
+      'Impulsa la eficiencia con planes claros y diseñados para escalar con tu negocio.',
     pricingThirdOption_es: '¿Necesitas una solución personalizada?',
     pricingBtnText_es: 'Contactar a Angel',
     ctaTitle_es: 'Construyamos Juntos',
@@ -136,16 +159,19 @@ const DEFAULT_DB = {
     clientsTitle_en: 'Trusted by Industry Leaders',
     clientsSubtitle_en: 'Experience the reliability chosen by industry giants.',
     featuresTitle_en: 'Meeting Business Demands',
-    featuresSubtitle_en: 'We tackle the unique challenges encountered in the technology and management sectors.',
-    featuresNavsTitle_en: 'Customize <span class="text-orange-500 dark:text-orange-400">Angel Alegre</span>\'s offerings to perfectly suit your software and business systems needs.',
+    featuresSubtitle_en:
+      'We tackle the unique challenges encountered in the technology and management sectors.',
+    featuresNavsTitle_en:
+      'Customize <span class="text-orange-500 dark:text-orange-400">Angel Alegre</span>\'s offerings to perfectly suit your software and business systems needs.',
     testimonialsTitle_en: 'Fast-Track Your Business',
     testimonialsSubtitle_en: 'We ensure a swift start with instant deployment.',
     faqTitle_en: 'Frequently<br />asked questions',
     pricingTitle_en: 'Simple, Transparent Pricing',
-    pricingSubtitle_en: 'Boost efficiency with clear, value-driven plans designed to scale with your business.',
+    pricingSubtitle_en:
+      'Boost efficiency with clear, value-driven plans designed to scale with your business.',
     pricingThirdOption_en: 'Need a custom solution?',
     pricingBtnText_en: 'Contact Angel',
-    ctaTitle_en: 'Let\'s Build Together',
+    ctaTitle_en: "Let's Build Together",
     ctaSubtitle_en: 'A premium software solution, meticulously crafted.',
 
     faqs_es,
@@ -158,8 +184,8 @@ const DEFAULT_DB = {
     featureTabs: defaultFeatureTabs,
     testimonials: defaultTestimonials,
     statistics: defaultStats,
-    heroAvatars: defaultAvatars
-  }
+    heroAvatars: defaultAvatars,
+  },
 };
 
 export function getDB() {
@@ -169,14 +195,14 @@ export function getDB() {
     fs.writeFileSync(dbPath, JSON.stringify(DEFAULT_DB, null, 2));
     return DEFAULT_DB;
   }
-  
+
   try {
     const fileData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
     // Merge defaults with file data to ensure no missing schema keys
     return {
       legal: { ...DEFAULT_DB.legal, ...(fileData.legal || {}) },
       site: { ...DEFAULT_DB.site, ...(fileData.site || {}) },
-      landing: { ...DEFAULT_DB.landing, ...(fileData.landing || {}) }
+      landing: { ...DEFAULT_DB.landing, ...(fileData.landing || {}) },
     };
   } catch (e) {
     return DEFAULT_DB;

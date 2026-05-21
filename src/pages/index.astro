@@ -74,7 +74,8 @@ const avatarSrcs = db.landing?.heroAvatars || [];
 
   <div class="reveal-on-scroll">
     <FeaturesNavs
-      title={db.landing?.featuresNavsTitle_es || `Customize <span class="text-orange-500 dark:text-orange-400">Equipo Sakad</span>'s offerings to perfectly suit your software and business systems needs.`}
+      title={db.landing?.featuresNavsTitle_es ||
+        `Customize <span class="text-orange-500 dark:text-orange-400">Equipo Sakad</span>'s offerings to perfectly suit your software and business systems needs.`}
       tabs={tabsData}
     />
   </div>
@@ -89,13 +90,15 @@ const avatarSrcs = db.landing?.heroAvatars || [];
   </div>
 
   <div class="reveal-on-scroll">
-    <PricingSection pricing={{
-      ...pricing,
-      title: db.landing?.pricingTitle_es || pricing.title,
-      subTitle: db.landing?.pricingSubtitle_es || pricing.subTitle,
-      thirdOption: db.landing?.pricingThirdOption_es || pricing.thirdOption,
-      btnText: db.landing?.pricingBtnText_es || pricing.btnText
-    }} />
+    <PricingSection
+      pricing={{
+        ...pricing,
+        title: db.landing?.pricingTitle_es || pricing.title,
+        subTitle: db.landing?.pricingSubtitle_es || pricing.subTitle,
+        thirdOption: db.landing?.pricingThirdOption_es || pricing.thirdOption,
+        btnText: db.landing?.pricingBtnText_es || pricing.btnText,
+      }}
+    />
   </div>
 
   <div class="reveal-on-scroll">

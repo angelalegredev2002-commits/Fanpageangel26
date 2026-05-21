@@ -35,7 +35,7 @@ const errorMsg =
   id="subscribe-form"
   action="https://formspree.io/f/xpwzgpeg"
   method="POST"
-  class="mt-4 flex flex-row flex-nowrap items-center gap-2 rounded-2xl bg-neutral-100 p-1.5 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 focus-within:border-orange-500/50 transition-all shadow-sm"
+  class="mt-4 flex flex-row flex-nowrap items-center gap-2 rounded-2xl border border-neutral-300 bg-neutral-100 p-1.5 shadow-sm transition-all focus-within:border-orange-500/50 dark:border-neutral-700 dark:bg-neutral-800"
 >
   <div class="flex-1">
     <label for={id} class="sr-only">{label}</label>
@@ -49,34 +49,45 @@ const errorMsg =
     />
     <!-- Hidden fields for Formspree -->
     <input type="hidden" name="_source" value="footer-subscribe" />
-    <input type="hidden" name="_subject" value="Nueva suscripción desde Fanpage" />
+    <input
+      type="hidden"
+      name="_subject"
+      value="Nueva suscripción desde Fanpage"
+    />
   </div>
   <button
     type="submit"
     id="subscribe-btn"
-    class="inline-flex shrink-0 items-center justify-center gap-x-2 rounded-xl bg-orange-500 px-4 py-2 text-xs font-bold whitespace-nowrap text-white transition duration-300 hover:bg-orange-600 focus:outline-none disabled:pointer-events-none disabled:opacity-50 shadow-md shadow-orange-500/20"
+    class="inline-flex shrink-0 items-center justify-center gap-x-2 rounded-xl bg-orange-500 px-4 py-2 text-xs font-bold whitespace-nowrap text-white shadow-md shadow-orange-500/20 transition duration-300 hover:bg-orange-600 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
   >
     {title}
   </button>
 </form>
 
-<p id="subscribe-success" class="hidden mt-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+<p
+  id="subscribe-success"
+  class="mt-2 hidden text-sm font-semibold text-emerald-600 dark:text-emerald-400"
+>
   {successMsg}
 </p>
-<p id="subscribe-error" class="hidden mt-2 text-sm font-semibold text-red-500">
+<p id="subscribe-error" class="mt-2 hidden text-sm font-semibold text-red-500">
   {errorMsg}
 </p>
 
 <script>
   function initSubscribeForm() {
-    const form = document.getElementById('subscribe-form') as HTMLFormElement | null;
-    const btn = document.getElementById('subscribe-btn') as HTMLButtonElement | null;
+    const form = document.getElementById(
+      'subscribe-form'
+    ) as HTMLFormElement | null;
+    const btn = document.getElementById(
+      'subscribe-btn'
+    ) as HTMLButtonElement | null;
     const success = document.getElementById('subscribe-success');
     const error = document.getElementById('subscribe-error');
 
     if (!form) return;
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       if (!btn) return;
 

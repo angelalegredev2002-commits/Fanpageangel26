@@ -1,6 +1,8 @@
 ---
 const {
-  label = Astro.currentLocale === 'es' ? 'Dirección de correo' : 'Email address',
+  label = Astro.currentLocale === 'es'
+    ? 'Dirección de correo'
+    : 'Email address',
   id,
   errorId,
 } = Astro.props;

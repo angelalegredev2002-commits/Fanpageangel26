@@ -16,21 +16,24 @@ interface Props {
 
 {/* Root section of the component */}
 <section
-  class="relative mx-auto mt-10 max-w-[85rem] px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-14 2xl:max-w-full overflow-hidden"
+  class="relative mx-auto mt-10 max-w-[85rem] overflow-hidden px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-14 2xl:max-w-full"
 >
   {/* Decorative Background Aura */}
-  <div class="absolute top-0 left-0 -z-10 size-full max-w-4xl bg-orange-500/5 blur-[120px] rounded-full"></div>
+  <div
+    class="absolute top-0 left-0 -z-10 size-full max-w-4xl rounded-full bg-orange-500/5 blur-[120px]"
+  >
+  </div>
 
   <div class="max-w-(--breakpoint-md)">
     {/* Section title with gradient text effect and reveal animation */}
     <h1
-      class="reveal-text mb-6 text-4xl font-black tracking-tight text-balance text-neutral-800 dark:text-neutral-100 md:text-5xl lg:text-6xl"
+      class="reveal-text mb-6 text-4xl font-black tracking-tight text-balance text-neutral-800 md:text-5xl lg:text-6xl dark:text-neutral-100"
     >
       {title}
     </h1>
     {/* Section subtitle with staggered animation */}
     <p
-      class="mb-8 max-w-prose font-medium leading-relaxed text-pretty text-neutral-600 sm:text-xl dark:text-neutral-400"
+      class="mb-8 max-w-prose leading-relaxed font-medium text-pretty text-neutral-600 sm:text-xl dark:text-neutral-400"
     >
       {subTitle}
     </p>
@@ -42,6 +45,4 @@ interface Props {
       ) : null
     }
   </div>
-
 </section>
-

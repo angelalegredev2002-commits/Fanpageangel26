@@ -42,28 +42,35 @@ interface Props {
 }
 ---
 
-{/* Defining a grid container that holds all the content - Horizontal on all screens */}
+{
+  /* Defining a grid container that holds all the content - Horizontal on all screens */
+}
 <section
-  class="relative mx-auto grid max-w-[85rem] grid-cols-2 items-center gap-4 px-4 pt-4 pb-12 sm:px-6 md:gap-20 lg:px-8 2xl:max-w-full overflow-hidden"
+  class="relative mx-auto grid max-w-[85rem] grid-cols-2 items-center gap-4 overflow-hidden px-4 pt-4 pb-12 sm:px-6 md:gap-20 lg:px-8 2xl:max-w-full"
 >
   {/* Large Background Parallax Text */}
-  <div class="parallax-text top-1/2 left-0 -translate-y-1/2 opacity-5 select-none pointer-events-none" id="parallax-bg-text">
+  <div
+    class="parallax-text pointer-events-none top-1/2 left-0 -translate-y-1/2 opacity-5 select-none"
+    id="parallax-bg-text"
+  >
     OKANOX_SYSTEMS_2026
   </div>
   {/* Sophisticated background decoration for the section */}
-  <div class="tilt-element absolute inset-x-0 -top-10 -z-10 h-full w-full bg-linear-to-b from-orange-500/5 to-transparent blur-3xl opacity-50 pointer-events-none"></div>
+  <div
+    class="tilt-element pointer-events-none absolute inset-x-0 -top-10 -z-10 h-full w-full bg-linear-to-b from-orange-500/5 to-transparent opacity-50 blur-3xl"
+  >
+  </div>
 
   {/* Content Column: The 'Miniature PC' interface */}
-  <div class="flex flex-col gap-y-4 sm:gap-y-10 order-1 reveal-on-scroll">
+  <div class="reveal-on-scroll order-1 flex flex-col gap-y-4 sm:gap-y-10">
     <div class="space-y-1 sm:space-y-6">
       <h1
         class="block text-xl font-black tracking-tight text-neutral-800 sm:text-5xl lg:text-7xl lg:leading-[1.1] dark:text-neutral-100"
         set:html={title}
-      >
-      </h1>
+      />
       {
         subTitle && (
-          <p class="animate-reveal-up [animation-delay:400ms] text-[9px] leading-relaxed text-neutral-600 sm:text-lg sm:leading-relaxed lg:w-11/12 dark:text-neutral-400 font-medium">
+          <p class="animate-reveal-up text-[9px] leading-relaxed font-medium text-neutral-600 [animation-delay:400ms] sm:text-lg sm:leading-relaxed lg:w-11/12 dark:text-neutral-400">
             {subTitle}
           </p>
         )
@@ -71,44 +78,56 @@ interface Props {
     </div>
 
     {/* Actions Interface: Compact but highly functional */}
-    <div class="flex flex-col gap-y-3 sm:gap-y-8 animate-reveal-up [animation-delay:600ms]">
-        <div class="flex flex-col gap-y-2 lg:flex-row lg:items-center lg:gap-x-10">
-            {/* Social Proof - Crisp and professional */}
-            {
-              withReview && (
-                <div class="scale-75 sm:scale-100 origin-left shrink-0">
-                    <ReviewComponent
-                      avatars={avatars}
-                      starCount={starCount}
-                      rating={rating}
-                      reviews={reviews}
-                    />
-                </div>
-              )
-            }
-
-            {/* CTA Buttons - Powerfully compact */}
-            <div class="flex flex-wrap items-center gap-2 sm:gap-4">
-              {primaryBtn && (
-                <div class="scale-75 sm:scale-100 origin-left magnetic-wrap">
-                    <PrimaryCTA title={primaryBtn} url={primaryBtnURL} />
-                </div>
-              )}
-              {
-                secondaryBtn && (
-                  <div class="scale-75 sm:scale-100 origin-left magnetic-wrap">
-                    <SecondaryCTA title={secondaryBtn} url={secondaryBtnURL} />
-                  </div>
-                )
-              }
+    <div
+      class="animate-reveal-up flex flex-col gap-y-3 [animation-delay:600ms] sm:gap-y-8"
+    >
+      <div
+        class="flex flex-col gap-y-2 lg:flex-row lg:items-center lg:gap-x-10"
+      >
+        {/* Social Proof - Crisp and professional */}
+        {
+          withReview && (
+            <div class="shrink-0 origin-left scale-75 sm:scale-100">
+              <ReviewComponent
+                avatars={avatars}
+                starCount={starCount}
+                rating={rating}
+                reviews={reviews}
+              />
             </div>
+          )
+        }
+
+        {/* CTA Buttons - Powerfully compact */}
+        <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+          {
+            primaryBtn && (
+              <div class="magnetic-wrap origin-left scale-75 sm:scale-100">
+                <PrimaryCTA title={primaryBtn} url={primaryBtnURL} />
+              </div>
+            )
+          }
+          {
+            secondaryBtn && (
+              <div class="magnetic-wrap origin-left scale-75 sm:scale-100">
+                <SecondaryCTA title={secondaryBtn} url={secondaryBtnURL} />
+              </div>
+            )
+          }
         </div>
+      </div>
     </div>
   </div>
 
-  <div class="flex items-center justify-center order-2 animate-reveal-up [animation-delay:600ms]">
-    <div class="relative w-full max-w-[130px] sm:max-w-[350px] transition-all duration-1000 group/hero-img">
-      <div class="overflow-hidden rounded-3xl transition-all duration-700 bg-transparent">
+  <div
+    class="animate-reveal-up order-2 flex items-center justify-center [animation-delay:600ms]"
+  >
+    <div
+      class="group/hero-img relative w-full max-w-[130px] transition-all duration-1000 sm:max-w-[350px]"
+    >
+      <div
+        class="overflow-hidden rounded-3xl bg-transparent transition-all duration-700"
+      >
         {
           src && alt && (
             <Image
@@ -123,7 +142,10 @@ interface Props {
         }
         {
           svgRaw && (
-            <div class="w-full h-auto text-neutral-800 dark:text-white fill-current transition-transform duration-1000" set:html={svgRaw} />
+            <div
+              class="h-auto w-full fill-current text-neutral-800 transition-transform duration-1000 dark:text-white"
+              set:html={svgRaw}
+            />
           )
         }
       </div>
@@ -131,31 +153,31 @@ interface Props {
   </div>
 
   <script>
-    const words = ["éxito", "futuro", "empresa", "operación"];
+    const words = ['éxito', 'futuro', 'empresa', 'operación'];
     let index = 0;
     const el = document.getElementById('cycling-text');
-    
+
     if (el) {
-        setInterval(() => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(-10px)';
-            
-            setTimeout(() => {
-                index = (index + 1) % words.length;
-                el.textContent = words[index];
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            }, 500);
-        }, 3000);
+      setInterval(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-10px)';
+
+        setTimeout(() => {
+          index = (index + 1) % words.length;
+          el.textContent = words[index];
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, 500);
+      }, 3000);
     }
 
     // Parallax Scroll Logic
     const parallaxText = document.getElementById('parallax-bg-text');
     window.addEventListener('scroll', () => {
-        if (parallaxText) {
-            const scroll = window.scrollY;
-            parallaxText.style.transform = `translate3d(${scroll * 0.5}px, -50%, 0)`;
-        }
+      if (parallaxText) {
+        const scroll = window.scrollY;
+        parallaxText.style.transform = `translate3d(${scroll * 0.5}px, -50%, 0)`;
+      }
     });
   </script>
 </section>

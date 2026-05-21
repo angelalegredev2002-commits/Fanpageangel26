@@ -15,7 +15,7 @@ interface Props {
 
 <div>
   <div class="flex flex-col sm:flex-row sm:items-center">
-    <div class="shrink-0 sm:flex sm:pe-4 pb-2 sm:pb-0">
+    <div class="shrink-0 pb-2 sm:flex sm:pe-4 sm:pb-0">
       {/* Avatar Group */}
       <div class="flex items-center -space-x-3">
         {avatars?.map(src => <Avatar src={src} alt="Avatar Description" />)}
@@ -28,12 +28,12 @@ interface Props {
         </span>
       </div>
     </div>
-    
+
     <div
-      class="hidden sm:block h-8 w-px border-s border-neutral-400 dark:border-neutral-500"
+      class="hidden h-8 w-px border-s border-neutral-400 sm:block dark:border-neutral-500"
     >
     </div>
-    
+
     {/* Review Ratings */}
     <div class="flex flex-col items-start sm:ps-4">
       <div class="flex items-center space-x-1.5">

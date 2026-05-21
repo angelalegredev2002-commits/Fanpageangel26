@@ -15,7 +15,8 @@ const blogs = [
     name: 'MoureDev',
     author: 'Brais Moure',
     tag: 'Mobile · iOS · Android',
-    description: 'Brais Moure has been a key figure in the democratization of technical knowledge. His focus on mobile development and open source has inspired thousands.',
+    description:
+      'Brais Moure has been a key figure in the democratization of technical knowledge. His focus on mobile development and open source has inspired thousands.',
     img: blog1,
     url: 'https://moure.dev/',
     accent: '#8B5CF6',
@@ -24,7 +25,8 @@ const blogs = [
     name: 'MiduDev',
     author: 'Miguel Ángel Durán',
     tag: 'JavaScript · React · Web',
-    description: 'Senior Software Engineer and content creator specializing in JavaScript. His coding challenges and technical interviews are industry benchmarks.',
+    description:
+      'Senior Software Engineer and content creator specializing in JavaScript. His coding challenges and technical interviews are industry benchmarks.',
     img: blog2,
     url: 'https://midu.dev/',
     accent: '#3B82F6',
@@ -33,7 +35,8 @@ const blogs = [
     name: 'Jhony Creativo',
     author: 'Jhony Creativo',
     tag: 'UI/UX · Creative Dev',
-    description: 'Focus on stunning interface design and creative programming. Inspires developers to prioritize the user visual experience.',
+    description:
+      'Focus on stunning interface design and creative programming. Inspires developers to prioritize the user visual experience.',
     img: blog4,
     url: 'https://www.tiktok.com/@jhonycreativo',
     accent: '#EC4899',
@@ -42,7 +45,8 @@ const blogs = [
     name: 'Halltec',
     author: 'Oscar & Camilo',
     tag: 'Architecture · Business',
-    description: 'Practical programming and real software architecture. They bridge the gap between academic theory and professional development and entrepreneurship.',
+    description:
+      'Practical programming and real software architecture. They bridge the gap between academic theory and professional development and entrepreneurship.',
     img: blog3,
     url: 'https://www.tiktok.com/@halltec.co',
     accent: '#10B981',
@@ -51,7 +55,8 @@ const blogs = [
     name: 'Nordstrom',
     author: 'Tech Blog',
     tag: 'Enterprise · Systems',
-    description: 'Software fundamentals and structured guides. Offers a business and technical approach for developers at all levels.',
+    description:
+      'Software fundamentals and structured guides. Offers a business and technical approach for developers at all levels.',
     img: blog5,
     url: 'https://www.nordstrom.com',
     accent: '#F59E0B',
@@ -60,7 +65,8 @@ const blogs = [
     name: 'Programación ATS',
     author: 'ATS Team',
     tag: 'Python · JS · Java',
-    description: 'Dedicated to software development with a methodical and beginner-friendly approach. Solid foundations in multiple languages.',
+    description:
+      'Dedicated to software development with a methodical and beginner-friendly approach. Solid foundations in multiple languages.',
     img: blog6,
     url: 'https://www.youtube.com/@ProgramacionATS',
     accent: '#EF4444',
@@ -70,72 +76,208 @@ const blogs = [
 const pageTitle: string = `Blog | ${SITE.title}`;
 ---
 
-<MainLayout
-  title={pageTitle}
-  lang="en"
->
+<MainLayout title={pageTitle} lang="en">
   <section class="bh">
     <div class="bh__inner">
-      <h1 class="bh__title">Developer <span class="bh__grad">Resources</span></h1>
-      <p class="bh__sub">Impactful tech creators from the Spanish-speaking world with detailed information.</p>
+      <h1 class="bh__title">
+        Developer <span class="bh__grad">Resources</span>
+      </h1>
+      <p class="bh__sub">
+        Impactful tech creators from the Spanish-speaking world with detailed
+        information.
+      </p>
     </div>
   </section>
 
   <section class="bg-wrap">
     <div class="bg-grid">
-      {blogs.map((b, i) => (
-        <a href={b.url} target="_blank" rel="noopener noreferrer" class="bc" style={`--ac:${b.accent};--d:${i * 50}ms`}>
-          <div class="bc__thumb">
-            <Image src={b.img} alt={b.name} class="bc__img" format="avif" />
-          </div>
-          <div class="bc__body">
-            <div class="bc__header">
-               <h2 class="bc__name">{b.name}</h2>
-               <span class="bc__tag">{b.tag}</span>
+      {
+        blogs.map((b, i) => (
+          <a
+            href={b.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bc"
+            style={`--ac:${b.accent};--d:${i * 50}ms`}
+          >
+            <div class="bc__thumb">
+              <Image src={b.img} alt={b.name} class="bc__img" format="avif" />
             </div>
-            <p class="bc__desc">{b.description}</p>
-          </div>
-          <div class="bc__icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-          </div>
-        </a>
-      ))}
+            <div class="bc__body">
+              <div class="bc__header">
+                <h2 class="bc__name">{b.name}</h2>
+                <span class="bc__tag">{b.tag}</span>
+              </div>
+              <p class="bc__desc">{b.description}</p>
+            </div>
+            <div class="bc__icon">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <>
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </>
+              </svg>
+            </div>
+          </a>
+        ))
+      }
     </div>
   </section>
 </MainLayout>
 
 <style>
-.bh { text-align: center; padding: 4rem 1.5rem 2rem; }
-.bh__title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: #111827; margin: 0; }
-:global(.dark) .bh__title { color: #f9fafb; }
-.bh__grad { background: linear-gradient(120deg, #f97316 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.bh__sub { font-size: 1rem; color: #6b7280; margin-top: .5rem; }
-:global(.dark) .bh__sub { color: #9ca3af; }
+  .bh {
+    text-align: center;
+    padding: 4rem 1.5rem 2rem;
+  }
+  .bh__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    color: #111827;
+    margin: 0;
+  }
+  :global(.dark) .bh__title {
+    color: #f9fafb;
+  }
+  .bh__grad {
+    background: linear-gradient(120deg, #f97316 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .bh__sub {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+  }
+  :global(.dark) .bh__sub {
+    color: #9ca3af;
+  }
 
-.bg-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 5rem; }
-.bg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-@media (max-width: 900px) { .bg-grid { grid-template-columns: 1fr; } }
+  .bg-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+  }
+  .bg-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 900px) {
+    .bg-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
-.bc {
-  display: flex; align-items: center; gap: 1.25rem; padding: 1rem;
-  background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: .85rem;
-  text-decoration: none; color: inherit; transition: all .3s ease;
-  opacity: 0; animation: fade .4s ease forwards; animation-delay: var(--d);
-}
-:global(.dark) .bc { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); }
-.bc:hover { transform: translateY(-3px); border-color: var(--ac); box-shadow: 0 12px 24px rgba(0,0,0,.06); }
+  .bc {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.85rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fade 0.4s ease forwards;
+    animation-delay: var(--d);
+  }
+  :global(.dark) .bc {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .bc:hover {
+    transform: translateY(-3px);
+    border-color: var(--ac);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+  }
 
-.bc__thumb { width: 80px; height: 80px; border-radius: .6rem; overflow: hidden; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.05); }
-.bc__img { width: 100%; height: 100%; object-fit: cover; }
-.bc__body { flex: 1; min-width: 0; }
-.bc__header { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; margin-bottom: .4rem; }
-.bc__name { font-size: 1.15rem; font-weight: 800; margin: 0; color: #111827; }
-:global(.dark) .bc__name { color: #f9fafb; }
-.bc__tag { font-size: .65rem; font-weight: 700; color: var(--ac); background: color-mix(in srgb, var(--ac) 10%, transparent); padding: .2rem .6rem; border-radius: 999px; text-transform: uppercase; letter-spacing: .05em; }
-.bc__desc { font-size: .85rem; line-height: 1.5; color: #6b7280; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-:global(.dark) .bc__desc { color: #9ca3af; }
-.bc__icon { color: var(--ac); opacity: 0.4; transition: all .3s ease; }
-.bc:hover .bc__icon { opacity: 1; transform: translate(2px, -2px); }
+  .bc__thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .bc__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bc__body {
+    flex: 1;
+    min-width: 0;
+  }
+  .bc__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .bc__name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 0;
+    color: #111827;
+  }
+  :global(.dark) .bc__name {
+    color: #f9fafb;
+  }
+  .bc__tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--ac);
+    background: color-mix(in srgb, var(--ac) 10%, transparent);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .bc__desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #6b7280;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  :global(.dark) .bc__desc {
+    color: #9ca3af;
+  }
+  .bc__icon {
+    color: var(--ac);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+  }
+  .bc:hover .bc__icon {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
 
-@keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fade {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>

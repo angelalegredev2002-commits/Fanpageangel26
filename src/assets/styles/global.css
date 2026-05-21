@@ -104,8 +104,11 @@
 }
 
 @layer base {
-  html, body {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  html,
+  body {
+    font-family:
+      'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans',
+      Arial, sans-serif;
   }
 
   *,
@@ -151,7 +154,8 @@
   }
 
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
@@ -192,16 +196,27 @@
     transform: translateY(0);
   }
 
-  .is-revealed .stagger-children > *:nth-child(1) { transition-delay: 100ms; }
-  .is-revealed .stagger-children > *:nth-child(2) { transition-delay: 200ms; }
-  .is-revealed .stagger-children > *:nth-child(3) { transition-delay: 300ms; }
-  .is-revealed .stagger-children > *:nth-child(4) { transition-delay: 400ms; }
-  .is-revealed .stagger-children > *:nth-child(5) { transition-delay: 500ms; }
+  .is-revealed .stagger-children > *:nth-child(1) {
+    transition-delay: 100ms;
+  }
+  .is-revealed .stagger-children > *:nth-child(2) {
+    transition-delay: 200ms;
+  }
+  .is-revealed .stagger-children > *:nth-child(3) {
+    transition-delay: 300ms;
+  }
+  .is-revealed .stagger-children > *:nth-child(4) {
+    transition-delay: 400ms;
+  }
+  .is-revealed .stagger-children > *:nth-child(5) {
+    transition-delay: 500ms;
+  }
 
   /* 3D Mouse Tilt */
   .tilt-element {
     transition: transform 0.2s ease-out;
-    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+      rotateY(var(--rotate-y, 0deg));
   }
 
   /* Custom Cursor - Glow Reference */
@@ -214,7 +229,10 @@
     pointer-events: none;
     z-index: 9999;
     filter: blur(8px);
-    transition: width 0.3s, height 0.3s, background 0.3s;
+    transition:
+      width 0.3s,
+      height 0.3s,
+      background 0.3s;
   }
 
   .custom-cursor.active {
@@ -237,8 +255,12 @@
 
   /* Infinite Marquee */
   @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 
   .animate-marquee {
@@ -260,27 +282,50 @@
     bottom: -50%;
     width: 200%;
     height: 200vh;
-    background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+    background: transparent
+      url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
     background-repeat: repeat;
     animation: noise 0.2s infinite;
-    opacity: .05;
+    opacity: 0.05;
     visibility: visible;
     z-index: 9998;
     pointer-events: none;
   }
 
   @keyframes noise {
-    0% { transform: translate(0,0) }
-    10% { transform: translate(-5%,-5%) }
-    20% { transform: translate(-10%,5%) }
-    30% { transform: translate(5%,-10%) }
-    40% { transform: translate(-5%,15%) }
-    50% { transform: translate(-10%,5%) }
-    60% { transform: translate(15%,0) }
-    70% { transform: translate(0,10%) }
-    80% { transform: translate(-15%,0) }
-    90% { transform: translate(10%,5%) }
-    100% { transform: translate(5%,0) }
+    0% {
+      transform: translate(0, 0);
+    }
+    10% {
+      transform: translate(-5%, -5%);
+    }
+    20% {
+      transform: translate(-10%, 5%);
+    }
+    30% {
+      transform: translate(5%, -10%);
+    }
+    40% {
+      transform: translate(-5%, 15%);
+    }
+    50% {
+      transform: translate(-10%, 5%);
+    }
+    60% {
+      transform: translate(15%, 0);
+    }
+    70% {
+      transform: translate(0, 10%);
+    }
+    80% {
+      transform: translate(-15%, 0);
+    }
+    90% {
+      transform: translate(10%, 5%);
+    }
+    100% {
+      transform: translate(5%, 0);
+    }
   }
 
   /* Magnetic Elements */
@@ -310,11 +355,15 @@
     position: fixed;
     inset: 0;
     z-index: -20;
-    background-image: 
+    background-image:
       linear-gradient(to right, rgba(249, 115, 22, 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(249, 115, 22, 0.05) 1px, transparent 1px);
     background-size: 100px 100px;
-    mask-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black, transparent 80%);
+    mask-image: radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      black,
+      transparent 80%
+    );
     pointer-events: none;
   }
 
@@ -336,9 +385,15 @@
   }
 
   @keyframes float-slow {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-50px) rotate(5deg); }
-    100% { transform: translateY(0) rotate(0deg); }
+    0% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-50px) rotate(5deg);
+    }
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
   }
 
   .parallax-text {
@@ -357,7 +412,11 @@
     position: fixed;
     width: 500px;
     height: 500px;
-    background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.1));
+    background: linear-gradient(
+      135deg,
+      rgba(249, 115, 22, 0.2),
+      rgba(234, 88, 12, 0.1)
+    );
     filter: blur(80px);
     border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
     animation: morph 15s linear infinite;
@@ -367,10 +426,22 @@
   }
 
   @keyframes morph {
-    0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: translate(0, 0) rotate(0deg); }
-    33% { border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%; transform: translate(10%, 5%) rotate(120deg); }
-    66% { border-radius: 67% 33% 47% 53% / 37% 20% 80% 63%; transform: translate(-5%, 10%) rotate(240deg); }
-    100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: translate(0, 0) rotate(360deg); }
+    0% {
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+      border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
+      transform: translate(10%, 5%) rotate(120deg);
+    }
+    66% {
+      border-radius: 67% 33% 47% 53% / 37% 20% 80% 63%;
+      transform: translate(-5%, 10%) rotate(240deg);
+    }
+    100% {
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      transform: translate(0, 0) rotate(360deg);
+    }
   }
 
   /* Ultra-bright Foggy Backdrop Strategy - Fixed Target */
@@ -396,7 +467,9 @@
 
   /* Liquid Distortion Hover for Images */
   .tilt-element {
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), filter 0.5s ease;
+    transition:
+      transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+      filter 0.5s ease;
     will-change: transform, filter;
   }
 
@@ -406,10 +479,19 @@
   }
 
   @keyframes liquid {
-    0%, 100% { border-radius: 2rem; }
-    25% { border-radius: 1.8rem 2.2rem 1.9rem 2.1rem; }
-    50% { border-radius: 2.1rem 1.9rem 2.2rem 1.8rem; }
-    75% { border-radius: 1.9rem 2.1rem 1.8rem 2.2rem; }
+    0%,
+    100% {
+      border-radius: 2rem;
+    }
+    25% {
+      border-radius: 1.8rem 2.2rem 1.9rem 2.1rem;
+    }
+    50% {
+      border-radius: 2.1rem 1.9rem 2.2rem 1.8rem;
+    }
+    75% {
+      border-radius: 1.9rem 2.1rem 1.8rem 2.2rem;
+    }
   }
 
   /* Reveal Masks & Staggered Text */

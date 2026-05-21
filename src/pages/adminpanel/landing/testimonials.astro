@@ -8,7 +8,7 @@ let success = false;
 
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
-  
+
   const rawTestimonials = formData.get('testimonialsData');
   if (rawTestimonials) {
     try {
@@ -16,8 +16,8 @@ if (Astro.request.method === 'POST') {
       db.landing.testimonials = JSON.parse(rawTestimonials.toString());
       saveDB(db);
       success = true;
-    } catch(e) {
-      console.error("Error saving testimonials", e);
+    } catch (e) {
+      console.error('Error saving testimonials', e);
     }
   }
 
@@ -27,8 +27,8 @@ if (Astro.request.method === 'POST') {
       db.landing.statistics = JSON.parse(rawStats.toString());
       saveDB(db);
       success = true;
-    } catch(e) {
-      console.error("Error saving stats", e);
+    } catch (e) {
+      console.error('Error saving stats', e);
     }
   }
 }
@@ -40,33 +40,81 @@ const statistics = db.landing?.statistics || [];
 <AdminLayout title="Manage Testimonials & Stats">
   <div class="mb-8 flex items-end justify-between">
     <div>
-      <h1 class="text-3xl font-bold text-white mb-2">Testimonios y Estadísticas</h1>
-      <p class="text-neutral-400">Administra los testimonios de clientes y las métricas destacadas de la landing page.</p>
+      <h1 class="mb-2 text-3xl font-bold text-white">
+        Testimonios y Estadísticas
+      </h1>
+      <p class="text-neutral-400">
+        Administra los testimonios de clientes y las métricas destacadas de la
+        landing page.
+      </p>
     </div>
-    {success && <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-xl text-sm font-bold border border-green-500/30">¡Cambios Guardados!</span>}
+    {
+      success && (
+        <span class="rounded-xl border border-green-500/30 bg-green-500/20 px-4 py-2 text-sm font-bold text-green-400">
+          ¡Cambios Guardados!
+        </span>
+      )
+    }
   </div>
 
-  <div id="testimonials-app" class="space-y-12" data-testimonials={JSON.stringify(testimonials)} data-stats={JSON.stringify(statistics)}>
-    
+  <div
+    id="testimonials-app"
+    class="space-y-12"
+    data-testimonials={JSON.stringify(testimonials)}
+    data-stats={JSON.stringify(statistics)}
+  >
     <!-- TESTIMONIALS SECTION -->
-    <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-3xl p-8">
-      <h2 class="text-2xl font-bold text-orange-500 mb-6 border-b border-neutral-800 pb-4">Testimonios</h2>
-      <div id="test-container" class="space-y-6 mb-6"></div>
-      <button id="add-test" type="button" class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl border border-neutral-700 hover:border-neutral-500 transition-colors w-full">+ Añadir Testimonio</button>
+    <div
+      class="rounded-3xl border border-neutral-800 bg-neutral-900/50 p-8 backdrop-blur-sm"
+    >
+      <h2
+        class="mb-6 border-b border-neutral-800 pb-4 text-2xl font-bold text-orange-500"
+      >
+        Testimonios
+      </h2>
+      <div id="test-container" class="mb-6 space-y-6"></div>
+      <button
+        id="add-test"
+        type="button"
+        class="w-full rounded-xl border border-neutral-700 bg-neutral-800 px-4 py-2 text-neutral-300 transition-colors hover:border-neutral-500 hover:text-white"
+        >+ Añadir Testimonio</button
+      >
     </div>
 
     <!-- STATISTICS SECTION -->
-    <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-3xl p-8">
-      <h2 class="text-2xl font-bold text-orange-500 mb-6 border-b border-neutral-800 pb-4">Estadísticas (Métricas)</h2>
-      <div id="stats-container" class="space-y-4 mb-6"></div>
-      <button id="add-stat" type="button" class="px-4 py-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-xl border border-neutral-700 hover:border-neutral-500 transition-colors w-full">+ Añadir Métrica</button>
+    <div
+      class="rounded-3xl border border-neutral-800 bg-neutral-900/50 p-8 backdrop-blur-sm"
+    >
+      <h2
+        class="mb-6 border-b border-neutral-800 pb-4 text-2xl font-bold text-orange-500"
+      >
+        Estadísticas (Métricas)
+      </h2>
+      <div id="stats-container" class="mb-6 space-y-4"></div>
+      <button
+        id="add-stat"
+        type="button"
+        class="w-full rounded-xl border border-neutral-700 bg-neutral-800 px-4 py-2 text-neutral-300 transition-colors hover:border-neutral-500 hover:text-white"
+        >+ Añadir Métrica</button
+      >
     </div>
 
     <!-- FORM -->
-    <form method="POST" id="test-form" class="pt-8 border-t border-neutral-800 flex justify-end">
-      <input type="hidden" name="testimonialsData" id="testimonials-data-input" />
+    <form
+      method="POST"
+      id="test-form"
+      class="flex justify-end border-t border-neutral-800 pt-8"
+    >
+      <input
+        type="hidden"
+        name="testimonialsData"
+        id="testimonials-data-input"
+      />
       <input type="hidden" name="statsData" id="stats-data-input" />
-      <button type="submit" class="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/25 text-lg">
+      <button
+        type="submit"
+        class="rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-4 text-lg font-bold text-white shadow-lg shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500"
+      >
         Guardar Configuración
       </button>
     </form>
@@ -79,7 +127,13 @@ const statistics = db.landing?.statistics || [];
       let dataStats = JSON.parse(app.dataset.stats);
 
       function escapeHtml(unsafe) {
-        return (unsafe||'').toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        return (unsafe || '')
+          .toString()
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
       }
 
       const testContainer = document.getElementById('test-container');
@@ -90,7 +144,8 @@ const statistics = db.landing?.statistics || [];
         testContainer.innerHTML = '';
         dataTestimonials.forEach((t, index) => {
           const div = document.createElement('div');
-          div.className = 'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-5 relative';
+          div.className =
+            'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-5 relative';
           div.innerHTML = `
             <button type="button" class="absolute top-4 right-4 text-red-400 hover:text-red-300" onclick="window.removeTest(${index})">Eliminar</button>
             <div class="space-y-4 mt-2">
@@ -123,7 +178,8 @@ const statistics = db.landing?.statistics || [];
         statsContainer.innerHTML = '';
         dataStats.forEach((stat, index) => {
           const div = document.createElement('div');
-          div.className = 'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-4 flex gap-4 items-start';
+          div.className =
+            'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-4 flex gap-4 items-start';
           div.innerHTML = `
             <div class="flex-1 space-y-3">
               <input type="text" placeholder="Número/Cantidad (ej: 70k+)" value="${escapeHtml(stat.count)}" data-type="stat" data-field="count" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500 font-bold">
@@ -138,7 +194,7 @@ const statistics = db.landing?.statistics || [];
 
       function attachTestEvents() {
         testContainer.querySelectorAll('input, textarea').forEach(el => {
-          el.addEventListener('input', (e) => {
+          el.addEventListener('input', e => {
             const idx = e.target.dataset.index;
             dataTestimonials[idx][e.target.dataset.field] = e.target.value;
           });
@@ -147,29 +203,42 @@ const statistics = db.landing?.statistics || [];
 
       function attachStatEvents() {
         statsContainer.querySelectorAll('input, textarea').forEach(el => {
-          el.addEventListener('input', (e) => {
+          el.addEventListener('input', e => {
             const idx = e.target.dataset.index;
             dataStats[idx][e.target.dataset.field] = e.target.value;
           });
         });
       }
 
-      window.removeTest = (idx) => { dataTestimonials.splice(idx, 1); renderTestimonials(); };
-      window.removeStat = (idx) => { dataStats.splice(idx, 1); renderStats(); };
-
-      document.getElementById('add-test').onclick = () => {
-        dataTestimonials.push({ content: 'Nuevo Testimonio', author: 'Nombre', role: 'Rol', avatarSrc: '' });
+      window.removeTest = idx => {
+        dataTestimonials.splice(idx, 1);
         renderTestimonials();
       };
-      
+      window.removeStat = idx => {
+        dataStats.splice(idx, 1);
+        renderStats();
+      };
+
+      document.getElementById('add-test').onclick = () => {
+        dataTestimonials.push({
+          content: 'Nuevo Testimonio',
+          author: 'Nombre',
+          role: 'Rol',
+          avatarSrc: '',
+        });
+        renderTestimonials();
+      };
+
       document.getElementById('add-stat').onclick = () => {
         dataStats.push({ count: '0', description: 'Nueva Métrica' });
         renderStats();
       };
 
       form.onsubmit = () => {
-        document.getElementById('testimonials-data-input').value = JSON.stringify(dataTestimonials);
-        document.getElementById('stats-data-input').value = JSON.stringify(dataStats);
+        document.getElementById('testimonials-data-input').value =
+          JSON.stringify(dataTestimonials);
+        document.getElementById('stats-data-input').value =
+          JSON.stringify(dataStats);
       };
 
       renderTestimonials();

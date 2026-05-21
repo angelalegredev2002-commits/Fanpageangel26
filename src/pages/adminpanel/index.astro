@@ -8,15 +8,17 @@ import RecentActivity from '@components/admin/widgets/RecentActivity.astro';
 
 <AdminLayout title="Admin Dashboard">
   <div class="mb-8">
-    <h1 class="text-3xl font-bold text-white mb-2">Dashboard Overview</h1>
-    <p class="text-neutral-400">Welcome back! Here's what's happening with your project today.</p>
+    <h1 class="mb-2 text-3xl font-bold text-white">Dashboard Overview</h1>
+    <p class="text-neutral-400">
+      Welcome back! Here's what's happening with your project today.
+    </p>
   </div>
 
   <!-- Stats Grid -->
   <StatsGrid />
 
   <!-- Main Content Grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
     <TrafficChart />
     <RecentActivity />
   </div>

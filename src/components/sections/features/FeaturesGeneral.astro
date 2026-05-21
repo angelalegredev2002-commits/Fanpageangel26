@@ -26,19 +26,22 @@ const { title, subTitle, src, alt, features } = Astro.props;
 >
   <div class="relative overflow-hidden">
     {/* Decorative background glow */}
-    <div class="absolute -right-20 -top-20 -z-10 size-64 bg-orange-500/10 blur-[100px] rounded-full"></div>
-    
-    <div class="grid grid-cols-2 items-center gap-6 mb-10 sm:block sm:mb-16">
+    <div
+      class="absolute -top-20 -right-20 -z-10 size-64 rounded-full bg-orange-500/10 blur-[100px]"
+    >
+    </div>
+
+    <div class="mb-10 grid grid-cols-2 items-center gap-6 sm:mb-16 sm:block">
       {/* Block for title and subtitle - Premium Side by Side on mobile */}
       <div class="flex flex-col gap-y-2 sm:gap-y-6">
         <h2
-          class="text-xl sm:text-5xl font-black text-neutral-800 dark:text-neutral-100 tracking-tight leading-tight"
+          class="text-xl leading-tight font-black tracking-tight text-neutral-800 sm:text-5xl dark:text-neutral-100"
         >
           {title}
         </h2>
         {
           subTitle && (
-            <p class="text-[9px] sm:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed font-medium">
+            <p class="text-[9px] leading-relaxed font-medium text-neutral-600 sm:text-xl dark:text-neutral-400">
               {subTitle}
             </p>
           )
@@ -46,7 +49,9 @@ const { title, subTitle, src, alt, features } = Astro.props;
       </div>
 
       {/* Feature image - High presence on mobile side-by-side */}
-      <div class="relative overflow-hidden rounded-3xl shadow-[0_10px_30px_rgba(249,115,22,0.08)] sm:mt-16 group/feat-img transition-all duration-700 border border-neutral-200 dark:border-neutral-800">
+      <div
+        class="group/feat-img relative overflow-hidden rounded-3xl border border-neutral-200 shadow-[0_10px_30px_rgba(249,115,22,0.08)] transition-all duration-700 sm:mt-16 dark:border-neutral-800"
+      >
         {
           src && alt && (
             <Image
@@ -59,25 +64,30 @@ const { title, subTitle, src, alt, features } = Astro.props;
             />
           )
         }
-        <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
+        <div
+          class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"
+        >
+        </div>
       </div>
     </div>
 
     {/* IconBlocks Grid - Organized into 4 distinct blocks */}
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-2 xl:grid-cols-4 lg:gap-6 mt-8">
+    <div
+      class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-2 lg:gap-6 xl:grid-cols-4"
+    >
       {
         features &&
           features.map(feature => (
-            <div class="group flex flex-col gap-y-2 p-3 rounded-2xl border border-neutral-200 bg-neutral-50/50 dark:border-neutral-800 dark:bg-neutral-900/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+            <div class="group flex flex-col gap-y-2 rounded-2xl border border-neutral-200 bg-neutral-50/50 p-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/50">
               <div class="flex items-center gap-x-2">
                 <div class="text-orange-500">
-                    <Icon name={feature.svg} />
+                  <Icon name={feature.svg} />
                 </div>
-                <h3 class="text-[11px] sm:text-base font-black text-neutral-800 dark:text-neutral-100 tracking-tight leading-tight">
+                <h3 class="text-[11px] leading-tight font-black tracking-tight text-neutral-800 sm:text-base dark:text-neutral-100">
                   {feature.heading}
                 </h3>
               </div>
-              <p class="text-[9px] sm:text-sm text-neutral-600 dark:text-neutral-400 leading-tight">
+              <p class="text-[9px] leading-tight text-neutral-600 sm:text-sm dark:text-neutral-400">
                 {feature.content}
               </p>
             </div>

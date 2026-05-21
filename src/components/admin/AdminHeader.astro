@@ -195,11 +195,10 @@ import LanguagePicker from '../ui/LanguagePicker.astro';
       </div>
     </div>
   </div>
-<script>
+<script type="module">
+  import { initSidebar } from '../../utils/adminStore.ts';
   // Initialize sidebar collapsed state on page load
-  if (typeof initSidebar === 'function') {
-    initSidebar();
-  }
+  initSidebar();
   // Set welcome message based on selected language
   const lang = localStorage.getItem('lang') || 'en';
   const welcomeEl = document.getElementById('welcome-msg');
@@ -211,3 +210,5 @@ import LanguagePicker from '../ui/LanguagePicker.astro';
     welcomeEl.textContent = messages[lang] ?? messages['en'];
   }
 </script>
+
+</header>

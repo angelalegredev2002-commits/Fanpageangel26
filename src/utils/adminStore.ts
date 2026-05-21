@@ -14,7 +14,15 @@ export const adminState = {
 export function toggleSidebar() {
   adminState.isSidebarCollapsed = !adminState.isSidebarCollapsed;
   localStorage.setItem('admin_sidebar_collapsed', JSON.stringify(adminState.isSidebarCollapsed));
-  // Apply CSS class to the sidebar element if it exists.
+  const sidebar = document.getElementById('app-sidebar');
+  if (sidebar) {
+    sidebar.classList.toggle('collapsed', adminState.isSidebarCollapsed);
+  }
+}
+
+/**
+ * Initialize sidebar collapsed state on page load.
+ */
 export function initSidebar() {
   const sidebar = document.getElementById('app-sidebar');
   if (!sidebar) return;
@@ -24,11 +32,6 @@ export function initSidebar() {
     document.body.setAttribute('data-sidebar-collapsed', 'true');
   }
 }
-  const sidebar = document.getElementById('app-sidebar');
-  if (sidebar) {
-    sidebar.classList.toggle('collapsed', adminState.isSidebarCollapsed);
-  }
-}
 
 /**
  * Set the theme ("light" | "dark"). Mirrors the existing ThemeBtn logic.
@@ -36,8 +39,6 @@ export function initSidebar() {
 export function setTheme(theme: 'light' | 'dark') {
   localStorage.setItem('hs_theme', theme);
   document.documentElement.classList.toggle('dark', theme === 'dark');
-  // Keep the store in sync if needed elsewhere.
-  // Not used directly in this file but convenient for future extensions.
 }
 
 /**
@@ -45,5 +46,4 @@ export function setTheme(theme: 'light' | 'dark') {
  */
 export function setLang(lang: string) {
   localStorage.setItem('lang', lang);
-  // Any additional UI updates can be performed here.
 }

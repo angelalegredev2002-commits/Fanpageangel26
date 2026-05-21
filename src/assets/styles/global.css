@@ -128,6 +128,15 @@
 }
 
 @layer utilities {
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }

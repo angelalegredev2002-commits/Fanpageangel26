@@ -1,6 +1,6 @@
 ---
+import ThemeBtn from '../ui/buttons/ThemeBtn.astro';
 import LanguagePicker from '../ui/LanguagePicker.astro';
-import ThemeIcon from '../../components/ThemeIcon.astro';
 ---
 
 <header
@@ -19,12 +19,15 @@ import ThemeIcon from '../../components/ThemeIcon.astro';
   </button>
 
   <div class="group relative ml-auto flex items-center gap-4 sm:gap-6">
+    <!-- Welcome message based on selected language -->
+    <span id="welcome-msg" class="ml-4 text-sm font-medium text-neutral-600 dark:text-neutral-300"></span>
     <div class="hidden sm:block">
       <LanguagePicker />
     </div>
 
     <!-- Theme Toggle for Admin Panel -->
-    <ThemeIcon />
+    <LanguagePicker />
+    <ThemeBtn />
 
     <div class="relative">
       <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-orange-500"
@@ -192,4 +195,19 @@ import ThemeIcon from '../../components/ThemeIcon.astro';
       </div>
     </div>
   </div>
-</header>
+<script>
+  // Initialize sidebar collapsed state on page load
+  if (typeof initSidebar === 'function') {
+    initSidebar();
+  }
+  // Set welcome message based on selected language
+  const lang = localStorage.getItem('lang') || 'en';
+  const welcomeEl = document.getElementById('welcome-msg');
+  if (welcomeEl) {
+    const messages = {
+      en: 'Welcome, Angel Alegre!',
+      es: '¡Bienvenido, Angel Alegre!'
+    };
+    welcomeEl.textContent = messages[lang] ?? messages['en'];
+  }
+</script>

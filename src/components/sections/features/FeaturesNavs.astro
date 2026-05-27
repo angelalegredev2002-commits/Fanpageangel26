@@ -149,11 +149,11 @@ interface Props {
     if (!tabButtons.length) return;
 
     let currentIndex = 0;
-    let intervalId;
+    let intervalId: ReturnType<typeof setInterval> | undefined;
     const intervalTime = 5000; // 5 seconds
 
-    const activateTab = (index) => {
-      const button = tabButtons[index];
+    const activateTab = (index: number) => {
+      const button = tabButtons[index] as HTMLElement | undefined;
       if (button) {
         button.click();
       }

@@ -33,7 +33,7 @@ const socialLinks = {
   github: 'https://github.com/angelalegredev2002-commits',
   tiktok: 'https://www.tiktok.com/@programador2002',
   instagram: 'https://www.instagram.com/okanoxarb',
-  whatsapp: 'https://wa.me/51900661201',
+  whatsapp: 'https://wa.me/900661201',
   google: 'https://www.google.com/',
   slack: 'https://slack.com/',
 };

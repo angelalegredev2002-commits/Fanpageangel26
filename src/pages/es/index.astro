@@ -6,6 +6,8 @@ import HeroSectionAlt from '@components/sections/landing/HeroSectionAlt.astro';
 import ClientsSection from '@components/sections/landing/ClientsSection.astro';
 import FeaturesGeneral from '@components/sections/features/FeaturesGeneral.astro';
 import FeaturesNavs from '@components/sections/features/FeaturesNavs.astro';
+import SecuritySection from '@components/sections/features/SecuritySection.astro';
+import IntegrationsSection from '@components/sections/landing/IntegrationsSection.astro';
 import TestimonialsSection from '@components/sections/testimonials/TestimonialsSection.astro';
 import PricingSection from '@components/sections/pricing/PricingSection.astro';
 import FAQ from '@components/sections/misc/FAQ.astro';
@@ -19,8 +21,11 @@ import construction from '@images/construction-image.avif';
 import tools from '@images/automated-tools.jpg';
 import dashboard from '@images/dashboard-image.avif';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { partnersData } from '@/data_files/constants';
 import { Image } from 'astro:assets';
+import { getDB } from '../../utils/db';
+
+const db = getDB();
+const partnersData = db.landing?.partners || [];
 
 const avatarSrcs: Array<string> = [
   'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80',
@@ -33,7 +38,7 @@ const avatarSrcs: Array<string> = [
 <MainLayout lang="es">
   <AnnouncementBanner
     btnId="dismiss-button"
-    btnTitle="Descubre Equipo Sakad en GitHub"
+    btnTitle="Descubre Angel Alegre en GitHub"
     url="https://github.com/angelalegredev2002-commits"
   />
 
@@ -72,36 +77,60 @@ const avatarSrcs: Array<string> = [
 
   <div class="reveal-on-scroll">
     <FeaturesNavs
-      title=`Descubre la Arquitectura de <span class="text-orange-500 dark:text-orange-400">ERP Okanox & Sakad RMS</span>`
+      title=`Personaliza las ofertas de <span class="text-orange-500 dark:text-orange-400">Angel Alegre</span> para adaptarlas perfectamente a tus necesidades de software.`
       tabs={[
         {
-          heading: 'Gestión Operativa',
+          heading: 'Herramientas de Vanguardia',
           content:
-            'Control total sobre Almacén, Logística, Producción/Recetas y Compras. Optimiza tu cadena de suministro y procesos de fabricación con herramientas automatizadas.',
+            'Potencia tu negocio con las herramientas de vanguardia de Angel Alegre. Experimenta una mayor eficiencia en la gestión empresarial con nuestras sofisticadas soluciones automatizadas.',
           svg: 'tools',
           src: tools,
-          alt: 'Gestión de almacén y logística',
+          alt: 'Representación de herramientas automatizadas',
           first: true,
         },
         {
-          heading: 'Finanzas y SUNAT',
+          heading: 'Paneles Intuitivos',
           content:
-            'Manejo experto de Contabilidad, Caja/Tesorería, Finanzas, Auditoría y Cumplimiento con SUNAT. Todo lo que necesitas para una salud financiera impecable.',
+            'Navega con facilidad utilizando los paneles intuitivos de Angel Alegre. Configura y supervisa tus operaciones sin problemas.',
           svg: 'dashboard',
           src: dashboard,
-          alt: 'Panel de control financiero y contable',
+          alt: 'Paneles Intuitivos',
           second: true,
         },
         {
-          heading: 'Estrategia y Ventas',
+          heading: 'Características Robustas',
           content:
-            'Potencia tus Ingresos, Marketing, Clientes (CRM) y presencia Web. Desde la Gerencia hasta el Soporte, un sistema diseñado para el crecimiento.',
+            'Minimiza la complejidad, maximiza la productividad. Las robustas características de Angel Alegre están diseñadas para optimizar tus procesos comerciales.',
           svg: 'house',
-          src: tools,
-          alt: 'Gestión estratégica y comercial',
+          src: construction,
+          alt: 'Características Robustas',
+        },
+        {
+          heading: 'Respaldo de la Industria',
+          content:
+            'Implementaciones de software exitosas en diversos sectores comerciales. Colaboramos con marcas líderes para ofrecer un rendimiento de nivel empresarial.',
+          svg: 'verified',
+          isLogos: true,
+          logos: [
+            { name: 'Schott Ceran', src: '/images/clients/schott-ceran.png' },
+            { name: 'Derwent', src: '/images/clients/derwent.png' },
+            { name: 'Elf', src: '/images/clients/elf.png' },
+            { name: 'Joe Fresh Outline', src: '/images/clients/joe-fresh-outline.png' },
+            { name: 'Joe Fresh', src: '/images/clients/joe-fresh.png' },
+            { name: 'Acqua Panna', src: '/images/clients/acqua-panna.png' },
+          ],
+          alt: 'Logos de respaldo de la industria',
         },
       ]}
     />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <IntegrationsSection />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <SecuritySection />
   </div>
 
   <div class="reveal-on-scroll">
@@ -149,8 +178,8 @@ const avatarSrcs: Array<string> = [
 
   <div class="reveal-on-scroll">
     <HeroSectionAlt
-      title="Impulsa tu Empresa Hoy"
-      subTitle="Conoce más sobre la arquitectura de ERP Okanox y Sakad RMS creado por Angel Alegre Benito."
+      title="Lidera con Okanox"
+      subTitle="Gestión empresarial con precisión y potencia tecnológica."
       url="https://github.com/angelalegredev2002-commits"
     />
   </div>

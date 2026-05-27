@@ -1,0 +1,76 @@
+---
+// IntegrationsSection.astro - Ecosistema de Integraciones
+const isEs = Astro.currentLocale === 'es';
+
+const title = isEs
+  ? 'Conecta con tu <span class="text-orange-500 dark:text-orange-400">Ecosistema</span> Digital'
+  : 'Connect with your <span class="text-orange-500 dark:text-orange-400">Digital</span> Ecosystem';
+
+const subtitle = isEs
+  ? 'ERP Okanox & Sakad RMS se integra nativamente con las herramientas que ya usas en tu empresa.'
+  : 'ERP Okanox & Sakad RMS integrates natively with the tools you already use in your business.';
+
+const integrations = [
+  { name: 'SUNAT API', iconKey: 'sunat', desc: isEs ? 'Facturación electrónica' : 'Electronic billing' },
+  { name: 'WhatsApp', iconKey: 'whatsapp', desc: isEs ? 'Notificaciones y alertas' : 'Notifications & alerts' },
+  { name: 'AWS Cloud', iconKey: 'aws', desc: isEs ? 'Infraestructura segura' : 'Secure infrastructure' },
+  { name: 'Niubiz', iconKey: 'niubiz', desc: isEs ? 'Pagos en línea' : 'Online payments' },
+  { name: 'Excel / CSV', iconKey: 'excel', desc: isEs ? 'Importar / Exportar datos' : 'Import / Export data' },
+  { name: 'Google Workspace', iconKey: 'google', desc: isEs ? 'Colaboración y correo' : 'Collaboration & email' },
+  { name: 'API REST', iconKey: 'api', desc: isEs ? 'Integraciones a medida' : 'Custom integrations' },
+  { name: 'MercadoPago', iconKey: 'mercado', desc: isEs ? 'Cobros y pagos digitales' : 'Digital payments' },
+];
+
+// SVG icons for integrations
+const svgIcons = {
+  sunat: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6"/></svg>`,
+  whatsapp: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 2L12 12l8 8"/></svg>`,
+  aws: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/></svg>`,
+  niubiz: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>`,
+  excel: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>`,
+  google: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/></svg>`,
+  api: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,3 19,12 5,21"/></svg>`,
+  mercado: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`,
+};
+---
+
+<section class="relative mx-auto max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-full overflow-hidden">
+  {/* Decorative glow */}
+  <div class="pointer-events-none absolute bottom-0 left-1/2 -z-10 size-[500px] -translate-x-1/2 rounded-full bg-orange-500/5 blur-[120px]"></div>
+
+  {/* Heading */}
+  <div class="mx-auto mb-12 max-w-2xl text-center">
+    <span class="mb-4 inline-flex items-center gap-x-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-orange-500">
+      {isEs ? 'Integraciones' : 'Integrations'}
+    </span>
+    <h2 class="mt-4 text-3xl font-black tracking-tight text-neutral-800 sm:text-4xl lg:text-5xl dark:text-neutral-100">
+      <Fragment set:html={title} />
+    </h2>
+    <p class="mt-4 text-base text-neutral-600 dark:text-neutral-400">{subtitle}</p>
+  </div>
+
+  {/* Integrations grid */}
+  <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+    {integrations.map((integration) => (
+      <div class="group flex flex-col items-center gap-y-3 rounded-2xl border border-neutral-200 bg-white p-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-orange-500/40">
+        <div class="flex size-14 items-center justify-center rounded-xl bg-neutral-50 dark:bg-neutral-800" set:html={svgIcons[integration.iconKey]} />
+        <div>
+          <p class="text-sm font-extrabold text-neutral-800 dark:text-neutral-100">{integration.name}</p>
+          <p class="mt-0.5 text-[11px] text-neutral-500 dark:text-neutral-400">{integration.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Bottom CTA */}
+  <div class="mt-10 text-center">
+    <p class="text-sm text-neutral-500 dark:text-neutral-400">
+      {isEs
+        ? '¿Necesitas una integración específica? '
+        : 'Need a specific integration? '}
+      <a href={isEs ? '/es/contact' : '/contact'} class="font-bold text-orange-500 underline-offset-2 hover:underline">
+        {isEs ? 'Contáctanos y lo desarrollamos.' : 'Contact us and we\'ll build it.'}
+      </a>
+    </p>
+  </div>
+</section>

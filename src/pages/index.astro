@@ -6,6 +6,8 @@ import HeroSectionAlt from '@components/sections/landing/HeroSectionAlt.astro';
 import ClientsSection from '@components/sections/landing/ClientsSection.astro';
 import FeaturesGeneral from '@components/sections/features/FeaturesGeneral.astro';
 import FeaturesNavs from '@components/sections/features/FeaturesNavs.astro';
+import SecuritySection from '@components/sections/features/SecuritySection.astro';
+import IntegrationsSection from '@components/sections/landing/IntegrationsSection.astro';
 import TestimonialsSection from '@components/sections/testimonials/TestimonialsSection.astro';
 import PricingSection from '@components/sections/pricing/PricingSection.astro';
 import FAQ from '@components/sections/misc/FAQ.astro';
@@ -67,17 +69,67 @@ const avatarSrcs = db.landing?.heroAvatars || [];
       title={db.landing?.featuresTitle_es || ''}
       subTitle={db.landing?.featuresSubtitle_es || ''}
       src={featureImage}
-      alt="Equipo Sakad solutions in floating boxes"
+      alt="Angel Alegre solutions in floating boxes"
       features={features}
     />
   </div>
 
   <div class="reveal-on-scroll">
     <FeaturesNavs
-      title={db.landing?.featuresNavsTitle_es ||
-        `Customize <span class="text-orange-500 dark:text-orange-400">Equipo Sakad</span>'s offerings to perfectly suit your software and business systems needs.`}
-      tabs={tabsData}
+      title=`Personaliza las ofertas de <span class="text-orange-500 dark:text-orange-400">Angel Alegre</span> para adaptarlas perfectamente a tus necesidades de software.`
+      tabs={[
+        {
+          heading: 'Herramientas de Vanguardia',
+          content:
+            'Potencia tu negocio con las herramientas de vanguardia de Angel Alegre. Experimenta una mayor eficiencia en la gestión empresarial con nuestras sofisticadas soluciones automatizadas.',
+          svg: 'tools',
+          src: tools,
+          alt: 'Representación de herramientas automatizadas',
+          first: true,
+        },
+        {
+          heading: 'Paneles Intuitivos',
+          content:
+            'Navega con facilidad utilizando los paneles intuitivos de Angel Alegre. Configura y supervisa tus operaciones sin problemas.',
+          svg: 'dashboard',
+          src: dashboard,
+          alt: 'Paneles Intuitivos',
+          second: true,
+        },
+        {
+          heading: 'Características Robustas',
+          content:
+            'Minimiza la complejidad, maximiza la productividad. Las robustas características de Angel Alegre están diseñadas para optimizar tus procesos comerciales.',
+          svg: 'house',
+          src: construction,
+          alt: 'Características Robustas',
+        },
+        {
+          heading: 'Respaldo de la Industria',
+          content:
+            'Implementaciones de software exitosas en diversos sectores comerciales. Colaboramos con marcas líderes para ofrecer un rendimiento de nivel empresarial.',
+          svg: 'verified',
+          isLogos: true,
+          logos: [
+            { name: 'Schott Ceran', src: '/images/clients/schott-ceran.png' },
+            { name: 'Derwent', src: '/images/clients/derwent.png' },
+            { name: 'Elf', src: '/images/clients/elf.png' },
+            { name: 'Joe Fresh Outline', src: '/images/clients/joe-fresh-outline.png' },
+            { name: 'Joe Fresh', src: '/images/clients/joe-fresh.png' },
+            { name: 'Acqua Panna', src: '/images/clients/acqua-panna.png' },
+          ],
+          alt: 'Logos de respaldo de la industria',
+        },
+      ]}
     />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <IntegrationsSection />
+  </div>
+
+  <div class="reveal-on-scroll">
+    <SecuritySection />
   </div>
 
   <div class="reveal-on-scroll">
@@ -107,9 +159,9 @@ const avatarSrcs = db.landing?.heroAvatars || [];
 
   <div class="reveal-on-scroll">
     <HeroSectionAlt
-      title={db.landing?.ctaTitle_es || ''}
-      subTitle={db.landing?.ctaSubtitle_es || ''}
-      url={db.landing?.announcementUrl || ''}
+      title="Lidera con Okanox"
+      subTitle="Gestión empresarial con precisión y potencia tecnológica."
+      url="https://github.com/angelalegredev2002-commits"
     />
   </div>
 </MainLayout>

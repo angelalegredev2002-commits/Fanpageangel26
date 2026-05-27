@@ -12,10 +12,12 @@ interface Tab {
   heading: string;
   content: string;
   svg: string;
-  src: any;
+  src?: any;
   alt: string;
   first?: boolean;
   second?: boolean;
+  isLogos?: boolean;
+  logos?: Array<{ name: string; src: string }>;
 }
 
 // Define TypeScript interface for props
@@ -45,9 +47,9 @@ interface Props {
         </h2>
       </div>
 
-      {/* Tab navigation - Organized into 3 blocks/boxes */}
+      {/* Tab navigation - Organized into responsive grid */}
       <nav
-        class="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-3"
+        class="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
         aria-label="Tabs"
         role="tablist"
       >
@@ -69,20 +71,65 @@ interface Props {
         }
       </nav>
 
-      {/* Contents Column - Full width image display */}
+      {/* Contents Column - Full width image display or logos grid */}
       <div class="relative overflow-hidden">
         <div class="overflow-hidden rounded-[2.5rem] shadow-2xl">
           {
-            tabs.map((tab, index) => (
-              <TabContent
-                id={`tabs-with-card-${index + 1}`}
-                aria={`tabs-with-card-item-${index + 1}`}
-                src={tab.src}
-                alt={tab.alt}
-                first={tab.first}
-                second={tab.second}
-              />
-            ))
+            tabs.map((tab, index) => {
+              if (tab.isLogos && tab.logos) {
+                return (
+                  <div
+                    id={`tabs-with-card-${index + 1}`}
+                    role="tabpanel"
+                    class={tab.first ? '' : 'hidden'}
+                    aria-labelledby={`tabs-with-card-item-${index + 1}`}
+                  >
+                    <div class="bg-neutral-50/70 dark:bg-neutral-900/60 backdrop-blur-xl border border-neutral-200 dark:border-neutral-800 rounded-[2.5rem] p-8 md:p-12 shadow-2xl min-h-[350px] flex flex-col justify-center">
+                      <div class="mb-8 text-center max-w-2xl mx-auto">
+                        <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-2">{tab.heading}</h3>
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400">{tab.content}</p>
+                      </div>
+                      <div class="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)] w-full max-w-5xl mx-auto py-4">
+                        <div class="animate-marquee flex w-max items-center gap-12 opacity-50 grayscale transition-all duration-700 hover:opacity-100 hover:grayscale-0 hover:[animation-play-state:paused] lg:gap-24">
+                          {/* First set of logos */}
+                          {tab.logos.map((logo) => (
+                            <div class="flex items-center justify-center p-6 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-100/50 dark:border-neutral-700/50 shrink-0 transition-transform duration-300 hover:scale-110 group">
+                              <img
+                                src={logo.src}
+                                alt={logo.name}
+                                class="h-10 w-auto object-contain grayscale dark:invert group-hover:grayscale-0 transition-all duration-300"
+                                loading="eager"
+                              />
+                            </div>
+                          ))}
+                          {/* Duplicated set for seamless loop */}
+                          {tab.logos.map((logo) => (
+                            <div class="flex items-center justify-center p-6 bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-100/50 dark:border-neutral-700/50 shrink-0 transition-transform duration-300 hover:scale-110 group">
+                              <img
+                                src={logo.src}
+                                alt={logo.name}
+                                class="h-10 w-auto object-contain grayscale dark:invert group-hover:grayscale-0 transition-all duration-300"
+                                loading="eager"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <TabContent
+                  id={`tabs-with-card-${index + 1}`}
+                  aria={`tabs-with-card-item-${index + 1}`}
+                  src={tab.src}
+                  alt={tab.alt}
+                  first={tab.first}
+                  second={tab.second}
+                />
+              );
+            })
           }
         </div>
         <!-- Decorative Glow behind image -->
@@ -94,3 +141,56 @@ interface Props {
     </div>
   </div>
 </section>
+
+<script>
+  // Carousel functionality for FeaturesNavs
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabButtons = document.querySelectorAll('[role="tablist"] [data-hs-tab]');
+    if (!tabButtons.length) return;
+
+    let currentIndex = 0;
+    let intervalId;
+    const intervalTime = 5000; // 5 seconds
+
+    const activateTab = (index) => {
+      const button = tabButtons[index];
+      if (button) {
+        button.click();
+      }
+    };
+
+    const nextTab = () => {
+      currentIndex = (currentIndex + 1) % tabButtons.length;
+      activateTab(currentIndex);
+    };
+
+    const startCarousel = () => {
+      stopCarousel();
+      intervalId = setInterval(nextTab, intervalTime);
+    };
+
+    const stopCarousel = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+
+    // Listen for manual clicks to update currentIndex and restart timer
+    tabButtons.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        currentIndex = index;
+        startCarousel();
+      });
+    });
+
+    // Pause on hover
+    const section = tabButtons[0].closest('section');
+    if (section) {
+      section.addEventListener('mouseenter', stopCarousel);
+      section.addEventListener('mouseleave', startCarousel);
+    }
+
+    // Start initially
+    startCarousel();
+  });
+</script>

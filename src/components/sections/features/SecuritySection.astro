@@ -1,0 +1,132 @@
+---
+// SecuritySection.astro - Seguridad y Respaldo Cloud
+const isEs = Astro.currentLocale === 'es';
+
+const features = isEs
+  ? [
+      {
+        icon: 'shield',
+        title: 'Encriptación Total',
+        desc: 'Todos tus datos viajan y se almacenan con encriptación AES-256 de extremo a extremo.',
+        color: 'orange',
+      },
+      {
+        icon: 'cloud',
+        title: 'Nube Empresarial',
+        desc: 'Infraestructura alojada en AWS con disponibilidad del 99.9% garantizada y escalado automático.',
+        color: 'blue',
+      },
+      {
+        icon: 'refresh',
+        title: 'Respaldos Diarios',
+        desc: 'Copias de seguridad automáticas cada 24 horas. Tu información siempre protegida.',
+        color: 'emerald',
+      },
+      {
+        icon: 'verified',
+        title: 'Cumplimiento SUNAT',
+        desc: 'Auditoría integrada y cumplimiento normativo actualizado con las exigencias de SUNAT y reguladores locales.',
+        color: 'violet',
+      },
+    ]
+  : [
+      {
+        icon: 'shield',
+        title: 'Full Encryption',
+        desc: 'All your data travels and is stored with end-to-end AES-256 encryption.',
+        color: 'orange',
+      },
+      {
+        icon: 'cloud',
+        title: 'Enterprise Cloud',
+        desc: 'Infrastructure hosted on AWS with guaranteed 99.9% availability and auto-scaling.',
+        color: 'blue',
+      },
+      {
+        icon: 'refresh',
+        title: 'Daily Backups',
+        desc: 'Automatic backups every 24 hours. Your data is always protected.',
+        color: 'emerald',
+      },
+      {
+        icon: 'verified',
+        title: 'Regulatory Compliance',
+        desc: 'Integrated audit and compliance with local regulatory and SUNAT requirements.',
+        color: 'violet',
+      },
+    ];
+
+const colorMap: Record<string, { bg: string; icon: string; border: string }> = {
+  orange: {
+    bg: 'bg-orange-500/10 dark:bg-orange-500/10',
+    icon: 'text-orange-500',
+    border: 'border-orange-500/20 group-hover:border-orange-500/60',
+  },
+  blue: {
+    bg: 'bg-blue-500/10 dark:bg-blue-500/10',
+    icon: 'text-blue-500',
+    border: 'border-blue-500/20 group-hover:border-blue-500/60',
+  },
+  emerald: {
+    bg: 'bg-emerald-500/10 dark:bg-emerald-500/10',
+    icon: 'text-emerald-500',
+    border: 'border-emerald-500/20 group-hover:border-emerald-500/60',
+  },
+  violet: {
+    bg: 'bg-violet-500/10 dark:bg-violet-500/10',
+    icon: 'text-violet-500',
+    border: 'border-violet-500/20 group-hover:border-violet-500/60',
+  },
+};
+
+const svgIcons: Record<string, string> = {
+  shield: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  cloud: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`,
+  refresh: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>`,
+  verified: `<svg xmlns="http://www.w3.org/2000/svg" class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`,
+};
+---
+
+<section class="relative mx-auto max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-full overflow-hidden">
+  {/* Decorative glow */}
+  <div class="pointer-events-none absolute -top-32 right-0 -z-10 size-96 rounded-full bg-blue-500/5 blur-[120px]"></div>
+
+  {/* Heading */}
+  <div class="mx-auto mb-12 max-w-2xl text-center">
+    <span class="mb-4 inline-flex items-center gap-x-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-orange-500">
+      {isEs ? 'Seguridad Empresarial' : 'Enterprise Security'}
+    </span>
+    <h2 class="mt-4 text-3xl font-black tracking-tight text-neutral-800 sm:text-4xl lg:text-5xl dark:text-neutral-100">
+      {isEs
+        ? <>Tu datos, <span class="text-orange-500 dark:text-orange-400">protegidos</span> al máximo</>
+        : <>Your data, <span class="text-orange-500 dark:text-orange-400">protected</span> at its best</>}
+    </h2>
+    <p class="mt-4 text-base text-neutral-600 dark:text-neutral-400">
+      {isEs
+        ? 'Infraestructura de nivel empresarial para que te concentres en crecer, no en preocuparte.'
+        : 'Enterprise-grade infrastructure so you can focus on growing, not worrying.'}
+    </p>
+  </div>
+
+  {/* Feature grid */}
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    {features.map((f) => {
+      const c = colorMap[f.color];
+      return (
+        <div class={`group relative flex flex-col rounded-2xl border p-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl bg-white dark:bg-neutral-900 ${c.border}`}>
+          {/* Background glow on hover */}
+          <div class={`absolute inset-0 -z-10 rounded-2xl opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100 ${c.bg}`}></div>
+
+          <div class={`mb-4 inline-flex size-14 items-center justify-center rounded-xl ${c.bg} ${c.icon}`} set:html={svgIcons[f.icon]} />
+
+          <h3 class="mb-2 text-base font-extrabold tracking-tight text-neutral-800 dark:text-neutral-100">
+            {f.title}
+          </h3>
+          <p class="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+            {f.desc}
+          </p>
+        </div>
+      );
+    })}
+  </div>
+</section>

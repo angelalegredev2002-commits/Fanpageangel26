@@ -1,127 +1,198 @@
 ---
-// Import the necessary dependencies
-import FooterSocialLink from '@components/ui/links/FooterSocialLink.astro';
-import EmailFooterInput from '@components/ui/forms/input/EmailFooterInput.astro';
+import BrandLogo from '@components/BrandLogo.astro';
+import Icon from '@components/ui/icons/Icon.astro';
 import enStrings from '@utils/navigation.ts';
 import esStrings from '@utils/es/navigation.ts';
-import Icon from '@components/ui/icons/Icon.astro';
-import BrandLogo from '@components/BrandLogo.astro';
-import { SITE } from '@data/constants';
 import { getDB } from '../../../utils/db';
+import heroImageRaw from '@images/hero-image.svg?raw';
 
-// Select the correct translation based on the page's lang prop:
+interface PartnerMark {
+  icon: string;
+  name?: string;
+  href?: string;
+}
+
 const lang = Astro.currentLocale || 'es';
 const strings = lang === 'es' ? esStrings : enStrings;
-
-// DB Content
 const db = getDB();
+
 const footerText =
   lang === 'es'
     ? db.site?.footerText_es ||
       '© 2026 Angel Alegre. Todos los derechos reservados.'
     : db.site?.footerText_en || '© 2026 Angel Alegre. All rights reserved.';
 
-// Define the variables that will be used in this component
-const sectionThreeTitle: string =
-  lang === 'es' ? 'Mantente actualizado' : 'Stay up to date';
-const sectionThreeContent: string =
-  lang === 'es'
-    ? 'Mantente informado con las últimas herramientas y ofertas exclusivas.'
-    : 'Stay updated with the latest tools and exclusive deals.';
+const homeUrl = lang === 'es' ? '/es' : '/';
+const contactUrl = lang === 'es' ? '/es/contact' : '/contact';
+const privacyUrl = '/privacy';
+const termsUrl = '/terms';
+
+const leftTitle = lang === 'es' ? 'Explora' : 'Explore';
+const rightTitle = lang === 'es' ? 'Conecta' : 'Connect';
+const legalPrivacy = lang === 'es' ? 'Privacidad' : 'Privacy';
+const legalTerms = lang === 'es' ? 'Términos' : 'Terms';
+
+const socialItems = [
+  { label: 'TikTok', url: strings.socialLinks.tiktok },
+  { label: 'Instagram', url: strings.socialLinks.instagram },
+  { label: 'GitHub', url: strings.socialLinks.github },
+  { label: 'WhatsApp', url: strings.socialLinks.whatsapp },
+].filter(item => item.url && item.url !== '#');
+
+const partnerMarks: PartnerMark[] = (db.landing?.partners || []).slice(0, 6);
+const partnerMarquee = [...partnerMarks, ...partnerMarks];
 ---
 
-<footer class="w-full bg-neutral-300 dark:bg-neutral-950">
-  <div
-    class="mx-auto w-full max-w-[85rem] px-4 py-10 sm:px-6 lg:px-16 lg:pt-20 2xl:max-w-(--breakpoint-2xl)"
-  >
-    <div class="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-5">
-      <div class="col-span-full lg:col-span-1">
-        {/* Brand Logo */}
-        <BrandLogo class="h-auto w-32" />
-      </div>
-      {/* An array of links for Product and Company sections */}
-      {
-        strings.footerLinks.map(section => (
-          <div class="col-span-1">
-            <h3 class="font-bold text-neutral-800 dark:text-neutral-200">
-              {section.section}
-            </h3>
-            <ul class="mt-3 grid space-y-3">
-              {section.links.map((link, index) => (
-                <li>
-                  <a
-                    href={link.url}
-                    class="inline-flex gap-x-2 rounded-lg text-neutral-600 ring-zinc-500 outline-hidden transition duration-300 hover:text-neutral-500 focus-visible:ring-3 dark:text-neutral-400 dark:ring-zinc-200 dark:hover:text-neutral-300 dark:focus:outline-hidden"
-                  >
-                    {link.name}
-                  </a>
-                  {section.section === 'Company' && index === 2 ? (
-                    <span class="ms-1 inline rounded-lg bg-orange-500 px-2 py-1 text-xs font-bold text-neutral-50">
-                      We're hiring!
-                    </span>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
-
-      <div class="col-span-2">
-        <h3 class="font-bold text-neutral-800 dark:text-neutral-200">
-          {sectionThreeTitle}
-        </h3>
-
-        <EmailFooterInput />
-        <p class="mt-3 text-sm text-neutral-600 dark:text-neutral-400">
-          {sectionThreeContent}
-        </p>
-      </div>
-    </div>
-
+<footer class="relative mt-20 overflow-hidden bg-neutral-100 text-neutral-100 dark:bg-neutral-950">
+  <div class="mx-auto w-full max-w-[100rem] px-4 pt-6 sm:px-6 lg:px-8">
     <div
-      class="mt-9 grid gap-y-2 sm:mt-12 sm:flex sm:items-center sm:justify-between sm:gap-y-0"
+      class="relative overflow-hidden rounded-[2rem] bg-white px-5 pt-[2.35rem] pb-[2.35rem] text-neutral-950 sm:rounded-[2.75rem] sm:px-7 dark:bg-neutral-900 dark:text-neutral-100 lg:px-10 lg:pt-[2.7rem] lg:pb-[2.7rem]"
     >
-      <div class="flex items-center justify-between">
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">
-          {footerText}
-          <a
-            class="rounded-lg font-medium underline underline-offset-2 ring-zinc-500 outline-hidden transition duration-300 hover:text-neutral-700 hover:decoration-dashed focus:outline-hidden focus-visible:ring-3 dark:ring-zinc-200 dark:hover:text-neutral-300"
-            href="https://github.com/angelalegredev2002-commits"
-            target="_blank"
-            rel="noopener noreferrer">Angel Alegre Benito</a
-          >.
-        </p>
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,0,0,0.04),transparent_24%),linear-gradient(180deg,rgba(0,0,0,0.015),transparent_36%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_36%)]"></div>
+      <div class="pointer-events-none absolute left-1/2 top-0 h-12 w-[clamp(160px,20vw,260px)] -translate-x-1/2 -translate-y-1/2 rounded-[1.5rem] bg-white dark:bg-neutral-900"></div>
+      <div class="pointer-events-none absolute bottom-0 left-0 h-7 w-24 rounded-tr-[1.5rem] bg-neutral-100 dark:bg-neutral-950"></div>
+      <div class="pointer-events-none absolute right-0 bottom-0 h-7 w-24 rounded-tl-[1.5rem] bg-neutral-100 dark:bg-neutral-950"></div>
+      <div class="pointer-events-none absolute inset-x-0 top-[4.4rem] bottom-[4.4rem] z-10 flex items-center justify-center px-4 sm:top-[4.8rem] sm:bottom-[4.9rem] sm:px-6 lg:top-[5.2rem] lg:bottom-[5.2rem] lg:px-8">
+        <div class="footer-bg-figure footer-bg-tone h-full max-h-[22rem] sm:max-h-[24rem] lg:max-h-[27rem]">
+          <div
+            class="h-full fill-current"
+            set:html={heroImageRaw}
+          />
+        </div>
       </div>
 
-      {/* Social Brands */}
-      <div>
-        <FooterSocialLink url={strings.socialLinks.facebook}
-          ><Icon name="facebookFooter" />
-        </FooterSocialLink>
+      <div class="relative z-20 flex flex-wrap items-start justify-between gap-6">
+        <a href={homeUrl} class="inline-flex flex-col gap-2">
+          <BrandLogo class="h-auto w-28 sm:w-32" />
+        </a>
 
-        <FooterSocialLink url={strings.socialLinks.github}
-          ><Icon name="githubFooter" />
-        </FooterSocialLink>
+        <a
+          href={contactUrl}
+          aria-label={lang === 'es' ? 'Ir a contacto' : 'Go to contact'}
+          class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-neutral-950/10 text-neutral-950 transition duration-300 hover:bg-neutral-950/5 dark:border-white/14 dark:text-neutral-100 dark:hover:bg-white/8"
+        >
+          <Icon name="arrowRightStatic" class="h-4 w-4 text-neutral-950 dark:text-neutral-100" />
+        </a>
+      </div>
 
-        <FooterSocialLink url={strings.socialLinks.tiktok}
-          ><Icon name="tiktokFooter" />
-        </FooterSocialLink>
+      <div class="relative z-20 mt-5 grid gap-4 lg:grid-cols-[minmax(150px,0.85fr)_minmax(0,1.2fr)_minmax(150px,0.85fr)] lg:items-center">
+        <div class="order-2 lg:order-1">
+          <p class="text-[0.7rem] font-black tracking-[0.24em] text-neutral-500 uppercase dark:text-neutral-400">
+            {leftTitle}
+          </p>
+          <nav class="mt-4 flex flex-col items-start gap-1.5">
+            {
+              strings.navBarLinks.map(link => (
+                <a
+                  href={link.url}
+                  class="text-xl leading-none font-black tracking-tight text-neutral-950 transition duration-300 hover:text-neutral-600 dark:text-neutral-100 dark:hover:text-neutral-300 sm:text-2xl"
+                >
+                  {link.name}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
 
-        <FooterSocialLink url={strings.socialLinks.instagram}
-          ><Icon name="instagramFooter" />
-        </FooterSocialLink>
+        <div class="order-1 flex min-h-18 items-center justify-center lg:order-2">
+          <div class="h-px w-full max-w-[10rem] bg-linear-to-r from-transparent via-neutral-950/20 to-transparent dark:via-white/18 lg:hidden"></div>
+        </div>
 
-        <FooterSocialLink url={strings.socialLinks.whatsapp}
-          ><Icon name="whatsappFooter" />
-        </FooterSocialLink>
+        <div class="order-3 lg:text-right">
+          <p class="text-[0.7rem] font-black tracking-[0.24em] text-neutral-500 uppercase dark:text-neutral-400">
+            {rightTitle}
+          </p>
+          <div class="mt-4 flex flex-col gap-1.5 lg:items-end">
+            {
+              socialItems.map(item => (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xl leading-none font-black tracking-tight text-neutral-950 transition duration-300 hover:text-neutral-600 dark:text-neutral-100 dark:hover:text-neutral-300 sm:text-2xl"
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="relative z-0 mt-5 pt-4">
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <a
+            href={contactUrl}
+            class="inline-flex items-center gap-2 self-start rounded-full bg-orange-500 px-4 py-2 text-[0.68rem] font-black tracking-[0.18em] text-white uppercase transition duration-300 hover:brightness-95 dark:bg-orange-400 dark:text-neutral-950 lg:ml-auto"
+          >
+            {lang === 'es' ? 'Consultas de negocio' : 'Business inquiries'}
+            <Icon name="arrowRightStatic" class="h-3.5 w-3.5 text-white dark:text-neutral-950" />
+          </a>
+        </div>
+
+        <div class="relative z-0 mt-5 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
+          <div class="animate-marquee flex w-max items-center gap-8 lg:gap-12">
+          {
+            partnerMarquee.map(partner => (
+              <a
+                href={partner.href || '#'}
+                class="footer-reference-mark flex min-h-12 min-w-[7.5rem] items-center justify-center opacity-85 transition duration-300 hover:opacity-100 lg:min-w-[9rem]"
+                set:html={partner.icon}
+              />
+            ))
+          }
+          </div>
+        </div>
       </div>
     </div>
 
-    <script>
-      const year = new Date().getFullYear();
-      const element = document.getElementById('current-year');
-      element!.innerText = year.toString();
-    </script>
+    <div class="flex flex-col gap-4 px-2 py-4 text-sm text-neutral-900 sm:flex-row sm:items-center sm:justify-between dark:text-neutral-100">
+      <p>{footerText}</p>
+
+      <div class="flex flex-wrap items-center gap-5 font-black uppercase">
+        <a href={privacyUrl} class="transition duration-300 hover:opacity-70">
+          {legalPrivacy}
+        </a>
+        <a href={termsUrl} class="transition duration-300 hover:opacity-70">
+          {legalTerms}
+        </a>
+      </div>
+    </div>
   </div>
 </footer>
+
+<style is:global>
+  .footer-reference-mark svg,
+  .footer-reference-mark img {
+    max-height: 2rem;
+    width: auto;
+    filter: brightness(0) saturate(100%) invert(11%) sepia(15%)
+      saturate(512%) hue-rotate(47deg) brightness(95%) contrast(89%);
+  }
+
+  .dark .footer-reference-mark svg,
+  .dark .footer-reference-mark img {
+    filter: brightness(0) saturate(100%) invert(71%) sepia(55%)
+      saturate(1436%) hue-rotate(345deg) brightness(100%) contrast(96%);
+  }
+
+  .footer-reference-mark svg {
+    max-width: 9rem;
+  }
+
+  .footer-bg-figure > svg,
+  .footer-bg-figure svg {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .footer-bg-tone {
+    color: rgb(55 65 81 / 0.64);
+  }
+
+  .dark .footer-bg-tone {
+    color: rgb(255 255 255 / 0.44);
+  }
+</style>

@@ -4,6 +4,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import HeroSection from '@components/sections/landing/HeroSection.astro';
 import HeroSectionAlt from '@components/sections/landing/HeroSectionAlt.astro';
 import ClientsSection from '@components/sections/landing/ClientsSection.astro';
+import LandoStorySection from '@components/sections/landing/LandoStorySection.astro';
 import FeaturesGeneral from '@components/sections/features/FeaturesGeneral.astro';
 import FeaturesNavs from '@components/sections/features/FeaturesNavs.astro';
 import SecuritySection from '@components/sections/features/SecuritySection.astro';
@@ -65,15 +66,15 @@ const avatarSrcs: Array<string> = [
     />
   </div>
 
-  <div class="reveal-on-scroll">
-    <FeaturesGeneral
-      title="La Potencia de 22 Módulos Integrados"
-      subTitle="Desde la Gerencia hasta la SUNAT, ERP Okanox y Sakad RMS cubren cada rincón de tu operación empresarial con precisión y eficiencia."
-      src={featureImage}
-      alt="Módulos del sistema ERP Okanox"
-      features={features}
-    />
-  </div>
+  <LandoStorySection locale="es" />
+
+  <FeaturesGeneral
+    title="La Potencia de 22 Módulos Integrados"
+    subTitle="Desde la Gerencia hasta la SUNAT, ERP Okanox y Sakad RMS cubren cada rincón de tu operación empresarial con precisión y eficiencia."
+    src={featureImage}
+    alt="Módulos del sistema ERP Okanox"
+    features={features}
+  />
 
   <div class="reveal-on-scroll">
     <FeaturesNavs
@@ -125,9 +126,7 @@ const avatarSrcs: Array<string> = [
     />
   </div>
 
-  <div class="reveal-on-scroll">
-    <IntegrationsSection />
-  </div>
+  <IntegrationsSection />
 
   <div class="reveal-on-scroll">
     <SecuritySection />

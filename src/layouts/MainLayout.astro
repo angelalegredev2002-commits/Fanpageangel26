@@ -107,8 +107,17 @@ interface Props {
       import 'preline';
       import gsap from 'gsap';
       import { initPremiumAnimations } from '@scripts/premiumAnimations.js';
+      import { setupSmoothScroll } from '@scripts/lenisScrollTrigger.js';
+      import {
+        initScrollOrderSections,
+        initScrollSectionReveals,
+        refreshScrollAnimations,
+      } from '@scripts/scrollOrder.js';
+      import { initLandoScroll } from '@scripts/landoScroll.js';
 
       const init = () => {
+        setupSmoothScroll();
+
         (
           window as Window & {
             HSStaticMethods?: { autoInit?: () => void };
@@ -118,6 +127,10 @@ interface Props {
 
         const win = window as any;
         initPremiumAnimations();
+        initScrollOrderSections();
+        initLandoScroll();
+        initScrollSectionReveals();
+        refreshScrollAnimations();
 
         // Background Music (Services Page) Logic
         const bgMusic = document.getElementById('bg-music') as HTMLAudioElement;
@@ -138,33 +151,6 @@ interface Props {
             bgMusic.currentTime = 0;
           }
         }
-
-        // Scroll Reveal & Focus Observer
-        const observerOptions = {
-          threshold: [0, 0.1, 0.9, 1],
-          rootMargin: '0px',
-        };
-
-        const observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            const rect = entry.boundingClientRect;
-            const isAbove = rect.top < 0;
-
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-revealed');
-              entry.target.classList.remove('is-leaving');
-            } else if (isAbove) {
-              entry.target.classList.add('is-leaving');
-            } else {
-              entry.target.classList.remove('is-revealed');
-              entry.target.classList.remove('is-leaving');
-            }
-          });
-        }, observerOptions);
-
-        document
-          .querySelectorAll('.reveal-on-scroll')
-          .forEach(el => observer.observe(el));
 
         // Premium Particle Cursor (Sparks/Bubbles)
         const createParticle = (x: number, y: number) => {

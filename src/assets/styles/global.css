@@ -165,25 +165,526 @@
     }
   }
 
-  /* Scroll Reveal & Focus System */
+  /* Scroll reveal — GSAP scrub in scrollOrder.js (landonorris-style) */
   .reveal-on-scroll {
-    opacity: 0;
-    filter: blur(10px);
-    transform: translateY(40px) scale(0.98);
-    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+  }
+
+  /* Pinned scroll-order sections */
+  .scroll-order-section {
+    position: relative;
+  }
+
+  .scroll-order-pin {
+    will-change: transform;
+  }
+
+  .scroll-order-grid {
+    position: relative;
+    perspective: 1200px;
+  }
+
+  .scroll-order-item {
     will-change: transform, opacity, filter;
   }
 
-  .reveal-on-scroll.is-revealed {
-    opacity: 1;
-    filter: blur(0px);
-    transform: translateY(0) scale(1);
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-order-item,
+    .reveal-on-scroll > * {
+      transform: none !important;
+      opacity: 1 !important;
+      filter: none !important;
+    }
   }
 
-  .reveal-on-scroll.is-leaving {
-    opacity: 0;
-    filter: blur(10px);
-    transform: translateY(-40px) scale(1.02);
+  /* Lando Norris–style story block (landoScroll.js) */
+  .lando-story-shell {
+    width: 100%;
+    padding-inline: 1rem;
+    margin-block: 4rem;
+  }
+
+  .lando-story {
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    max-width: 100rem;
+    margin-inline: auto;
+    --lando-bg: #fffdf8;
+    --lando-fg: #171717;
+    --lando-muted: #737373;
+    --lando-accent: #f97316;
+    --lando-surface: rgb(255 255 255 / 0.88);
+    --lando-border: rgb(23 23 23 / 0.1);
+    border: 1px solid var(--lando-border);
+    border-radius: 2.25rem;
+    overflow: clip;
+    background-color: var(--lando-bg);
+    box-shadow: 0 20px 80px rgb(23 23 23 / 0.06);
+    isolation: isolate;
+  }
+
+  :is(.dark) .lando-story {
+    --lando-bg: #09090b;
+    --lando-fg: #fafaf9;
+    --lando-muted: #a1a1aa;
+    --lando-accent: #fb923c;
+    --lando-surface: rgb(24 24 27 / 0.9);
+    --lando-border: rgb(255 255 255 / 0.1);
+    box-shadow: 0 24px 90px rgb(0 0 0 / 0.3);
+  }
+
+  .lando-story-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: url('/banner-pattern.svg');
+    background-size: 28rem auto;
+    background-position: center;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  :is(.dark) .lando-story-pattern {
+    opacity: 0.12;
+  }
+
+  .lando-manifesto {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  .horizontal-scroll-pin {
+    position: relative;
+    display: flex;
+    min-height: 100dvh;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+    will-change: transform;
+  }
+
+  .lando-story-stage {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: end;
+  }
+
+  .lando-story-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .lando-story-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid var(--lando-border);
+    background: var(--lando-surface);
+    padding: 0.7rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--lando-fg);
+    backdrop-filter: blur(14px);
+  }
+
+  .horizontal-scroll-viewport {
+    width: 100%;
+    overflow: hidden;
+    padding-left: 0;
+  }
+
+  .horizontal-scroll-track {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: clamp(2rem, 4vw, 4rem);
+    will-change: transform;
+  }
+
+  .horizontal-scroll-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08em;
+    padding-right: clamp(1rem, 3vw, 2rem);
+    font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--lando-fg);
+    white-space: nowrap;
+  }
+
+  .horizontal-scroll-line {
+    display: block;
+  }
+
+  .horizontal-scroll-line--accent {
+    color: var(--lando-accent);
+    text-transform: uppercase;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    right: clamp(1.5rem, 5vw, 4rem);
+    bottom: clamp(1.5rem, 4vw, 3rem);
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    opacity: 0.9;
+  }
+
+  .scroll-indicator-copy {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--lando-muted);
+  }
+
+  .scroll-indicator-track {
+    position: relative;
+    display: block;
+    width: 2px;
+    height: 6.5rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--lando-border);
+  }
+
+  .scroll-indicator-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 18%;
+    border-radius: 999px;
+    background: var(--lando-accent);
+    transform: translateY(0);
+    will-change: transform;
+  }
+
+  .lando-story-facts {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .lando-story-fact {
+    border: 0;
+    background: transparent;
+    padding: 0 0 0.9rem;
+  }
+
+  .lando-story-fact:not(:last-child) {
+    border-bottom: 1px solid var(--lando-border);
+  }
+
+  .lando-story-fact-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--lando-accent);
+  }
+
+  .lando-story-fact-value {
+    margin-top: 0.7rem;
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--lando-fg);
+  }
+
+  .lando-story-fact-detail {
+    margin-top: 0.65rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--lando-muted);
+  }
+
+  .lando-story-aside {
+    width: min(100%, 28rem);
+    margin-left: auto;
+    padding: 0 0 0 1.4rem;
+    border-left: 1px solid var(--lando-border);
+  }
+
+  .lando-panels {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    border-top: 1px solid var(--lando-border);
+  }
+
+  .split-merge-pin {
+    position: relative;
+    min-height: 100dvh;
+    will-change: transform;
+  }
+
+  .split-merge-stage {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .split-merge-panels {
+    display: flex;
+    will-change: transform;
+  }
+
+  .split-merge-panel {
+    display: flex;
+    width: 100%;
+    min-width: 100%;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+    min-height: 100dvh;
+  }
+
+  .split-merge-title {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    font-size: clamp(3.5rem, 16vw, 11rem);
+    font-weight: 900;
+    line-height: 0.82;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    color: var(--lando-fg);
+  }
+
+  .split-merge-kicker {
+    display: block;
+    margin-bottom: 0.02em;
+    font-size: 0.42em;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    will-change: transform, opacity;
+  }
+
+  .split-merge-stack {
+    position: relative;
+    display: block;
+    line-height: 0.82;
+  }
+
+  .split-merge-word {
+    display: block;
+    will-change: transform, opacity;
+  }
+
+  .split-merge-word--main {
+    position: relative;
+    z-index: 2;
+  }
+
+  .split-merge-word--dup {
+    position: absolute;
+    top: 0.14em;
+    left: 0.06em;
+    z-index: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(249 115 22 / 0.55);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .split-merge-desc {
+    margin: clamp(1.5rem, 4vw, 2.5rem) 0 0;
+    max-width: 32rem;
+    font-size: clamp(1.05rem, 2vw, 1.4rem);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--lando-muted);
+    will-change: transform, opacity, filter;
+  }
+
+  .lando-panels-progress {
+    position: absolute;
+    right: clamp(1.5rem, 6vw, 5rem);
+    bottom: clamp(1.5rem, 4vw, 3rem);
+    left: clamp(1.5rem, 6vw, 5rem);
+    height: 2px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--lando-border);
+  }
+
+  .lando-panels-progress-fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: var(--lando-accent);
+    will-change: transform;
+  }
+
+  .horizontal-scroll-gallery {
+    display: inline-flex;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding-right: clamp(24vw, 30vw, 36vw);
+  }
+
+  .horizontal-scroll-figure {
+    display: flex;
+    width: clamp(16rem, 22vw, 22rem);
+    flex-shrink: 0;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .horizontal-scroll-figure-image {
+    width: 100%;
+    height: clamp(15rem, 28vw, 21rem);
+    object-fit: cover;
+    border-radius: 1.8rem;
+    border: 1px solid var(--lando-border);
+    box-shadow: 0 20px 60px rgb(0 0 0 / 0.12);
+  }
+
+  :is(.dark) .horizontal-scroll-figure-image {
+    box-shadow: 0 24px 70px rgb(0 0 0 / 0.32);
+  }
+
+  .horizontal-scroll-figure-copy {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .horizontal-scroll-figure-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--lando-accent);
+  }
+
+  .horizontal-scroll-figure-title {
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--lando-fg);
+  }
+
+  @media (max-width: 767px) {
+    .lando-story-shell {
+      margin-block: 2.5rem;
+      padding-inline: 0.85rem;
+    }
+
+    .lando-story {
+      border-radius: 1.6rem;
+    }
+
+    .horizontal-scroll-pin {
+      min-height: auto;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .lando-story-stage {
+      gap: 1.5rem;
+    }
+
+    .lando-story-meta {
+      gap: 0.55rem;
+    }
+
+    .scroll-indicator {
+      display: none;
+    }
+
+    .lando-story-chip {
+      padding: 0.6rem 0.85rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+    }
+
+    .horizontal-scroll-text {
+      white-space: normal;
+      padding-right: 0;
+      font-size: clamp(1.85rem, 9vw, 2.75rem);
+    }
+
+    .horizontal-scroll-gallery {
+      display: grid;
+      width: min(100%, 22rem);
+      padding-right: 0;
+    }
+
+    .horizontal-scroll-figure {
+      width: 100%;
+    }
+
+    .lando-story-facts {
+      margin-top: 0.85rem;
+    }
+
+    .lando-story-aside {
+      width: 100%;
+      margin-left: 0;
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--lando-border);
+      padding-top: 1rem;
+    }
+
+    .split-merge-panel {
+      min-height: auto;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .split-merge-panels {
+      flex-direction: column;
+    }
+
+    .split-merge-word--dup {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lando-story-shell {
+      padding-inline: 1.5rem;
+    }
+
+    .lando-story-stage {
+      grid-template-columns: minmax(0, 1fr) minmax(22rem, 28rem);
+    }
+
+    .horizontal-scroll-viewport {
+      padding-right: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .horizontal-scroll-track,
+    .split-merge-panels,
+    .split-merge-kicker,
+    .split-merge-word,
+    .split-merge-desc {
+      transform: none !important;
+      opacity: 1 !important;
+      filter: none !important;
+    }
+
+    .split-merge-word--dup {
+      display: none;
+    }
+
+    .lando-panels-progress-fill {
+      transform: scaleX(1) !important;
+    }
   }
 
   /* Staggered Children Logic */

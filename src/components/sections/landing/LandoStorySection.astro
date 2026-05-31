@@ -1,0 +1,249 @@
+---
+import { Image } from 'astro:assets';
+import dashboardImage from '@images/dashboard-image.avif';
+import toolsImage from '@images/automated-tools.jpg';
+import modulesImage from '@images/features-image.png';
+
+interface Props {
+  locale?: 'es' | 'en';
+}
+
+const { locale } = Astro.props;
+const isEs = locale === 'es' || Astro.currentLocale === 'es';
+
+const manifestoLines = isEs
+  ? [
+      'Redefiniendo límites,',
+      'impulsando resultados,',
+      'llevándolo todo adelante.',
+      'Construyendo un legado en software empresarial',
+      'dentro y fuera del sistema.',
+    ]
+  : [
+      'Redefining limits,',
+      'driving results,',
+      'pushing everything forward.',
+      'Building a legacy in enterprise software',
+      'on and off the system.',
+    ];
+
+const panels = isEs
+  ? [
+      {
+        kicker: 'EN',
+        word: 'SISTEMA',
+        desc: 'Módulos ERP, SUNAT, inventario y operaciones en tiempo real.',
+      },
+      {
+        kicker: 'FUERA',
+        word: 'SISTEMA',
+        desc: 'Consultoría, implementación y soporte para llevar tu empresa al siguiente nivel.',
+      },
+    ]
+  : [
+      {
+        kicker: 'IN',
+        word: 'SYSTEM',
+        desc: 'ERP modules, compliance, inventory, and real-time operations.',
+      },
+      {
+        kicker: 'OUT',
+        word: 'SYSTEM',
+        desc: 'Consulting, implementation, and support to take your business further.',
+      },
+    ];
+
+const sectionLabel = isEs ? 'Historia Angel Alegre' : 'Angel Alegre story';
+
+const factCards = isEs
+  ? [
+      {
+        label: 'Ritmo',
+        value: 'Scroll editorial',
+        detail: 'Bloques largos, tension visual y una narrativa mas cinematica.',
+      },
+      {
+        label: 'Sistema',
+        value: 'Arquitectura viva',
+        detail: 'Operacion, compliance y dashboards unidos en una sola historia.',
+      },
+      {
+        label: 'Salida',
+        value: 'Diseno premium',
+        detail: 'La landing se siente mas intencional, mas limpia y mas recordable.',
+      },
+    ]
+  : [
+      {
+        label: 'Rhythm',
+        value: 'Editorial scroll',
+        detail: 'Long-form blocks, visual tension, and more cinematic storytelling.',
+      },
+      {
+        label: 'System',
+        value: 'Living architecture',
+        detail: 'Operations, compliance, and dashboards tied into one story.',
+      },
+      {
+        label: 'Output',
+        value: 'Premium design',
+        detail: 'The landing feels more intentional, cleaner, and more memorable.',
+      },
+    ];
+
+const storyGallery = isEs
+  ? [
+      {
+        image: dashboardImage,
+        alt: 'Panel operativo de Angel Alegre',
+        label: 'Operacion visible',
+        title: 'Control en tiempo real',
+      },
+      {
+        image: modulesImage,
+        alt: 'Módulos integrados del ecosistema',
+        label: '22 modulos',
+        title: 'Arquitectura conectada',
+      },
+      {
+        image: toolsImage,
+        alt: 'Herramientas y automatización empresarial',
+        label: 'Implementacion',
+        title: 'Automatizacion con soporte',
+      },
+    ]
+  : [
+      {
+        image: dashboardImage,
+        alt: 'Angel Alegre operations dashboard',
+        label: 'Visible operations',
+        title: 'Real-time control',
+      },
+      {
+        image: modulesImage,
+        alt: 'Integrated ecosystem modules',
+        label: '22 modules',
+        title: 'Connected architecture',
+      },
+      {
+        image: toolsImage,
+        alt: 'Business automation tools',
+        label: 'Implementation',
+        title: 'Automation with support',
+      },
+    ];
+---
+
+<section class="lando-story-shell">
+  <div class="lando-story">
+    <div class="lando-story-pattern" aria-hidden="true"></div>
+
+    <section
+      class="horizontal-scroll-section lando-manifesto"
+      aria-label={sectionLabel}
+    >
+      <div class="horizontal-scroll-pin">
+        <div class="lando-story-stage">
+          <div class="horizontal-scroll-viewport">
+            <div class="horizontal-scroll-track">
+              <div class="horizontal-scroll-text" role="paragraph">
+                {
+                  manifestoLines.map((line, i) => (
+                    <span
+                      class:list={[
+                        'horizontal-scroll-line',
+                        i === 0 && 'horizontal-scroll-line--accent',
+                      ]}
+                    >
+                      {line}
+                    </span>
+                  ))
+                }
+              </div>
+
+              <div class="horizontal-scroll-gallery" aria-hidden="true">
+                {
+                  storyGallery.map(item => (
+                    <figure class="horizontal-scroll-figure">
+                      <Image
+                        src={item.image}
+                        alt={item.alt}
+                        class="horizontal-scroll-figure-image"
+                        widths={[480, 720]}
+                        sizes="(min-width: 1024px) 28rem, 70vw"
+                      />
+                      <figcaption class="horizontal-scroll-figure-copy">
+                        <span class="horizontal-scroll-figure-label">{item.label}</span>
+                        <span class="horizontal-scroll-figure-title">{item.title}</span>
+                      </figcaption>
+                    </figure>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+
+          <aside class="lando-story-aside">
+            <div class="lando-story-facts">
+              {
+                factCards.map(card => (
+                  <article class="lando-story-fact">
+                    <p class="lando-story-fact-label">{card.label}</p>
+                    <h3 class="lando-story-fact-value">{card.value}</h3>
+                    <p class="lando-story-fact-detail">{card.detail}</p>
+                  </article>
+                ))
+              }
+            </div>
+          </aside>
+        </div>
+
+        <div class="scroll-indicator" aria-hidden="true">
+          <span class="scroll-indicator-copy">{isEs ? 'Scroll' : 'Scroll'}</span>
+          <span class="scroll-indicator-track">
+            <span class="scroll-indicator-bar"></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="split-merge-section lando-panels"
+      aria-label={isEs ? 'Dentro y fuera del sistema' : 'On and off the system'}
+    >
+      <div class="split-merge-pin">
+        <div class="split-merge-stage">
+          <div class="split-merge-panels">
+            {
+              panels.map((panel, panelIndex) => (
+                <article
+                  class="split-merge-panel"
+                  data-panel={panelIndex}
+                >
+                  <h2 class="split-merge-title">
+                    <span class="split-merge-kicker">{panel.kicker}</span>
+                    <span class="split-merge-stack">
+                      <span class="split-merge-word split-merge-word--main">
+                        {panel.word}
+                      </span>
+                      <span
+                        class="split-merge-word split-merge-word--dup"
+                        aria-hidden="true"
+                      >
+                        {panel.word}
+                      </span>
+                    </span>
+                  </h2>
+                  <p class="split-merge-desc">{panel.desc}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+        <div class="lando-panels-progress" aria-hidden="true">
+          <span class="lando-panels-progress-fill"></span>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

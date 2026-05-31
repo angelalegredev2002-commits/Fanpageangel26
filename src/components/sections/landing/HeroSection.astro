@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import PrimaryCTA from '@components/ui/buttons/PrimaryCTA.astro';
 import SecondaryCTA from '@components/ui/buttons/SecondaryCTA.astro';
 import ReviewComponent from '@components/ui/blocks/ReviewComponent.astro';
+import BrandLogo from '@components/BrandLogo.astro';
 
 // Define props from Astro
 const {
@@ -40,14 +41,40 @@ interface Props {
   alt?: string;
   svgRaw?: string;
 }
+
+const isEs = Astro.currentLocale === 'es';
+
+const heroPills = isEs
+  ? ['22 modulos conectados', 'Operacion 360', 'Soporte continuo']
+  : ['22 connected modules', '360 operations', 'Continuous support'];
+
+const heroStats = isEs
+  ? [
+      { value: '22', label: 'modulos integrados' },
+      { value: '24/7', label: 'acompanamiento tecnico' },
+      { value: 'SUNAT', label: 'compliance listo' },
+    ]
+  : [
+      { value: '22', label: 'integrated modules' },
+      { value: '24/7', label: 'technical support' },
+      { value: 'SUNAT', label: 'compliance ready' },
+    ];
+
 ---
 
 {
   /* Defining a grid container that holds all the content - Horizontal on all screens */
 }
 <section
-  class="relative mx-auto grid max-w-[85rem] grid-cols-2 items-center gap-4 overflow-hidden px-4 pt-4 pb-12 sm:px-6 md:gap-20 lg:px-8 2xl:max-w-full"
+  class="relative mx-auto max-w-[85rem] overflow-hidden px-4 pt-4 pb-12 sm:px-6 lg:px-8 lg:pt-8 lg:pb-20 2xl:max-w-full"
 >
+  <div class="pointer-events-none absolute inset-0 -z-30 bg-[radial-gradient(circle_at_top_left,rgba(249,115,22,0.12),transparent_30%),radial-gradient(circle_at_86%_16%,rgba(250,204,21,0.12),transparent_18%)]"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden w-[42%] bg-[url('/banner-pattern.svg')] bg-[length:420px_auto] bg-right-top bg-no-repeat opacity-25 lg:block dark:opacity-12"></div>
+  <div class="pointer-events-none absolute -top-12 left-8 -z-10 size-32 rounded-full bg-orange-500/15 blur-3xl"></div>
+  <div class="pointer-events-none absolute right-10 bottom-8 -z-10 size-40 rounded-full bg-yellow-400/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute inset-x-12 bottom-0 -z-10 h-px bg-linear-to-r from-transparent via-orange-500/50 to-transparent"></div>
+
+  <div class="relative grid items-center gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-10">
   {/* Large Background Parallax Text */}
   <div
     class="parallax-text pointer-events-none top-1/2 left-0 -translate-y-1/2 opacity-5 select-none"
@@ -62,15 +89,32 @@ interface Props {
   </div>
 
   {/* Content Column: The 'Miniature PC' interface */}
-  <div class="reveal-on-scroll order-1 flex flex-col gap-y-4 sm:gap-y-10">
-    <div class="space-y-1 sm:space-y-6">
+  <div class="reveal-on-scroll order-2 flex flex-col gap-y-4 lg:order-1">
+    <div class="mb-6 flex flex-wrap items-center gap-2 sm:gap-3">
+      <span class="inline-flex items-center rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-1 text-[0.65rem] font-black tracking-[0.24em] text-orange-600 uppercase dark:text-orange-300">
+        {isEs ? 'Landing 2026' : 'Landing 2026'}
+      </span>
+      {
+        heroPills.map(pill => (
+          <span class="inline-flex items-center rounded-full border border-neutral-200/80 px-3 py-1 text-[0.68rem] font-bold tracking-[0.18em] text-neutral-600 uppercase dark:border-neutral-800 dark:text-neutral-300">
+            {pill}
+          </span>
+        ))
+      }
+    </div>
+
+    <div class="mb-6 flex items-center">
+      <BrandLogo class="h-auto w-24" />
+    </div>
+
+    <div class="space-y-3 sm:space-y-6">
       <h1
-        class="block text-xl font-black tracking-tight text-neutral-800 sm:text-5xl lg:text-7xl lg:leading-[1.1] dark:text-neutral-100"
+        class="block max-w-4xl text-4xl font-black tracking-[-0.06em] text-balance text-neutral-900 sm:text-6xl lg:text-7xl lg:leading-[0.98] dark:text-neutral-50"
         set:html={title}
       />
       {
         subTitle && (
-          <p class="animate-reveal-up text-[9px] leading-relaxed font-medium text-neutral-600 [animation-delay:400ms] sm:text-lg sm:leading-relaxed lg:w-11/12 dark:text-neutral-400">
+          <p class="animate-reveal-up max-w-2xl text-sm leading-relaxed font-medium text-neutral-600 [animation-delay:400ms] sm:text-lg sm:leading-relaxed dark:text-neutral-300">
             {subTitle}
           </p>
         )
@@ -79,15 +123,15 @@ interface Props {
 
     {/* Actions Interface: Compact but highly functional */}
     <div
-      class="animate-reveal-up flex flex-col gap-y-3 [animation-delay:600ms] sm:gap-y-8"
+      class="animate-reveal-up flex flex-col gap-y-4 [animation-delay:600ms] sm:gap-y-8"
     >
       <div
-        class="flex flex-col gap-y-2 lg:flex-row lg:items-center lg:gap-x-10"
+        class="flex flex-col gap-y-4 xl:flex-row xl:items-center xl:gap-x-10"
       >
         {/* Social Proof - Crisp and professional */}
         {
           withReview && (
-            <div class="shrink-0 origin-left scale-75 sm:scale-100">
+            <div class="shrink-0 origin-left sm:scale-100">
               <ReviewComponent
                 avatars={avatars}
                 starCount={starCount}
@@ -102,14 +146,14 @@ interface Props {
         <div class="flex flex-wrap items-center gap-2 sm:gap-4">
           {
             primaryBtn && (
-              <div class="magnetic-wrap origin-left scale-75 sm:scale-100">
+              <div class="magnetic-wrap origin-left sm:scale-100">
                 <PrimaryCTA title={primaryBtn} url={primaryBtnURL} />
               </div>
             )
           }
           {
             secondaryBtn && (
-              <div class="magnetic-wrap origin-left scale-75 sm:scale-100">
+              <div class="magnetic-wrap origin-left sm:scale-100">
                 <SecondaryCTA title={secondaryBtn} url={secondaryBtnURL} />
               </div>
             )
@@ -117,23 +161,47 @@ interface Props {
         </div>
       </div>
     </div>
+
+    <dl class="mt-8 grid grid-cols-1 gap-6 border-t border-neutral-200 pt-6 sm:grid-cols-3 dark:border-neutral-800">
+      {
+        heroStats.map(stat => (
+          <div>
+            <dt class="text-[0.7rem] font-black tracking-[0.22em] text-neutral-500 uppercase dark:text-neutral-400">
+              {stat.label}
+            </dt>
+            <dd class="mt-2 text-2xl font-black tracking-tight text-neutral-900 dark:text-neutral-50">
+              {stat.value}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
   </div>
 
   <div
-    class="animate-reveal-up order-2 flex items-center justify-center [animation-delay:600ms]"
+    class="animate-reveal-up order-1 flex items-center justify-center [animation-delay:600ms] lg:order-2"
   >
     <div
-      class="group/hero-img relative w-full max-w-[130px] transition-all duration-1000 sm:max-w-[350px]"
+      class="group/hero-img relative w-full max-w-[460px] transition-all duration-1000"
     >
-      <div
-        class="overflow-hidden rounded-3xl bg-transparent transition-all duration-700"
-      >
+      <div class="pointer-events-none absolute inset-x-8 top-12 bottom-12 rounded-full bg-orange-500/10 blur-3xl"></div>
+      <div class="relative px-4 py-6 sm:px-8">
+        <div class="relative z-10 mb-6 flex items-center justify-between gap-3">
+          <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.68rem] font-black tracking-[0.2em] text-neutral-200 uppercase">
+            <span class="size-2 rounded-full bg-orange-400 shadow-[0_0_16px_rgba(249,115,22,0.9)]"></span>
+            {isEs ? 'Modo lanzamiento' : 'Launch mode'}
+          </span>
+          <span class="rounded-full border border-orange-400/30 bg-orange-500/10 px-3 py-1 text-[0.68rem] font-black tracking-[0.2em] text-orange-300 uppercase">
+            2026 build
+          </span>
+        </div>
+
         {
           src && alt && (
             <Image
               src={src}
               alt={alt}
-              class="h-auto w-full object-contain transition-transform duration-1000"
+              class="relative z-10 h-auto w-full object-contain transition-transform duration-1000"
               draggable={'false'}
               loading={'eager'}
               format={'avif'}
@@ -143,13 +211,15 @@ interface Props {
         {
           svgRaw && (
             <div
-              class="h-auto w-full fill-current text-neutral-800 transition-transform duration-1000 dark:text-white"
+              class="relative z-10 h-auto w-full fill-current text-neutral-950 transition-transform duration-1000 dark:text-white"
               set:html={svgRaw}
             />
           )
         }
+
       </div>
     </div>
+  </div>
   </div>
 
   <script>

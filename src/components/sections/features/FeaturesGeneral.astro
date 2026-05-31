@@ -1,7 +1,6 @@
 ---
 // Import the necessary dependencies
 import { Image } from 'astro:assets';
-import IconBlock from '@components/ui/blocks/IconBlock.astro';
 import Icon from '@components/ui/icons/Icon.astro';
 
 interface Feature {
@@ -22,20 +21,21 @@ const { title, subTitle, src, alt, features } = Astro.props;
 ---
 
 <section
-  class="mx-auto max-w-[85rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-full"
+  class="scroll-order-section mx-auto max-w-[85rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-full"
+  data-pin="true"
 >
-  <div class="relative overflow-hidden">
-    {/* Decorative background glow */}
+  <div class="scroll-order-pin relative flex min-h-0 flex-col justify-center overflow-hidden md:min-h-[100dvh]">
     <div
       class="absolute -top-20 -right-20 -z-10 size-64 rounded-full bg-orange-500/10 blur-[100px]"
     >
     </div>
 
-    <div class="mb-10 grid grid-cols-2 items-center gap-6 sm:mb-16 sm:block">
-      {/* Block for title and subtitle - Premium Side by Side on mobile */}
+    <div
+      class="scroll-order-header mb-10 grid grid-cols-2 items-center gap-6 sm:mb-16 sm:block"
+    >
       <div class="flex flex-col gap-y-2 sm:gap-y-6">
         <h2
-          class="text-xl leading-tight font-black tracking-tight text-neutral-800 sm:text-5xl dark:text-neutral-100"
+          class="text-xl leading-tight font-black tracking-tight text-balance text-neutral-800 sm:text-5xl dark:text-neutral-100"
         >
           {title}
         </h2>
@@ -48,9 +48,12 @@ const { title, subTitle, src, alt, features } = Astro.props;
         }
       </div>
 
-      {/* Feature image - High presence on mobile side-by-side */}
       <div
-        class="group/feat-img relative overflow-hidden rounded-3xl border border-neutral-200 shadow-[0_10px_30px_rgba(249,115,22,0.08)] transition-all duration-700 sm:mt-16 dark:border-neutral-800"
+        class="scroll-order-item group/feat-img relative overflow-hidden rounded-3xl border border-neutral-200 shadow-[0_10px_30px_rgba(249,115,22,0.08)] sm:mt-16 dark:border-neutral-800"
+        data-scatter-index="0"
+        data-scatter-x="-100"
+        data-scatter-y="60"
+        data-scatter-r="-8"
       >
         {
           src && alt && (
@@ -71,14 +74,16 @@ const { title, subTitle, src, alt, features } = Astro.props;
       </div>
     </div>
 
-    {/* IconBlocks Grid - Organized into 4 distinct blocks */}
     <div
-      class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-2 lg:gap-6 xl:grid-cols-4"
+      class="scroll-order-grid mt-8 grid grid-cols-2 gap-3 sm:grid-cols-2 lg:gap-6 xl:grid-cols-4"
     >
       {
         features &&
-          features.map(feature => (
-            <div class="group flex flex-col gap-y-2 rounded-2xl border border-neutral-200 bg-neutral-50/50 p-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/50">
+          features.map((feature, index) => (
+            <div
+              class="scroll-order-item group flex flex-col gap-y-2 rounded-2xl border border-neutral-200 bg-neutral-50/50 p-3 transition-[box-shadow,border-color] duration-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900/50"
+              data-scatter-index={index + 1}
+            >
               <div class="flex items-center gap-x-2">
                 <div class="text-orange-500">
                   <Icon name={feature.svg} />

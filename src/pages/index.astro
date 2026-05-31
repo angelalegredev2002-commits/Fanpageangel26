@@ -4,6 +4,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import HeroSection from '@components/sections/landing/HeroSection.astro';
 import HeroSectionAlt from '@components/sections/landing/HeroSectionAlt.astro';
 import ClientsSection from '@components/sections/landing/ClientsSection.astro';
+import LandoStorySection from '@components/sections/landing/LandoStorySection.astro';
 import FeaturesGeneral from '@components/sections/features/FeaturesGeneral.astro';
 import FeaturesNavs from '@components/sections/features/FeaturesNavs.astro';
 import SecuritySection from '@components/sections/features/SecuritySection.astro';
@@ -64,15 +65,15 @@ const avatarSrcs = db.landing?.heroAvatars || [];
     />
   </div>
 
-  <div class="reveal-on-scroll">
-    <FeaturesGeneral
-      title={db.landing?.featuresTitle_es || ''}
-      subTitle={db.landing?.featuresSubtitle_es || ''}
-      src={featureImage}
-      alt="Angel Alegre solutions in floating boxes"
-      features={features}
-    />
-  </div>
+  <LandoStorySection locale="es" />
+
+  <FeaturesGeneral
+    title={db.landing?.featuresTitle_es || ''}
+    subTitle={db.landing?.featuresSubtitle_es || ''}
+    src={featureImage}
+    alt="Angel Alegre solutions in floating boxes"
+    features={features}
+  />
 
   <div class="reveal-on-scroll">
     <FeaturesNavs
@@ -124,9 +125,7 @@ const avatarSrcs = db.landing?.heroAvatars || [];
     />
   </div>
 
-  <div class="reveal-on-scroll">
-    <IntegrationsSection />
-  </div>
+  <IntegrationsSection />
 
   <div class="reveal-on-scroll">
     <SecuritySection />

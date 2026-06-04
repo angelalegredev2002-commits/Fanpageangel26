@@ -693,3 +693,21 @@ If you're interested in helping, you can contribute in several ways:
 This project is released under the MIT License. Please read the [LICENSE](https://github.com/mearashadowfax/ScrewFast/blob/main/LICENSE) file for more details.
 
 **Note:** This website template has no affiliation with the companies displayed. Logos are used for demonstration purposes only and should be replaced in customized versions.
+
+
+../ To relased amazing relations many  Public/assets/logo.svg.
+
+
+Include Brsch/ srsch/ pnpm install.
+
+Other models: 
+. User
+. User_rol
+. Organization
+. Tenant_id : Uuid
+. Branch_id  :Uuid
+. User_agent
+. User_responsability
+. Others: Rules
+. Timestop
+

@@ -180,6 +180,11 @@ export function initScrollSectionReveals() {
         end: 'top 45%',
         scrub: 0.75,
         invalidateOnRefresh: true,
+        onToggle: self => {
+          if (self.isActive || self.progress > 0) {
+            section.classList.add('is-revealed');
+          }
+        },
       },
     });
   });

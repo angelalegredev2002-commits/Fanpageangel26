@@ -79,7 +79,7 @@ export function initHorizontalManifesto() {
 
     ScrollTrigger.matchMedia({
       '(min-width: 768px)': () => build(true),
-      '(max-width: 767px)': () => build(false),
+      '(max-width: 767px)': () => build(true),
     });
   });
 }

@@ -21,17 +21,17 @@ const { title, subTitle, src, alt, features } = Astro.props;
 ---
 
 <section
-  class="scroll-order-section mx-auto max-w-[85rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-full"
-  data-pin="true"
+  class="scroll-order-section mx-auto max-w-[85rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-16 2xl:max-w-full"
+  data-pin="false"
 >
-  <div class="scroll-order-pin relative flex min-h-0 flex-col justify-center overflow-hidden md:min-h-[100dvh]">
+  <div class="scroll-order-pin relative flex min-h-0 flex-col justify-center overflow-hidden">
     <div
       class="absolute -top-20 -right-20 -z-10 size-64 rounded-full bg-orange-500/10 blur-[100px]"
     >
     </div>
 
     <div
-      class="scroll-order-header mb-10 grid grid-cols-2 items-center gap-6 sm:mb-16 sm:block"
+      class="scroll-order-header mb-10 grid grid-cols-1 items-center gap-6 sm:mb-16 sm:grid-cols-2"
     >
       <div class="flex flex-col gap-y-2 sm:gap-y-6">
         <h2

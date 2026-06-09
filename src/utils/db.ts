@@ -24,11 +24,6 @@ const defaultPartners = [
     href: '#',
   },
   {
-    icon: `<img src="/images/clients/client-4.png" alt="Client 4" class="mx-auto h-12 w-auto grayscale object-contain dark:invert" />`,
-    name: 'Glow & Lovely',
-    href: '#',
-  },
-  {
     icon: `<img src="/images/clients/client-5.png" alt="Client 5" class="mx-auto h-12 w-auto grayscale object-contain dark:invert" />`,
     name: 'Gallina Blanca',
     href: '#',

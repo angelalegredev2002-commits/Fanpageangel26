@@ -237,7 +237,7 @@
   .lando-story-pattern {
     position: absolute;
     inset: 0;
-    background-image: url('/banner-pattern.svg');
+    /* background-image: url('/banner-pattern.svg'); */
     background-size: 28rem auto;
     background-position: center;
     opacity: 0.08;
@@ -585,12 +585,6 @@
       border-radius: 1.6rem;
     }
 
-    .horizontal-scroll-pin {
-      min-height: auto;
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-    }
-
     .lando-story-stage {
       gap: 1.5rem;
     }
@@ -610,19 +604,9 @@
     }
 
     .horizontal-scroll-text {
-      white-space: normal;
-      padding-right: 0;
+      white-space: nowrap;
+      padding-right: 2rem;
       font-size: clamp(1.85rem, 9vw, 2.75rem);
-    }
-
-    .horizontal-scroll-gallery {
-      display: grid;
-      width: min(100%, 22rem);
-      padding-right: 0;
-    }
-
-    .horizontal-scroll-figure {
-      width: 100%;
     }
 
     .lando-story-facts {
@@ -842,6 +826,14 @@
   .is-revealed .word-reveal span {
     transform: translateY(0);
   }
+
+  /* Staggered delays for hero word-reveal (loaded with is-revealed) */
+  .is-revealed .word-reveal:nth-child(1) span { transition-delay: 0.05s; }
+  .is-revealed .word-reveal:nth-child(2) span { transition-delay: 0.15s; }
+  .is-revealed .word-reveal:nth-child(3) span { transition-delay: 0.25s; }
+  .is-revealed .word-reveal:nth-child(4) span { transition-delay: 0.35s; }
+  .is-revealed .word-reveal:nth-child(5) span { transition-delay: 0.45s; }
+  .is-revealed .word-reveal:nth-child(6) span { transition-delay: 0.55s; }
 
   /* Tech Grid Background */
   .tech-grid {

@@ -1,353 +1,217 @@
 ---
+const pathname = Astro.url.pathname;
 
+function isActive(href: string): boolean {
+  if (href === '/adminpanel') return pathname === '/adminpanel' || pathname === '/adminpanel/';
+  return pathname.startsWith(href);
+}
+
+function linkClass(href: string, size: 'normal' | 'small' = 'normal'): string {
+  const base = 'group flex items-center gap-2.5 rounded-lg px-3 transition-all duration-150 text-xs';
+  const py = size === 'small' ? 'py-1.5' : 'py-2';
+  if (isActive(href)) {
+    return `${base} ${py} bg-orange-500/10 text-orange-500 border-l-2 border-orange-500 pl-[10px] font-medium dark:text-orange-400`;
+  }
+  return `${base} ${py} text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 font-normal dark:text-neutral-400 dark:hover:bg-neutral-800/70 dark:hover:text-neutral-200`;
+}
+
+function iconClass(href: string): string {
+  if (isActive(href)) {
+    return 'h-4 w-4 text-orange-500 dark:text-orange-400';
+  }
+  return 'h-4 w-4 text-neutral-400 transition-colors group-hover:text-neutral-700 dark:text-neutral-500 dark:group-hover:text-neutral-300';
+}
 ---
 
 <aside
   id="app-sidebar"
   class="absolute inset-y-0 left-0 z-[100] flex w-64 shrink-0 -translate-x-full transform flex-col border-r border-neutral-200 bg-white transition-transform duration-300 md:relative md:translate-x-0 dark:border-neutral-800 dark:bg-neutral-950"
 >
-  <div
-    class="flex h-16 items-center justify-between border-b border-neutral-200 px-6 dark:border-neutral-800"
-  >
-    <span
-      class="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-xl font-bold text-transparent"
-      >AdminPanel</span
-    >
-    <button
-      class="sidebar-toggle text-neutral-500 hover:text-neutral-900 md:hidden dark:text-neutral-400 dark:hover:text-white"
-    >
-      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"></path></svg
-      >
+  <!-- Logo -->
+  <div class="flex h-16 items-center justify-between border-b border-neutral-200 px-6 dark:border-neutral-800">
+    <a href="/adminpanel" class="flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-orange-400 to-orange-600 shadow-lg shadow-orange-500/30">
+        <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </div>
+      <span class="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-lg font-bold text-transparent">
+        AdminPanel
+      </span>
+    </a>
+    <button class="sidebar-toggle text-neutral-500 hover:text-neutral-900 md:hidden dark:text-neutral-400 dark:hover:text-white">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
     </button>
   </div>
-  <nav class="scrollbar-hide flex-1 space-y-1 overflow-y-auto p-4">
-    <a
-      href="/adminpanel"
-      class="flex items-center gap-3 rounded-xl px-4 py-3 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-        ></path></svg
-      >
+
+  <!-- Navigation -->
+  <nav class="scrollbar-hide flex-1 space-y-0.5 overflow-y-auto p-3">
+
+    <!-- Main -->
+    <a href="/adminpanel" class={linkClass('/adminpanel')}>
+      <svg class={iconClass('/adminpanel')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+      </svg>
       Dashboard
     </a>
-    <a
-      href="/adminpanel/users"
-      class="flex items-center gap-3 rounded-xl px-4 py-3 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-        ></path></svg
-      >
-      Users
+
+    <a href="/adminpanel/users" class={linkClass('/adminpanel/users')}>
+      <svg class={iconClass('/adminpanel/users')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+      Usuarios
     </a>
-    <a
-      href="/adminpanel/settings"
-      class="flex items-center gap-3 rounded-xl px-4 py-3 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-        ></path><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg
-      >
-      Settings
+
+    <a href="/adminpanel/settings" class={linkClass('/adminpanel/settings')}>
+      <svg class={iconClass('/adminpanel/settings')} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      Configuración
     </a>
-    <div class="mt-4 px-4 py-2">
-      <p
-        class="text-xs font-semibold tracking-wider text-neutral-500 uppercase"
-      >
-        Content
+
+    <!-- Divider: Content -->
+    <div class="px-3 pb-1 pt-5">
+      <p class="text-[10px] font-bold tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
+        Contenido
       </p>
     </div>
-    <a
-      href="/adminpanel/media"
-      class="flex items-center gap-3 rounded-xl px-4 py-2 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-        ></path></svg
-      >
+
+    <a href="/adminpanel/media" class={linkClass('/adminpanel/media', 'small')}>
+      <svg class={iconClass('/adminpanel/media')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
       Media Library
     </a>
 
-    <div class="mt-4 px-4 py-2">
-      <p
-        class="text-xs font-semibold tracking-wider text-neutral-500 uppercase"
-      >
+    <!-- Divider: Site Content -->
+    <div class="px-3 pb-1 pt-5">
+      <p class="text-[10px] font-bold tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
         Site Content
       </p>
     </div>
-    <a
-      href="/adminpanel/site/header"
-      class="flex items-center gap-3 rounded-xl px-4 py-2 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"></path></svg
-      >
+
+    <a href="/adminpanel/site/header" class={linkClass('/adminpanel/site/header', 'small')}>
+      <svg class={iconClass('/adminpanel/site/header')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
       Header
     </a>
-    <a
-      href="/adminpanel/site/footer"
-      class="flex items-center gap-3 rounded-xl px-4 py-2 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg
-      >
+
+    <a href="/adminpanel/site/footer" class={linkClass('/adminpanel/site/footer', 'small')}>
+      <svg class={iconClass('/adminpanel/site/footer')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
       Footer
     </a>
 
-    <!-- Landing Page Config -->
-    <div>
-      <h3
-        class="mb-2 px-4 text-xs font-semibold tracking-wider text-neutral-500 uppercase"
-      >
+    <!-- Divider: Landing Page -->
+    <div class="px-3 pb-1 pt-5">
+      <p class="text-[10px] font-bold tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
         Landing Page
-      </h3>
-      <ul class="space-y-1">
-        <li>
-          <a
-            href="/adminpanel/landing/hero"
-            class="group flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
-          >
-            <svg
-              class="h-5 w-5 text-neutral-500 transition-colors group-hover:text-orange-500 dark:group-hover:text-orange-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              ></path>
-            </svg>
-            Hero Section
-          </a>
-        </li>
-        <li>
-          <a
-            href="/adminpanel/landing/sections"
-            class="group flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
-          >
-            <svg
-              class="h-5 w-5 text-neutral-500 transition-colors group-hover:text-orange-500 dark:group-hover:text-orange-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-            </svg>
-            Títulos de Secciones
-          </a>
-        </li>
-        <li>
-          <a
-            href="/adminpanel/landing/faqs"
-            class="group flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
-          >
-            <svg
-              class="h-5 w-5 text-neutral-500 transition-colors group-hover:text-orange-500 dark:group-hover:text-orange-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            FAQs
-          </a>
-        </li>
-        <li>
-          <a
-            href="/adminpanel/landing/features"
-            class="group flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
-          >
-            <svg
-              class="h-5 w-5 text-neutral-500 transition-colors group-hover:text-orange-500 dark:group-hover:text-orange-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-              ></path>
-            </svg>
-            Características
-          </a>
-        </li>
-        <li>
-          <a
-            href="/adminpanel/landing/testimonials"
-            class="group flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
-          >
-            <svg
-              class="h-5 w-5 text-neutral-500 transition-colors group-hover:text-orange-500 dark:group-hover:text-orange-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              ></path>
-            </svg>
-            Testimonios
-          </a>
-        </li>
-        <li>
-          <a
-            href="/adminpanel/landing/pricing"
-            class="group flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
-          >
-            <svg
-              class="h-5 w-5 text-neutral-500 transition-colors group-hover:text-orange-500 dark:group-hover:text-orange-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            Precios
-          </a>
-        </li>
-        <li>
-          <a
-            href="/adminpanel/landing/partners"
-            class="group flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
-          >
-            <svg
-              class="h-5 w-5 text-neutral-500 transition-colors group-hover:text-orange-500 dark:group-hover:text-orange-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-              ></path>
-            </svg>
-            Partners
-          </a>
-        </li>
-      </ul>
+      </p>
     </div>
 
-    <div class="mt-4 px-4 py-2">
-      <p
-        class="text-xs font-semibold tracking-wider text-neutral-500 uppercase"
-      >
+    <a href="/adminpanel/landing/hero" class={linkClass('/adminpanel/landing/hero', 'small')}>
+      <svg class={iconClass('/adminpanel/landing/hero')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      Hero Section
+    </a>
+
+    <a href="/adminpanel/landing/sections" class={linkClass('/adminpanel/landing/sections', 'small')}>
+      <svg class={iconClass('/adminpanel/landing/sections')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+      </svg>
+      Títulos de Secciones
+    </a>
+
+    <a href="/adminpanel/landing/faqs" class={linkClass('/adminpanel/landing/faqs', 'small')}>
+      <svg class={iconClass('/adminpanel/landing/faqs')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      FAQs
+    </a>
+
+    <a href="/adminpanel/landing/features" class={linkClass('/adminpanel/landing/features', 'small')}>
+      <svg class={iconClass('/adminpanel/landing/features')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+      </svg>
+      Características
+    </a>
+
+    <a href="/adminpanel/landing/testimonials" class={linkClass('/adminpanel/landing/testimonials', 'small')}>
+      <svg class={iconClass('/adminpanel/landing/testimonials')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>
+      Testimonios
+    </a>
+
+    <a href="/adminpanel/landing/pricing" class={linkClass('/adminpanel/landing/pricing', 'small')}>
+      <svg class={iconClass('/adminpanel/landing/pricing')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Precios
+    </a>
+
+    <a href="/adminpanel/landing/partners" class={linkClass('/adminpanel/landing/partners', 'small')}>
+      <svg class={iconClass('/adminpanel/landing/partners')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+      Partners
+    </a>
+
+    <!-- Divider: Legal -->
+    <div class="px-3 pb-1 pt-5">
+      <p class="text-[10px] font-bold tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
         Legal
       </p>
     </div>
-    <a
-      href="/adminpanel/legal/cookies"
-      class="flex items-center gap-3 rounded-xl px-4 py-2 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg
-      >
+
+    <a href="/adminpanel/legal/cookies" class={linkClass('/adminpanel/legal/cookies', 'small')}>
+      <svg class={iconClass('/adminpanel/legal/cookies')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
       Cookies Banner
     </a>
-    <a
-      href="/adminpanel/legal/privacy"
-      class="flex items-center gap-3 rounded-xl px-4 py-2 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-        ></path></svg
-      >
+
+    <a href="/adminpanel/legal/privacy" class={linkClass('/adminpanel/legal/privacy', 'small')}>
+      <svg class={iconClass('/adminpanel/legal/privacy')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
       Privacy Policy
     </a>
-    <a
-      href="/adminpanel/legal/terms"
-      class="flex items-center gap-3 rounded-xl px-4 py-2 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
-    >
-      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-        ></path></svg
-      >
+
+    <a href="/adminpanel/legal/terms" class={linkClass('/adminpanel/legal/terms', 'small')}>
+      <svg class={iconClass('/adminpanel/legal/terms')} style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
       Terms & Conditions
     </a>
+
   </nav>
-  <div class="border-t border-neutral-200 p-4 dark:border-neutral-800">
+
+  <!-- Footer -->
+  <div class="border-t border-neutral-200 p-3 dark:border-neutral-800">
     <a
       href="/"
-      class="flex items-center gap-3 rounded-xl px-4 py-3 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+      target="_blank"
+      class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-neutral-600 transition-all hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
     >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-        ></path></svg
-      >
-      Back to Site
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+      </svg>
+      Ver Sitio Público
+    </a>
+    <a
+      href="/logout"
+      class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-500 transition-all hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+      </svg>
+      Cerrar Sesión
     </a>
   </div>
 </aside>

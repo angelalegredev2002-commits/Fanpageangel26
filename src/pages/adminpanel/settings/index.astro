@@ -1,0 +1,248 @@
+---
+export const prerender = false;
+import AdminLayout from '@layouts/AdminLayout.astro';
+import { getDB, saveDB } from '../../../utils/db';
+
+let db = getDB();
+let success = false;
+let activeTab = 'general';
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const section = formData.get('section') as string;
+  activeTab = section || 'general';
+
+  if (section === 'general') {
+    if (!db.site) db.site = {} as any;
+    db.site.brandText = formData.get('brandText') as string;
+    db.site.stickyHeader = formData.get('stickyHeader') === 'on' ? 'on' : 'off';
+    db.site.footerText_es = formData.get('footerText_es') as string;
+    db.site.footerText_en = formData.get('footerText_en') as string;
+    saveDB(db);
+    success = true;
+  }
+
+  if (section === 'seo') {
+    if (!db.site) db.site = {} as any;
+    (db.site as any).metaTitle_es = formData.get('metaTitle_es') as string;
+    (db.site as any).metaDesc_es = formData.get('metaDesc_es') as string;
+    (db.site as any).metaTitle_en = formData.get('metaTitle_en') as string;
+    (db.site as any).metaDesc_en = formData.get('metaDesc_en') as string;
+    saveDB(db);
+    success = true;
+  }
+}
+
+const site = db.site as any;
+---
+
+<AdminLayout title="Configuración">
+  <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-black tracking-tight text-neutral-900 dark:text-white">
+        <span class="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Configuración</span>
+        del Panel
+      </h1>
+      <p class="mt-1 text-neutral-500 dark:text-neutral-400">
+        Ajustes globales del sitio, SEO y preferencias del panel.
+      </p>
+    </div>
+    {success && (
+      <span class="flex items-center gap-2 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-2 text-sm font-bold text-green-500 dark:text-green-400">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+        </svg>
+        ¡Cambios Guardados!
+      </span>
+    )}
+  </div>
+
+  <!-- Tabs -->
+  <div class="mb-6 flex gap-1 rounded-xl border border-neutral-200 bg-white p-1 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+    {[
+      { id: 'general', label: 'General', icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>` },
+      { id: 'seo', label: 'SEO', icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>` },
+      { id: 'danger', label: 'Zona de Peligro', icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>` },
+    ].map(tab => (
+      <button
+        data-tab={tab.id}
+        class={`tab-btn flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all ${activeTab === tab.id ? 'bg-orange-500 text-white shadow-md shadow-orange-500/25' : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'}`}
+      >
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" set:html={tab.icon} />
+        <span class="hidden sm:inline">{tab.label}</span>
+      </button>
+    ))}
+  </div>
+
+  <!-- Tab: General -->
+  <div id="tab-general" class={`space-y-6 ${activeTab !== 'general' ? 'hidden' : ''}`}>
+    <div class="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-900/70">
+      <div class="border-b border-neutral-100 px-6 py-4 dark:border-neutral-800">
+        <h2 class="text-lg font-bold text-neutral-900 dark:text-white">Identidad del Sitio</h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">Nombre, comportamiento del header y textos del footer.</p>
+      </div>
+      <form method="POST" class="space-y-5 p-6">
+        <input type="hidden" name="section" value="general" />
+        <div>
+          <label class="mb-1.5 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">Nombre del Sitio / Marca</label>
+          <input
+            type="text"
+            name="brandText"
+            value={site?.brandText || 'Angel Alegre'}
+            class="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white"
+          />
+        </div>
+        <div class="flex items-center justify-between rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 dark:border-neutral-700 dark:bg-neutral-800">
+          <div>
+            <p class="text-sm font-semibold text-neutral-900 dark:text-white">Header Sticky</p>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400">El header se fija al hacer scroll</p>
+          </div>
+          <label class="relative inline-flex cursor-pointer items-center">
+            <input type="hidden" name="stickyHeader" value="off" />
+            <input
+              type="checkbox"
+              name="stickyHeader"
+              value="on"
+              checked={site?.stickyHeader !== 'off'}
+              class="peer sr-only"
+            />
+            <div class="peer h-6 w-11 rounded-full bg-neutral-300 transition-colors peer-checked:bg-orange-500 dark:bg-neutral-600 peer-checked:dark:bg-orange-500"></div>
+            <div class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-5"></div>
+          </label>
+        </div>
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">Footer Text (Español)</label>
+            <input
+              type="text"
+              name="footerText_es"
+              value={site?.footerText_es || '© 2026 Angel Alegre. Todos los derechos reservados.'}
+              class="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white"
+            />
+          </div>
+          <div>
+            <label class="mb-1.5 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">Footer Text (English)</label>
+            <input
+              type="text"
+              name="footerText_en"
+              value={site?.footerText_en || '© 2026 Angel Alegre. All rights reserved.'}
+              class="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end pt-2">
+          <button type="submit" class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-3 font-bold text-white shadow-lg shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500 hover:-translate-y-0.5">
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tab: SEO -->
+  <div id="tab-seo" class={`space-y-6 ${activeTab !== 'seo' ? 'hidden' : ''}`}>
+    <div class="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-900/70">
+      <div class="border-b border-neutral-100 px-6 py-4 dark:border-neutral-800">
+        <h2 class="text-lg font-bold text-neutral-900 dark:text-white">Meta Tags SEO</h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">Títulos y descripciones para buscadores.</p>
+      </div>
+      <form method="POST" class="space-y-5 p-6">
+        <input type="hidden" name="section" value="seo" />
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div class="space-y-4">
+            <h3 class="border-b border-neutral-100 pb-2 text-sm font-bold text-orange-500 dark:border-neutral-800">Español</h3>
+            <div>
+              <label class="mb-1.5 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">Meta Título (ES)</label>
+              <input type="text" name="metaTitle_es" value={site?.metaTitle_es || 'Angel Alegre — Soluciones de Software'} class="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-white" />
+              <p class="mt-1 text-xs text-neutral-400">Máximo 60 caracteres recomendado</p>
+            </div>
+            <div>
+              <label class="mb-1.5 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">Meta Descripción (ES)</label>
+              <textarea name="metaDesc_es" rows="3" class="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">{site?.metaDesc_es || ''}</textarea>
+              <p class="mt-1 text-xs text-neutral-400">Máximo 160 caracteres recomendado</p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <h3 class="border-b border-neutral-100 pb-2 text-sm font-bold text-orange-500 dark:border-neutral-800">English</h3>
+            <div>
+              <label class="mb-1.5 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">Meta Title (EN)</label>
+              <input type="text" name="metaTitle_en" value={site?.metaTitle_en || 'Angel Alegre — Software Solutions'} class="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-white" />
+            </div>
+            <div>
+              <label class="mb-1.5 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">Meta Description (EN)</label>
+              <textarea name="metaDesc_en" rows="3" class="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">{site?.metaDesc_en || ''}</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end pt-2">
+          <button type="submit" class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-3 font-bold text-white shadow-lg shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500">
+            Guardar SEO
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tab: Danger Zone -->
+  <div id="tab-danger" class={`space-y-6 ${activeTab !== 'danger' ? 'hidden' : ''}`}>
+    <div class="overflow-hidden rounded-2xl border border-red-200 bg-white shadow-sm dark:border-red-900/40 dark:bg-neutral-900/70">
+      <div class="border-b border-red-100 bg-red-50/50 px-6 py-4 dark:border-red-900/30 dark:bg-red-900/10">
+        <h2 class="text-lg font-bold text-red-600 dark:text-red-400">⚠ Zona de Peligro</h2>
+        <p class="text-sm text-red-500/80 dark:text-red-400/70">Estas acciones son irreversibles. Procede con extrema precaución.</p>
+      </div>
+      <div class="divide-y divide-red-100 p-6 dark:divide-red-900/30">
+        {[
+          { title: 'Exportar Configuración', desc: 'Descarga el archivo db.json con toda la configuración actual del sitio.', label: 'Exportar JSON', href: '/src/data/db.json', safe: true },
+          { title: 'Reiniciar Configuración de Landing', desc: 'Restaura todos los textos de la landing page a los valores por defecto. No se puede deshacer.', label: 'Reiniciar Landing', href: null, safe: false },
+          { title: 'Reiniciar Todo', desc: 'Elimina toda la configuración personalizada y restaura los valores de fábrica.', label: 'Reiniciar Todo', href: null, safe: false },
+        ].map(item => (
+          <div class="flex flex-wrap items-center justify-between gap-4 py-5 first:pt-0 last:pb-0">
+            <div>
+              <p class="font-semibold text-neutral-900 dark:text-white">{item.title}</p>
+              <p class="text-sm text-neutral-500 dark:text-neutral-400">{item.desc}</p>
+            </div>
+            {item.safe ? (
+              <a href={item.href!} class="rounded-xl border border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 transition-all hover:border-neutral-400 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+                {item.label}
+              </a>
+            ) : (
+              <button
+                class="rounded-xl border border-red-300 bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 transition-all hover:bg-red-100 hover:border-red-400 dark:border-red-900/50 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
+                onclick="return confirm('¿Estás seguro? Esta acción no se puede deshacer.')"
+              >
+                {item.label}
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  // Tab switching
+  const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const tabPanels = ['general', 'seo', 'danger'];
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab!;
+      // Update buttons
+      tabBtns.forEach(b => {
+        const active = b.dataset.tab === target;
+        b.className = b.className
+          .replace(/bg-orange-500 text-white shadow-md shadow-orange-500\/25/g, '')
+          .replace(/text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800/g, '');
+        b.className += active
+          ? ' bg-orange-500 text-white shadow-md shadow-orange-500/25'
+          : ' text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800';
+      });
+      // Update panels
+      tabPanels.forEach(id => {
+        const panel = document.getElementById(`tab-${id}`);
+        if (panel) panel.classList.toggle('hidden', id !== target);
+      });
+    });
+  });
+</script>

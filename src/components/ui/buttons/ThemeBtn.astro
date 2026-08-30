@@ -1,32 +1,77 @@
 ---
-import ThemeIcon from '../../ThemeIcon.astro';
+// Modern Theme Toggle Button matching the design system
 ---
 
-<style>
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 9999px;
-    background: var(--theme-bg, #f3f4f6);
-    color: var(--theme-fg, #111827);
-    transition: background 0.2s;
-  }
-  button:hover {
-    background: var(--theme-bg-hover, #e5e7eb);
-  }
-</style>
+<button
+  id="theme-mode-btn"
+  type="button"
+  aria-label="Toggle theme mode"
+  class="relative flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-all hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
+>
+  <!-- Sun icon (visible in dark mode, click to go light) -->
+  <svg
+    class="hidden h-4 w-4 dark:block"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="m4.93 4.93 1.41 1.41"></path>
+    <path d="m17.66 17.66 1.41 1.41"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+    <path d="m6.34 17.66-1.41 1.41"></path>
+    <path d="m19.07 4.93-1.41 1.41"></path>
+  </svg>
 
-<button id="theme-btn" aria-label="Toggle theme">
-  <ThemeIcon />
+  <!-- Moon icon (visible in light mode, click to go dark) -->
+  <svg
+    class="block h-4 w-4 dark:hidden"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"
+    ></path>
+  </svg>
 </button>
 
 <script>
-  const btn = document.getElementById('theme-btn');
-  btn?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('hs_theme', isDark ? 'dark' : 'light');
-  });
+  (function () {
+    const btn = document.getElementById('theme-mode-btn');
+    btn?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      const newMode = isDark ? 'dark' : 'light';
+      localStorage.setItem('hs_theme', newMode);
+
+      // Sync with theme customizer settings
+      try {
+        const saved = localStorage.getItem('theme_customizer_settings');
+        const settings = saved ? JSON.parse(saved) : {};
+        settings.colorMode = newMode;
+        localStorage.setItem('theme_customizer_settings', JSON.stringify(settings));
+
+        // Update segmented buttons inside theme customizer if open
+        document.querySelectorAll<HTMLButtonElement>('.mode-btn').forEach(b => {
+          const active = b.getAttribute('data-color-mode') === newMode;
+          if (active) {
+            b.classList.add('bg-white', 'text-neutral-900', 'shadow-sm', 'dark:bg-neutral-800', 'dark:text-white');
+            b.classList.remove('text-neutral-600', 'dark:text-neutral-400');
+          } else {
+            b.classList.remove('bg-white', 'text-neutral-900', 'shadow-sm', 'dark:bg-neutral-800', 'dark:text-white');
+            b.classList.add('text-neutral-600', 'dark:text-neutral-400');
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  })();
 </script>

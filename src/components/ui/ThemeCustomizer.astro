@@ -1,0 +1,557 @@
+---
+// ThemeCustomizer.astro - Visual Theme Customizer dropdown / popup
+---
+
+<div class="relative inline-block text-left" id="theme-customizer-root">
+  <!-- Trigger Button (Palette Icon) -->
+  <button
+    id="theme-customizer-toggle"
+    type="button"
+    aria-label="Theme Customizer"
+    class="relative flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-all hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"
+  >
+    <svg
+      class="h-4 w-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M7 21a4 4 0 01-4-4 7 7 0 0110-6.32V10a3 3 0 013-3h2.68A4 4 0 0122 10.32V11a7 7 0 01-10 6.32V17a3 3 0 01-3 3H7z"
+      ></path>
+      <circle cx="8" cy="8" r="1" fill="currentColor"></circle>
+      <circle cx="12" cy="6" r="1" fill="currentColor"></circle>
+      <circle cx="16" cy="8" r="1" fill="currentColor"></circle>
+      <circle cx="9" cy="14" r="1" fill="currentColor"></circle>
+    </svg>
+  </button>
+
+  <!-- Customizer Popover -->
+  <div
+    id="theme-customizer-panel"
+    class="invisible absolute right-0 z-[120] mt-2 w-80 origin-top-right rounded-2xl border border-neutral-200 bg-white/95 p-5 opacity-0 shadow-2xl backdrop-blur-md transition-all duration-200 sm:w-88 dark:border-neutral-800 dark:bg-neutral-900/95 dark:text-neutral-200"
+  >
+    <!-- Header -->
+    <div class="mb-4 flex items-start justify-between border-b border-neutral-100 pb-3 dark:border-neutral-800">
+      <div>
+        <div class="flex items-center gap-2">
+          <h3 class="text-base font-bold text-neutral-900 dark:text-white">
+            Theme Customizer
+          </h3>
+          <!-- Help Icon -->
+          <div class="group/help relative flex items-center">
+            <svg
+              class="h-4 w-4 cursor-pointer text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <div class="invisible absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 rounded-lg bg-neutral-900 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 shadow transition-all group-hover/help:visible group-hover/help:opacity-100 dark:bg-white dark:text-neutral-900">
+              Configura tipografía, colores y layout
+            </div>
+          </div>
+        </div>
+        <p class="mt-0.5 text-xs text-neutral-500 dark:text-neutral-400">
+          Customize your theme to your liking.
+        </p>
+      </div>
+
+      <!-- Reset Button -->
+      <button
+        id="theme-reset-btn"
+        title="Reset all settings to default"
+        class="flex h-7 w-7 items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-700 dark:text-neutral-500 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+      >
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Body Scrollable if needed -->
+    <div class="scrollbar-hide max-h-[75vh] space-y-4 overflow-y-auto pr-1">
+      <!-- 1. Theme Preset -->
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          Theme Preset
+        </label>
+        <div class="relative">
+          <select
+            id="theme-preset-select"
+            class="w-full appearance-none rounded-xl border border-neutral-200 bg-neutral-50 py-2 pr-8 pl-9 text-xs font-semibold text-neutral-800 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
+          >
+            <option value="claude">Claude (Terracotta)</option>
+            <option value="orange">Default Orange</option>
+            <option value="emerald">Emerald Green</option>
+            <option value="indigo">Indigo / Violet</option>
+            <option value="cyan">Ocean Cyan</option>
+            <option value="rose">Rose Pink</option>
+            <option value="monochrome">Monochrome Slate</option>
+          </select>
+          <span
+            id="preset-color-dot"
+            class="pointer-events-none absolute top-1/2 left-3 h-3 w-3 -translate-y-1/2 rounded-full bg-[#c25e36]"
+          ></span>
+          <svg
+            class="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-neutral-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 2. Font -->
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          Font
+        </label>
+        <div class="relative">
+          <select
+            id="theme-font-select"
+            class="w-full appearance-none rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-semibold text-neutral-800 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
+          >
+            <option value="manrope">Manrope</option>
+            <option value="inter">Inter</option>
+            <option value="outfit">Outfit</option>
+            <option value="roboto">Roboto</option>
+            <option value="system">System Default</option>
+          </select>
+          <svg
+            class="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-neutral-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 3. Color Mode -->
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          Color Mode
+        </label>
+        <div class="grid grid-cols-3 gap-1 rounded-xl border border-neutral-200 bg-neutral-100/80 p-1 dark:border-neutral-800 dark:bg-neutral-950">
+          <button
+            type="button"
+            data-color-mode="light"
+            class="mode-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Light
+          </button>
+          <button
+            type="button"
+            data-color-mode="dark"
+            class="mode-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Dark
+          </button>
+          <button
+            type="button"
+            data-color-mode="system"
+            class="mode-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            System
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Radius -->
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          Radius
+        </label>
+        <div class="grid grid-cols-4 gap-1 rounded-xl border border-neutral-200 bg-neutral-100/80 p-1 dark:border-neutral-800 dark:bg-neutral-950">
+          <button
+            type="button"
+            data-radius="none"
+            title="None (0px)"
+            class="radius-btn flex items-center justify-center rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            ⊘
+          </button>
+          <button
+            type="button"
+            data-radius="sm"
+            class="radius-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            SM
+          </button>
+          <button
+            type="button"
+            data-radius="md"
+            class="radius-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            MD
+          </button>
+          <button
+            type="button"
+            data-radius="lg"
+            class="radius-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            LG
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. Content Layout -->
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          Content Layout
+        </label>
+        <div class="grid grid-cols-2 gap-1 rounded-xl border border-neutral-200 bg-neutral-100/80 p-1 dark:border-neutral-800 dark:bg-neutral-950">
+          <button
+            type="button"
+            data-layout="compact"
+            class="layout-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Compact
+          </button>
+          <button
+            type="button"
+            data-layout="full"
+            class="layout-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Full
+          </button>
+        </div>
+      </div>
+
+      <!-- 6. Scale -->
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          Scale
+        </label>
+        <div class="grid grid-cols-3 gap-1 rounded-xl border border-neutral-200 bg-neutral-100/80 p-1 dark:border-neutral-800 dark:bg-neutral-950">
+          <button
+            type="button"
+            data-scale="sm"
+            class="scale-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            SM
+          </button>
+          <button
+            type="button"
+            data-scale="md"
+            class="scale-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            MD
+          </button>
+          <button
+            type="button"
+            data-scale="lg"
+            class="scale-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            LG
+          </button>
+        </div>
+      </div>
+
+      <!-- 7. Sidebar Variant -->
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          Sidebar Variant
+        </label>
+        <div class="grid grid-cols-3 gap-1 rounded-xl border border-neutral-200 bg-neutral-100/80 p-1 dark:border-neutral-800 dark:bg-neutral-950">
+          <button
+            type="button"
+            data-sidebar-variant="flush"
+            class="sb-variant-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Flush
+          </button>
+          <button
+            type="button"
+            data-sidebar-variant="inset"
+            class="sb-variant-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Inset
+          </button>
+          <button
+            type="button"
+            data-sidebar-variant="floating"
+            class="sb-variant-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Floating
+          </button>
+        </div>
+      </div>
+
+      <!-- 8. Sidebar Mode -->
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+          Sidebar Mode
+        </label>
+        <div class="grid grid-cols-3 gap-1 rounded-xl border border-neutral-200 bg-neutral-100/80 p-1 dark:border-neutral-800 dark:bg-neutral-950">
+          <button
+            type="button"
+            data-sidebar-mode="expanded"
+            class="sb-mode-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Expanded
+          </button>
+          <button
+            type="button"
+            data-sidebar-mode="icon"
+            class="sb-mode-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Icon
+          </button>
+          <button
+            type="button"
+            data-sidebar-mode="hidden"
+            class="sb-mode-btn rounded-lg py-1.5 text-xs font-semibold text-neutral-600 transition-all hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+          >
+            Hidden
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const STORAGE_KEY = 'theme_customizer_settings';
+
+    const colorDots: Record<string, string> = {
+      claude: '#c25e36',
+      orange: '#f97316',
+      emerald: '#10b981',
+      indigo: '#6366f1',
+      cyan: '#06b6d4',
+      rose: '#f43f5e',
+      monochrome: '#71717a',
+    };
+
+    function getSettings() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved
+          ? JSON.parse(saved)
+          : {
+              preset: 'claude',
+              font: 'manrope',
+              colorMode: 'system',
+              radius: 'md',
+              layout: 'full',
+              scale: 'md',
+              sidebarVariant: 'flush',
+              sidebarMode: 'expanded',
+            };
+      } catch {
+        return {};
+      }
+    }
+
+    function saveSettings(settings: any) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    }
+
+    function applyAll(settings: any) {
+      // 1. Color Mode
+      const isDark =
+        settings.colorMode === 'dark' ||
+        (settings.colorMode === 'system' &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.classList.toggle('dark', isDark);
+      localStorage.setItem('hs_theme', isDark ? 'dark' : 'light');
+
+      // 2. Preset
+      document.documentElement.setAttribute('data-theme-preset', settings.preset || 'claude');
+      const dot = document.getElementById('preset-color-dot');
+      if (dot && colorDots[settings.preset]) {
+        dot.style.backgroundColor = colorDots[settings.preset];
+      }
+
+      // 3. Font
+      document.documentElement.setAttribute('data-theme-font', settings.font || 'manrope');
+
+      // 4. Radius
+      document.documentElement.setAttribute('data-theme-radius', settings.radius || 'md');
+
+      // 5. Layout
+      document.documentElement.setAttribute('data-content-layout', settings.layout || 'full');
+
+      // 6. Scale
+      document.documentElement.setAttribute('data-theme-scale', settings.scale || 'md');
+
+      // 7. Sidebar Variant & Mode
+      document.documentElement.setAttribute('data-sidebar-variant', settings.sidebarVariant || 'flush');
+      document.documentElement.setAttribute('data-sidebar-mode', settings.sidebarMode || 'expanded');
+
+      // Update UI Buttons Active States
+      updateUIStates(settings);
+    }
+
+    function updateUIStates(settings: any) {
+      // Preset select
+      const presetSelect = document.getElementById('theme-preset-select') as HTMLSelectElement;
+      if (presetSelect) presetSelect.value = settings.preset || 'claude';
+
+      // Font select
+      const fontSelect = document.getElementById('theme-font-select') as HTMLSelectElement;
+      if (fontSelect) fontSelect.value = settings.font || 'manrope';
+
+      // Segmented helper
+      const updateSegment = (selector: string, attr: string, activeVal: string) => {
+        document.querySelectorAll<HTMLButtonElement>(selector).forEach(btn => {
+          const isActive = btn.getAttribute(attr) === activeVal;
+          if (isActive) {
+            btn.classList.add('bg-white', 'text-neutral-900', 'shadow-sm', 'dark:bg-neutral-800', 'dark:text-white');
+            btn.classList.remove('text-neutral-600', 'dark:text-neutral-400');
+          } else {
+            btn.classList.remove('bg-white', 'text-neutral-900', 'shadow-sm', 'dark:bg-neutral-800', 'dark:text-white');
+            btn.classList.add('text-neutral-600', 'dark:text-neutral-400');
+          }
+        });
+      };
+
+      updateSegment('.mode-btn', 'data-color-mode', settings.colorMode || 'system');
+      updateSegment('.radius-btn', 'data-radius', settings.radius || 'md');
+      updateSegment('.layout-btn', 'data-layout', settings.layout || 'full');
+      updateSegment('.scale-btn', 'data-scale', settings.scale || 'md');
+      updateSegment('.sb-variant-btn', 'data-sidebar-variant', settings.sidebarVariant || 'flush');
+      updateSegment('.sb-mode-btn', 'data-sidebar-mode', settings.sidebarMode || 'expanded');
+    }
+
+    // Initialize
+    const currentSettings = getSettings();
+    applyAll(currentSettings);
+
+    // Popover Toggle
+    const root = document.getElementById('theme-customizer-root');
+    const toggleBtn = document.getElementById('theme-customizer-toggle');
+    const panel = document.getElementById('theme-customizer-panel');
+
+    toggleBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isVisible = panel?.classList.contains('opacity-100');
+      if (isVisible) {
+        panel?.classList.add('invisible', 'opacity-0');
+        panel?.classList.remove('opacity-100');
+      } else {
+        panel?.classList.remove('invisible', 'opacity-0');
+        panel?.classList.add('opacity-100');
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (root && !root.contains(e.target as Node)) {
+        panel?.classList.add('invisible', 'opacity-0');
+        panel?.classList.remove('opacity-100');
+      }
+    });
+
+    // Event Listeners for controls
+    document.getElementById('theme-preset-select')?.addEventListener('change', (e) => {
+      const val = (e.target as HTMLSelectElement).value;
+      const s = getSettings();
+      s.preset = val;
+      saveSettings(s);
+      applyAll(s);
+    });
+
+    document.getElementById('theme-font-select')?.addEventListener('change', (e) => {
+      const val = (e.target as HTMLSelectElement).value;
+      const s = getSettings();
+      s.font = val;
+      saveSettings(s);
+      applyAll(s);
+    });
+
+    // Segmented clicks
+    document.querySelectorAll<HTMLButtonElement>('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const s = getSettings();
+        s.colorMode = btn.getAttribute('data-color-mode');
+        saveSettings(s);
+        applyAll(s);
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.radius-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const s = getSettings();
+        s.radius = btn.getAttribute('data-radius');
+        saveSettings(s);
+        applyAll(s);
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.layout-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const s = getSettings();
+        s.layout = btn.getAttribute('data-layout');
+        saveSettings(s);
+        applyAll(s);
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.scale-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const s = getSettings();
+        s.scale = btn.getAttribute('data-scale');
+        saveSettings(s);
+        applyAll(s);
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.sb-variant-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const s = getSettings();
+        s.sidebarVariant = btn.getAttribute('data-sidebar-variant');
+        saveSettings(s);
+        applyAll(s);
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.sb-mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const s = getSettings();
+        s.sidebarMode = btn.getAttribute('data-sidebar-mode');
+        saveSettings(s);
+        applyAll(s);
+      });
+    });
+
+    // Reset Button
+    document.getElementById('theme-reset-btn')?.addEventListener('click', () => {
+      const defaults = {
+        preset: 'claude',
+        font: 'manrope',
+        colorMode: 'system',
+        radius: 'md',
+        layout: 'full',
+        scale: 'md',
+        sidebarVariant: 'flush',
+        sidebarMode: 'expanded',
+      };
+      saveSettings(defaults);
+      applyAll(defaults);
+    });
+  })();
+</script>

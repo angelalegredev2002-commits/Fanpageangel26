@@ -1,35 +1,104 @@
 ---
-const mockBars = [40, 70, 45, 90, 65, 85, 100];
+const days = [
+  { label: 'Lun', value: 1240 },
+  { label: 'Mar', value: 2180 },
+  { label: 'Mié', value: 1450 },
+  { label: 'Jue', value: 2900 },
+  { label: 'Vie', value: 2100 },
+  { label: 'Sáb', value: 2680 },
+  { label: 'Dom', value: 3200 },
+];
+const max = Math.max(...days.map(d => d.value));
+const total = days.reduce((s, d) => s + d.value, 0);
 ---
 
 <div
-  class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm lg:col-span-2"
+  class="rounded-xl border border-neutral-200/80 bg-white p-5 shadow-xs transition-colors duration-200 lg:col-span-2 dark:border-neutral-800/80 dark:bg-neutral-900/60"
 >
-  <div class="mb-6 flex items-center justify-between">
-    <h2 class="text-xl font-bold text-white">Traffic Overview</h2>
+  <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h2 class="text-sm font-semibold text-neutral-900 dark:text-white">Tráfico del Sitio</h2>
+      <p class="mt-0.5 text-xs text-neutral-500 dark:text-neutral-400">
+        Total semanal: <span class="font-medium text-neutral-900 dark:text-neutral-100">{total.toLocaleString()} visitas</span>
+      </p>
+    </div>
     <select
-      class="rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-1 text-sm text-neutral-300 outline-none focus:border-orange-500"
+      class="rounded-lg border border-neutral-200 bg-neutral-50 px-2.5 py-1 text-xs font-medium text-neutral-700 outline-none transition-colors focus:border-neutral-400 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
     >
-      <option>Last 7 days</option>
-      <option>Last 30 days</option>
-      <option>This Year</option>
+      <option>Últimos 7 días</option>
+      <option>Últimos 30 días</option>
+      <option>Este año</option>
     </select>
   </div>
-  <div class="flex h-64 items-end justify-between gap-2">
-    {
-      mockBars.map(height => (
-        <div class="group relative w-full rounded-t-lg bg-neutral-800">
-          <div
-            class="absolute bottom-0 w-full rounded-t-lg bg-gradient-to-t from-orange-600 to-orange-400 transition-all duration-500 group-hover:opacity-80"
-            style={`height: ${height}%`}
-          />
+
+  <!-- Chart Area -->
+  <div class="relative flex h-48 items-end gap-2">
+    <!-- Y-axis grid lines -->
+    <div class="pointer-events-none absolute inset-0 flex flex-col justify-between">
+      {[100, 75, 50, 25, 0].map((pct) => (
+        <div class="flex items-center gap-2">
+          <span class="w-8 text-right text-[10px] text-neutral-400 dark:text-neutral-600 font-mono">
+            {Math.round((pct / 100) * max).toLocaleString()}
+          </span>
+          <div class="h-px flex-1 border-t border-dashed border-neutral-100 dark:border-neutral-800/70" />
         </div>
-      ))
-    }
+      ))}
+    </div>
+
+    <!-- Bars -->
+    <div class="relative flex h-full w-full items-end gap-3 pl-12">
+      {
+        days.map((day) => {
+          const h = Math.round((day.value / max) * 100);
+          return (
+            <div class="group relative flex flex-1 flex-col items-center justify-end h-full">
+              <!-- Tooltip -->
+              <div class="absolute bottom-full mb-1.5 hidden -translate-x-1/2 left-1/2 group-hover:flex flex-col items-center z-20 pointer-events-none">
+                <div class="rounded-md bg-neutral-900 px-2 py-1 text-center shadow-md dark:bg-neutral-100">
+                  <p class="text-[11px] font-medium text-white dark:text-neutral-900">{day.value.toLocaleString()}</p>
+                </div>
+                <div class="h-1.5 w-1.5 rotate-45 bg-neutral-900 -mt-1 dark:bg-neutral-100" />
+              </div>
+              <!-- Bar -->
+              <div
+                class="admin-bar w-full rounded-t-sm bg-gradient-to-t from-orange-600 to-orange-400 opacity-85 transition-all duration-300 group-hover:opacity-100"
+                style={`height: 0%;`}
+                data-height={`${h}%`}
+              />
+            </div>
+          );
+        })
+      }
+    </div>
   </div>
-  <div class="mt-4 flex justify-between text-xs text-neutral-500">
-    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span
-      >Fri</span
-    ><span>Sat</span><span>Sun</span>
+
+  <!-- X-axis labels -->
+  <div class="mt-2 flex pl-12 gap-3">
+    {days.map(day => (
+      <span class="flex-1 text-center text-[11px] font-medium text-neutral-400 dark:text-neutral-500">
+        {day.label}
+      </span>
+    ))}
+  </div>
+
+  <!-- Legend -->
+  <div class="mt-4 flex items-center justify-between border-t border-neutral-100 pt-3 text-xs dark:border-neutral-800/60">
+    <div class="flex items-center gap-2">
+      <span class="h-2 w-2 rounded-xs bg-orange-500" />
+      <span class="text-neutral-500 dark:text-neutral-400">Visitas únicas por día</span>
+    </div>
+    <span class="font-medium text-emerald-600 dark:text-emerald-400">↑ 12.4% vs. semana anterior</span>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const bars = document.querySelectorAll<HTMLElement>('.admin-bar');
+    bars.forEach((bar, i) => {
+      setTimeout(() => {
+        bar.style.height = bar.dataset.height ?? '0%';
+        bar.style.transition = 'height 0.5s ease-out';
+      }, i * 40);
+    });
+  });
+</script>

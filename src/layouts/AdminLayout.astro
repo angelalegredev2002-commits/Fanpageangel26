@@ -4,7 +4,7 @@ import '@styles/global.css';
 
 import AppSidebar from '@components/admin/AppSidebar.astro';
 import AdminHeader from '@components/admin/AdminHeader.astro';
-import LoadingTransition from '@components/ui/LoadingTransition.astro';
+import ThemeCustomizerInit from '@components/ui/ThemeCustomizerInit.astro';
 
 interface Props {
   title?: string;
@@ -17,40 +17,32 @@ const { title = 'Admin Panel', lang = 'en' } = Astro.props;
 <html lang={lang}>
   <head>
     <Meta meta={title} />
-    <title>{title}</title>
-    <script is:inline>
-      if (
-        localStorage.getItem('hs_theme') === 'dark' ||
-        (!('hs_theme' in localStorage) &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    </script>
+    <title>{title} — AdminPanel</title>
+    <ThemeCustomizerInit />
   </head>
   <body
     class="flex min-h-screen bg-neutral-50 text-neutral-900 transition-colors duration-300 selection:bg-orange-500 selection:text-white dark:bg-neutral-950 dark:text-neutral-200"
-    style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"
   >
-    <LoadingTransition />
     <div class="relative flex flex-1 overflow-hidden">
       <AppSidebar />
       <main class="relative flex flex-1 flex-col overflow-hidden">
         <AdminHeader />
-        <div class="relative flex-1 overflow-y-auto p-6">
-          <!-- Abstract Background -->
+        <div class="relative flex-1 overflow-y-auto">
+          <!-- Abstract Background Glows -->
           <div
-            class="pointer-events-none absolute top-[-10%] right-[-5%] h-[40%] w-[40%] rounded-full bg-orange-500/10 blur-[100px]"
-          >
-          </div>
+            class="pointer-events-none absolute top-0 right-0 h-[500px] w-[500px] -translate-y-1/4 translate-x-1/4 rounded-full bg-orange-500/5 blur-[120px]"
+          ></div>
           <div
-            class="pointer-events-none absolute bottom-[-10%] left-[-5%] h-[40%] w-[40%] rounded-full bg-orange-500/10 blur-[100px]"
-          >
-          </div>
+            class="pointer-events-none absolute bottom-0 left-0 h-[400px] w-[400px] translate-y-1/4 -translate-x-1/4 rounded-full bg-orange-500/5 blur-[120px]"
+          ></div>
 
-          <div class="relative z-10 mx-auto max-w-7xl">
+          <!-- Grid pattern overlay (subtle) -->
+          <div
+            class="pointer-events-none absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
+            style="background-image: linear-gradient(rgba(249,115,22,0.5) 1px, transparent 1px), linear-gradient(to right, rgba(249,115,22,0.5) 1px, transparent 1px); background-size: 60px 60px;"
+          ></div>
+
+          <div class="relative z-10 mx-auto max-w-7xl p-6">
             <slot />
           </div>
         </div>

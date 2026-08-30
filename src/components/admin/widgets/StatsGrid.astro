@@ -1,24 +1,104 @@
 ---
 const stats = [
-  { label: 'Visitas Únicas (Mes)', value: '14,248', trend: '+12%', isPositive: true },
-  { label: 'Clics en "Precios"', value: '842', trend: '+5%', isPositive: true },
-  { label: 'Tasa de Rebote', value: '28%', trend: '-2%', isPositive: true },
-  { label: 'Consultas Recibidas', value: '45', trend: '+15%', isPositive: true },
+  {
+    label: 'Visitas Únicas',
+    value: '14,248',
+    trend: '+12.4%',
+    isPositive: true,
+    subtext: 'vs. mes anterior',
+    sparkline: [35, 45, 40, 60, 55, 75, 85],
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>`,
+    bg: 'bg-blue-500/10 dark:bg-blue-500/10',
+    iconColor: 'text-blue-500 dark:text-blue-400',
+  },
+  {
+    label: 'Clics en "Precios"',
+    value: '842',
+    trend: '+5.1%',
+    isPositive: true,
+    subtext: 'vs. mes anterior',
+    sparkline: [25, 38, 32, 50, 45, 55, 60],
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>`,
+    bg: 'bg-orange-500/10',
+    iconColor: 'text-orange-500 dark:text-orange-400',
+  },
+  {
+    label: 'Tasa de Rebote',
+    value: '28.3%',
+    trend: '-2.4%',
+    isPositive: true,
+    subtext: 'mejoría en retención',
+    sparkline: [55, 50, 48, 44, 40, 36, 32],
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>`,
+    bg: 'bg-emerald-500/10',
+    iconColor: 'text-emerald-500 dark:text-emerald-400',
+  },
+  {
+    label: 'Consultas Recibidas',
+    value: '45',
+    trend: '+18.2%',
+    isPositive: true,
+    subtext: '4 pendientes de respuesta',
+    sparkline: [15, 22, 28, 26, 34, 38, 45],
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>`,
+    bg: 'bg-purple-500/10',
+    iconColor: 'text-purple-500 dark:text-purple-400',
+  },
 ];
 ---
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-  {stats.map(stat => (
-    <div class="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-2xl p-6 hover:border-orange-500/50 transition-colors group relative overflow-hidden">
-      <!-- Glow effect -->
-      <div class="absolute -top-10 -right-10 size-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/10 transition-colors pointer-events-none"></div>
-      
-      <h3 class="text-neutral-400 text-sm font-medium mb-3 relative z-10">{stat.label}</h3>
-      <div class="flex items-end justify-between relative z-10">
-        <span class="text-3xl font-black text-white group-hover:text-orange-400 transition-colors">{stat.value}</span>
-        <span class={`text-xs font-bold px-2 py-1 rounded-lg ${stat.isPositive ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
-          {stat.trend}
-        </span>
-      </div>
-    </div>
-  ))}
+
+<div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  {
+    stats.map((stat) => {
+      const max = Math.max(...stat.sparkline);
+      return (
+        <div class="group relative rounded-xl border border-neutral-200/80 bg-white p-4.5 shadow-xs transition-all duration-200 hover:border-neutral-300 hover:shadow-sm dark:border-neutral-800/80 dark:bg-neutral-900/60 dark:hover:border-neutral-700">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <p class="text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                {stat.label}
+              </p>
+              <p class="mt-1 text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+                {stat.value}
+              </p>
+            </div>
+            <div class={`rounded-lg p-2 ${stat.bg}`}>
+              <svg
+                class={`h-4 w-4 ${stat.iconColor}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                set:html={stat.icon}
+              />
+            </div>
+          </div>
+
+          <!-- Sparkline -->
+          <div class="mt-3 flex h-8 items-end gap-1">
+            {stat.sparkline.map((val) => (
+              <div
+                class="flex-1 rounded-xs opacity-50 transition-opacity group-hover:opacity-80"
+                style={`height: ${(val / max) * 100}%; background: linear-gradient(to top, var(--tw-gradient-to, #ea580c), var(--tw-gradient-from, #fb923c));`}
+              />
+            ))}
+          </div>
+
+          <div class="mt-2.5 flex items-center justify-between border-t border-neutral-100 pt-2 text-[11px] dark:border-neutral-800/60">
+            <span class="text-neutral-400 dark:text-neutral-500">
+              {stat.subtext}
+            </span>
+            <span
+              class={`font-medium ${
+                stat.isPositive
+                  ? 'text-emerald-600 dark:text-emerald-400'
+                  : 'text-rose-600 dark:text-rose-400'
+              }`}
+            >
+              {stat.trend}
+            </span>
+          </div>
+        </div>
+      );
+    })
+  }
 </div>

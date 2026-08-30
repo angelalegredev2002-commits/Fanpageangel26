@@ -213,7 +213,7 @@ const DEFAULT_DB = {
   },
   site: {
     brandText: 'Angel Alegre',
-    stickyHeader: 'on',
+    stickyHeader: 'off',
     footerText_es: '© 2026 Angel Alegre. Todos los derechos reservados.',
     footerText_en: '© 2026 Angel Alegre. All rights reserved.',
   },

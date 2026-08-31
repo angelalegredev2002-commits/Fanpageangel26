@@ -4,9 +4,7 @@ import Meta from '@components/Meta.astro';
 import Navbar from '@components/sections/navbar&footer/Navbar.astro';
 import FooterSection from '@components/sections/navbar&footer/FooterSection.astro';
 import ContactHub from '@components/ui/buttons/ContactHub.astro';
-import LoadingTransition from '@components/ui/LoadingTransition.astro';
 import CookieBanner from '@components/ui/CookieBanner.astro';
-import BrandLogo from '@components/BrandLogo.astro';
 import ThemeCustomizerInit from '@components/ui/ThemeCustomizerInit.astro';
 import { SITE } from '@data/constants';
 import '@styles/global.css';
@@ -41,7 +39,6 @@ interface Props {
       customDescription={customDescription}
       customOgTitle={customOgTitle}
     />
-    {/* Define the title of the page */}
     <title>{title}</title>
     <ThemeCustomizerInit />
     <script>
@@ -51,49 +48,32 @@ interface Props {
   <body
     class="flex min-h-screen flex-col bg-neutral-50 text-neutral-900 transition-colors duration-300 selection:bg-orange-500 selection:text-white dark:bg-neutral-950 dark:text-neutral-200"
   >
-    {
-      /*
-    Setting up the main structure of the page.
-    The Navbar is placed at the top, with a slot for the main content and FooterSection at the bottom.
-    */
-    }
-    <div
-      class="mx-auto flex min-h-screen w-full max-w-(--breakpoint-2xl) flex-col px-4 sm:px-6 lg:px-8"
-    >
+    {/* Main Container */}
+    <div class="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8">
       <Navbar />
       <main class="grow">
         <slot />
       </main>
     </div>
+
     <FooterSection />
     <ContactHub />
     <CookieBanner />
 
-    <LoadingTransition />
+    {/* Background Decorative Elements (Pointer events disabled) */}
+    <div class="tech-grid pointer-events-none" id="tech-grid"></div>
+    <div class="noise-overlay pointer-events-none"></div>
+    <div class="custom-cursor pointer-events-none hidden lg:block" id="cursor"></div>
 
-    {/* Tech Grid, Noise & Custom Cursor */}
-    <div class="tech-grid" id="tech-grid"></div>
-    <div class="noise-overlay"></div>
-    <div class="custom-cursor hidden lg:block" id="cursor"></div>
-
-    {/* Organic Morphing Blobs */}
-    <div class="blob top-[-10%] right-[-10%] opacity-50"></div>
+    <div class="blob pointer-events-none top-[-10%] right-[-10%] opacity-40"></div>
     <div
-      class="blob bottom-[-10%] left-[-10%] opacity-30"
+      class="blob pointer-events-none bottom-[-10%] left-[-10%] opacity-20"
       style="animation-delay: -5s; background: linear-gradient(135deg, rgba(234, 88, 12, 0.2), rgba(249, 115, 22, 0.1));"
     >
     </div>
-    <div
-      class="blob top-[40%] left-[20%] opacity-20"
-      style="animation-delay: -10s; width: 300px; height: 300px;"
-    >
-    </div>
-
-    <audio id="bg-music" src="/music/in-the-end.mp3" loop transition:persist
-    ></audio>
 
     <script>
-      // https://preline.co
+      // Preline & Animations Init
       import 'preline';
       import gsap from 'gsap';
       import { initPremiumAnimations } from '@scripts/premiumAnimations.js';
@@ -106,59 +86,35 @@ interface Props {
       import { initLandoScroll } from '@scripts/landoScroll.js';
 
       const init = () => {
-        setupSmoothScroll();
-
-        (
-          window as Window & {
-            HSStaticMethods?: { autoInit?: () => void };
-            hasPlayedLoading?: boolean;
-          }
-        ).HSStaticMethods?.autoInit?.();
-
-        const win = window as any;
-        initPremiumAnimations();
-        initScrollOrderSections();
-        initLandoScroll();
-        initScrollSectionReveals();
-        refreshScrollAnimations();
-
-        // Background Music (Services Page) Logic
-        const bgMusic = document.getElementById('bg-music') as HTMLAudioElement;
-        const isServicesPage = window.location.pathname.includes('/services');
-
-        if (bgMusic) {
-          bgMusic.volume = 0.4;
-
-          if (isServicesPage) {
-            const playBG = () => {
-              bgMusic.play().catch(() => {});
-            };
-            window.addEventListener('click', playBG, { once: true });
-            window.addEventListener('scroll', playBG, { once: true });
-            playBG();
-          } else {
-            bgMusic.pause();
-            bgMusic.currentTime = 0;
-          }
+        try {
+          setupSmoothScroll();
+          (window as any).HSStaticMethods?.autoInit?.();
+          initPremiumAnimations();
+          initScrollOrderSections();
+          initLandoScroll();
+          initScrollSectionReveals();
+          refreshScrollAnimations();
+        } catch (e) {
+          console.warn('Animation init notice:', e);
         }
 
-        // Premium Particle Cursor (Sparks/Bubbles)
+        // Particle Cursor
         const createParticle = (x: number, y: number) => {
           const particle = document.createElement('div');
-          particle.className = 'cursor-particle';
+          particle.className = 'cursor-particle pointer-events-none';
           document.body.appendChild(particle);
 
-          const size = Math.random() * 8 + 4;
+          const size = Math.random() * 6 + 3;
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
 
-          const destinationX = x + (Math.random() - 0.5) * 40;
-          const destinationY = y + (Math.random() - 0.5) * 40;
+          const destinationX = x + (Math.random() - 0.5) * 30;
+          const destinationY = y + (Math.random() - 0.5) * 30;
 
           gsap.set(particle, {
             x: x - size / 2,
             y: y - size / 2,
-            opacity: 1,
+            opacity: 0.8,
             scale: 1,
             backgroundColor: Math.random() > 0.5 ? '#f97316' : '#fbbf24',
           });
@@ -168,7 +124,7 @@ interface Props {
             y: destinationY,
             opacity: 0,
             scale: 0,
-            duration: Math.random() * 1 + 0.5,
+            duration: Math.random() * 0.8 + 0.4,
             ease: 'power2.out',
             onComplete: () => particle.remove(),
           });
@@ -176,21 +132,18 @@ interface Props {
 
         const cursor = document.getElementById('cursor');
         const techGrid = document.getElementById('tech-grid');
-        const magneticElements = document.querySelectorAll('.magnetic-wrap');
         let lastX = 0;
         let lastY = 0;
 
         document.addEventListener('mousemove', e => {
           const { clientX, clientY } = e;
 
-          // Create particles on move
-          if (Math.abs(clientX - lastX) > 5 || Math.abs(clientY - lastY) > 5) {
+          if (Math.abs(clientX - lastX) > 8 || Math.abs(clientY - lastY) > 8) {
             createParticle(clientX, clientY);
             lastX = clientX;
             lastY = clientY;
           }
 
-          // Update Grid Mask
           if (techGrid) {
             const xPercent = (clientX / window.innerWidth) * 100;
             const yPercent = (clientY / window.innerHeight) * 100;
@@ -198,45 +151,6 @@ interface Props {
             techGrid.style.setProperty('--mouse-y', `${yPercent}%`);
           }
 
-          // Update Tilt
-          const elements = document.querySelectorAll('.tilt-element');
-          elements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            const x = clientX - rect.left;
-            const y = clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -10;
-            const rotateY = ((x - centerX) / centerX) * 10;
-
-            (el as HTMLElement).style.setProperty(
-              '--rotate-x',
-              `${rotateX}deg`
-            );
-            (el as HTMLElement).style.setProperty(
-              '--rotate-y',
-              `${rotateY}deg`
-            );
-          });
-
-          // Update Magnetic Elements
-          magneticElements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const distance = Math.hypot(clientX - centerX, clientY - centerY);
-
-            if (distance < 100) {
-              const moveX = (clientX - centerX) * 0.4;
-              const moveY = (clientY - centerY) * 0.4;
-              (el as HTMLElement).style.transform =
-                `translate(${moveX}px, ${moveY}px)`;
-            } else {
-              (el as HTMLElement).style.transform = `translate(0px, 0px)`;
-            }
-          });
-
-          // Update Main Cursor (Glow)
           if (cursor) {
             gsap.to(cursor, {
               x: clientX - 10,
@@ -246,48 +160,21 @@ interface Props {
             });
           }
         });
-
-        // Cursor Hover Effect
-        const hoverables = document.querySelectorAll(
-          'a, button, [role="button"]'
-        );
-        hoverables.forEach(el => {
-          el.addEventListener('mouseenter', () =>
-            cursor?.classList.add('active')
-          );
-          el.addEventListener('mouseleave', () =>
-            cursor?.classList.remove('active')
-          );
-        });
       };
 
-      // Support for both regular load and Astro view transitions
       document.addEventListener('DOMContentLoaded', init);
       document.addEventListener('astro:page-load', init);
     </script>
+
     <style is:global>
-      /* Cinematic Reveal Masks */
-      .reveal-text span {
-        display: inline-block;
-        overflow: hidden;
-        vertical-align: bottom;
-      }
-
-      /* Smooth clip-path transitions for images */
+      /* Smooth reveal fallback to ensure images are always visible */
       .reveal-image {
-        clip-path: inset(100% 0% 0% 0%);
-        transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        clip-path: none !important;
+        opacity: 1 !important;
       }
-
-      .reveal-image.is-in-view {
-        clip-path: inset(0% 0% 0% 0%);
-      }
-
-      /* CSS rules for the page scrollbar */
       .scrollbar-hide::-webkit-scrollbar {
         display: none;
       }
-
       .scrollbar-hide {
         -ms-overflow-style: none;
         scrollbar-width: none;

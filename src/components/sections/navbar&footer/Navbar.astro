@@ -1,5 +1,5 @@
 ---
-//Import relevant dependencies
+// Import relevant dependencies
 import ThemeIcon from '@components/ThemeIcon.astro';
 import NavLink from '@components/ui/links/NavLink.astro';
 import Authentication from '../misc/Authentication.astro';
@@ -7,12 +7,12 @@ import enStrings from '@utils/navigation.ts';
 import esStrings from '@utils/es/navigation.ts';
 import BrandLogo from '@components/BrandLogo.astro';
 import LanguagePicker from '@components/ui/LanguagePicker.astro';
+import ThemeCustomizer from '@components/ui/ThemeCustomizer.astro';
+import CommandPalette from '@components/ui/CommandPalette.astro';
 import { getDB } from '../../../utils/db';
 
 const db = getDB();
-const isSticky = db.site?.stickyHeader !== 'off';
-
-import ThemeCustomizer from '@components/ui/ThemeCustomizer.astro';
+const brandText = db.site?.brandText || 'Angel Alegre';
 
 // Select the correct translation based on the page's lang prop:
 const strings = Astro.currentLocale === 'es' ? esStrings : enStrings;
@@ -25,84 +25,82 @@ const homeUrl = Astro.currentLocale === 'es' ? '/es' : '/';
 >
   {/* Navigation container */}
   <nav
-    class="relative mx-2 w-full rounded-[36px] border border-neutral-200 bg-yellow-50/60 px-4 py-3 shadow-sm backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-0 lg:px-8 xl:mx-auto dark:border-neutral-700/40 dark:bg-neutral-900/80 dark:text-neutral-200 dark:backdrop-blur-md"
+    class="relative mx-2 w-full rounded-2xl border border-neutral-200/80 bg-white/80 px-4 py-2.5 shadow-xs backdrop-blur-md transition-colors duration-300 md:flex md:items-center md:justify-between md:px-6 md:py-2 dark:border-neutral-800 dark:bg-neutral-900/80 dark:text-neutral-200"
     aria-label="Global"
   >
     <div class="flex items-center justify-between">
       {/* Brand logo */}
       <a
-        class="flex-none rounded-lg text-xl font-bold ring-zinc-500 outline-hidden focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden"
+        class="flex items-center gap-2.5 rounded-lg py-1 text-base font-bold outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
         href={homeUrl}
         aria-label="Brand"
       >
-        <BrandLogo class="h-auto w-24" />
+        <div class="admin-brand-icon flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-orange-400 to-orange-600 shadow-xs">
+          <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <span class="admin-brand-text bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-base font-bold text-transparent">
+          {brandText}
+        </span>
       </a>
-      {/* Collapse toggle for smaller screens */}
-      <div class="mr-5 ml-auto flex items-center gap-2 md:hidden">
+
+      {/* Collapse toggle for mobile */}
+      <div class="mr-1 ml-auto flex items-center gap-1.5 md:hidden">
         <ThemeCustomizer />
-        <ThemeIcon />
         <button
           type="button"
-          class="hs-collapse-toggle flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-neutral-600 transition duration-300 hover:bg-neutral-200 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:outline-hidden"
+          class="hs-collapse-toggle flex h-8 w-8 items-center justify-center rounded-lg text-neutral-600 transition hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
           data-hs-collapse="#navbar-collapse-with-animation"
           aria-controls="navbar-collapse-with-animation"
           aria-label="Toggle navigation"
         >
           <svg
-            class="hs-collapse-open:hidden h-[1.25rem] w-[1.25rem] shrink-0"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
+            class="hs-collapse-open:hidden h-5 w-5 shrink-0"
             fill="none"
+            viewBox="0 0 24 24"
             stroke="currentColor"
             stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
           >
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
           <svg
-            class="hs-collapse-open:block hidden h-[1.25rem] w-[1.25rem] shrink-0"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
+            class="hs-collapse-open:block hidden h-5 w-5 shrink-0"
             fill="none"
+            viewBox="0 0 24 24"
             stroke="currentColor"
             stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
           >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
     </div>
-    {/* Contains navigation links */}
+
+    {/* Navigation links & Actions */}
     <div
       id="navbar-collapse-with-animation"
       class="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block"
     >
-      {/* Navigation links container */}
       <div
-        class="mt-5 flex flex-col gap-x-0 gap-y-4 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-x-4 md:gap-y-0 md:ps-7 lg:gap-x-7"
+        class="mt-4 flex flex-col gap-2 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-3 lg:gap-4"
       >
-        {/* Navigation links and Authentication component */}
-        {
-          strings.navBarLinks.map(link => (
-            <NavLink url={link.url} name={link.name} />
-          ))
-        }
+        {/* Navigation links */}
+        <div class="flex flex-col gap-1 md:flex-row md:items-center md:gap-1">
+          {
+            strings.navBarLinks.map(link => (
+              <NavLink url={link.url} name={link.name} />
+            ))
+          }
+        </div>
 
-        <Authentication />
-        <LanguagePicker />
-        <ThemeCustomizer />
-        {/* ThemeIcon component specifically for larger screens */}
-        <span class="hidden md:inline-block">
-          <ThemeIcon />
-        </span>
+        {/* Action Controls Group */}
+        <div class="flex items-center gap-2 border-t border-neutral-100 pt-3 md:border-t-0 md:border-l md:border-neutral-200 md:pt-0 md:pl-3 dark:border-neutral-800">
+          <CommandPalette />
+          <LanguagePicker />
+          <ThemeCustomizer />
+          <Authentication />
+        </div>
       </div>
     </div>
   </nav>

@@ -111,8 +111,9 @@
   /* ==========================================================================
      4. CONTENT LAYOUT
      ========================================================================== */
-  html[data-content-layout='compact'] .max-w-7xl {
-    max-width: 64rem !important;
+  html[data-content-layout='compact'] .max-w-7xl,
+  html[data-content-layout='compact'] .max-w-\(--breakpoint-2xl\) {
+    max-width: 68rem !important;
   }
 
   /* ==========================================================================
@@ -178,10 +179,78 @@
   }
 
   /* ==========================================================================
-     6. UNIVERSAL DYNAMIC COMPONENT STYLING (Sidebar, Header, Forms, Buttons)
+     6. UNIVERSAL DYNAMIC THEME OVERRIDES (Public + Admin)
      ========================================================================== */
 
-  /* 6.1 Sidebar Active Links & Icons */
+  /* Text highlights */
+  .text-orange-500,
+  .text-orange-400,
+  .text-yellow-500,
+  .dark .text-orange-400,
+  .theme-text {
+    color: var(--theme-primary) !important;
+  }
+
+  /* Backgrounds */
+  .bg-orange-500,
+  .bg-orange-400,
+  .theme-bg {
+    background-color: var(--theme-primary) !important;
+  }
+
+  /* Borders */
+  .border-orange-500,
+  .border-orange-400,
+  .theme-border {
+    border-color: var(--theme-primary) !important;
+  }
+
+  /* Subtle background tints */
+  .bg-orange-500\/10,
+  .bg-orange-400\/10,
+  .bg-orange-50 {
+    background-color: rgba(var(--theme-primary-rgb), 0.1) !important;
+  }
+
+  /* Gradients */
+  .admin-brand-icon,
+  .btn-theme-primary,
+  button[type='submit'],
+  .from-orange-400.to-orange-600,
+  .from-orange-500.to-orange-600 {
+    background-image: linear-gradient(135deg, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
+  }
+
+  /* Gradient Texts */
+  .admin-brand-text,
+  .gradient-text-theme {
+    background-image: linear-gradient(to right, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+  /* Focus & Accents */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--theme-primary) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1.5px var(--theme-primary) !important;
+  }
+
+  /* Text Selection */
+  ::selection {
+    background-color: var(--theme-primary) !important;
+    color: #ffffff !important;
+  }
+
+  /* Shadows */
+  .shadow-orange-500\/25,
+  .shadow-orange-500\/30 {
+    box-shadow: 0 10px 25px -5px rgba(var(--theme-primary-rgb), 0.3) !important;
+  }
+
+  /* Sidebar Active Highlight */
   #app-sidebar .sidebar-active-link {
     background-color: rgba(var(--theme-primary-rgb), 0.12) !important;
     border-left-color: var(--theme-primary) !important;
@@ -194,54 +263,7 @@
     color: var(--theme-primary) !important;
   }
 
-  /* 6.2 Brand Logos & Gradients */
-  .admin-brand-icon {
-    background: linear-gradient(135deg, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
-  }
-  .admin-brand-text {
-    background: linear-gradient(to right, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-  }
-
-  /* 6.3 Submit & Primary Action Buttons */
-  button[type='submit'],
-  .btn-theme-primary {
-    background: linear-gradient(to right, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
-    color: #ffffff !important;
-  }
-
-  /* 6.4 Active Language / Navigation Tabs */
-  .tab-active {
-    border-color: var(--theme-primary) !important;
-    background-color: rgba(var(--theme-primary-rgb), 0.12) !important;
-    color: var(--theme-primary) !important;
-  }
-
-  /* 6.5 Form Focus Rings */
-  input:focus,
-  textarea:focus,
-  select:focus {
-    border-color: var(--theme-primary) !important;
-    outline: none !important;
-    box-shadow: 0 0 0 1px var(--theme-primary) !important;
-  }
-
-  /* 6.6 Accent utility overrides */
-  .text-orange-500,
-  .text-orange-400,
-  .dark .text-orange-400 {
-    color: var(--theme-primary) !important;
-  }
-  .bg-orange-500 {
-    background-color: var(--theme-primary) !important;
-  }
-  .border-orange-500 {
-    border-color: var(--theme-primary) !important;
-  }
-  .bg-orange-500\/10 {
-    background-color: rgba(var(--theme-primary-rgb), 0.12) !important;
-  }
+  /* Admin Traffic Bar Charts */
   .admin-bar {
     background: linear-gradient(to top, var(--theme-gradient-to), var(--theme-gradient-from)) !important;
   }

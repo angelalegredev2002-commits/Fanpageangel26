@@ -37,20 +37,22 @@ const testimonials = db.landing?.testimonials || [];
 const statistics = db.landing?.statistics || [];
 ---
 
-<AdminLayout title="Manage Testimonials & Stats">
-  <div class="mb-8 flex items-end justify-between">
+<AdminLayout title="Testimonios y Métricas">
+  <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
     <div>
-      <h1 class="mb-2 text-3xl font-bold text-white">
+      <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">
         Testimonios y Estadísticas
       </h1>
-      <p class="text-neutral-400">
-        Administra los testimonios de clientes y las métricas destacadas de la
-        landing page.
+      <p class="mt-0.5 text-xs text-neutral-500 dark:text-neutral-400">
+        Administra los testimonios de clientes y las métricas destacadas de la landing page.
       </p>
     </div>
     {
       success && (
-        <span class="rounded-xl border border-green-500/30 bg-green-500/20 px-4 py-2 text-sm font-bold text-green-400">
+        <span class="flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+          </svg>
           ¡Cambios Guardados!
         </span>
       )
@@ -59,51 +61,63 @@ const statistics = db.landing?.statistics || [];
 
   <div
     id="testimonials-app"
-    class="space-y-12"
+    class="space-y-6"
     data-testimonials={JSON.stringify(testimonials)}
     data-stats={JSON.stringify(statistics)}
   >
     <!-- TESTIMONIALS SECTION -->
     <div
-      class="rounded-3xl border border-neutral-800 bg-neutral-900/50 p-8 backdrop-blur-sm"
+      class="rounded-xl border border-neutral-200/80 bg-white p-5 shadow-xs dark:border-neutral-800/80 dark:bg-neutral-900/60"
     >
-      <h2
-        class="mb-6 border-b border-neutral-800 pb-4 text-2xl font-bold text-orange-500"
-      >
-        Testimonios
-      </h2>
-      <div id="test-container" class="mb-6 space-y-6"></div>
+      <div class="mb-5 border-b border-neutral-100 pb-3 dark:border-neutral-800">
+        <h2 class="text-sm font-semibold text-neutral-900 dark:text-white">
+          Testimonios de Clientes
+        </h2>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          Mensajes y recomendaciones visibles en la sección de testimonios.
+        </p>
+      </div>
+
+      <div id="test-container" class="mb-4 space-y-4"></div>
+      
       <button
         id="add-test"
         type="button"
-        class="w-full rounded-xl border border-neutral-700 bg-neutral-800 px-4 py-2 text-neutral-300 transition-colors hover:border-neutral-500 hover:text-white"
-        >+ Añadir Testimonio</button
+        class="w-full rounded-xl border border-dashed border-neutral-300 bg-neutral-50/50 py-3 text-xs font-medium text-neutral-600 transition-all hover:border-orange-500 hover:bg-orange-50/40 hover:text-orange-600 dark:border-neutral-700 dark:bg-neutral-800/40 dark:text-neutral-300 dark:hover:border-orange-500/50 dark:hover:bg-neutral-800 dark:hover:text-orange-400"
       >
+        + Añadir Nuevo Testimonio
+      </button>
     </div>
 
     <!-- STATISTICS SECTION -->
     <div
-      class="rounded-3xl border border-neutral-800 bg-neutral-900/50 p-8 backdrop-blur-sm"
+      class="rounded-xl border border-neutral-200/80 bg-white p-5 shadow-xs dark:border-neutral-800/80 dark:bg-neutral-900/60"
     >
-      <h2
-        class="mb-6 border-b border-neutral-800 pb-4 text-2xl font-bold text-orange-500"
-      >
-        Estadísticas (Métricas)
-      </h2>
-      <div id="stats-container" class="mb-6 space-y-4"></div>
+      <div class="mb-5 border-b border-neutral-100 pb-3 dark:border-neutral-800">
+        <h2 class="text-sm font-semibold text-neutral-900 dark:text-white">
+          Métricas y Estadísticas
+        </h2>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          Cifras de impacto destacadas en la landing page.
+        </p>
+      </div>
+
+      <div id="stats-container" class="mb-4 space-y-3"></div>
+
       <button
         id="add-stat"
         type="button"
-        class="w-full rounded-xl border border-neutral-700 bg-neutral-800 px-4 py-2 text-neutral-300 transition-colors hover:border-neutral-500 hover:text-white"
-        >+ Añadir Métrica</button
+        class="w-full rounded-xl border border-dashed border-neutral-300 bg-neutral-50/50 py-3 text-xs font-medium text-neutral-600 transition-all hover:border-orange-500 hover:bg-orange-50/40 hover:text-orange-600 dark:border-neutral-700 dark:bg-neutral-800/40 dark:text-neutral-300 dark:hover:border-orange-500/50 dark:hover:bg-neutral-800 dark:hover:text-orange-400"
       >
+        + Añadir Nueva Métrica
+      </button>
     </div>
 
     <!-- FORM -->
     <form
       method="POST"
       id="test-form"
-      class="flex justify-end border-t border-neutral-800 pt-8"
+      class="flex justify-end pt-2"
     >
       <input
         type="hidden"
@@ -113,9 +127,9 @@ const statistics = db.landing?.statistics || [];
       <input type="hidden" name="statsData" id="stats-data-input" />
       <button
         type="submit"
-        class="rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-4 text-lg font-bold text-white shadow-lg shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500"
+        class="rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-2.5 text-xs font-semibold text-white shadow-md shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500 hover:-translate-y-0.5"
       >
-        Guardar Configuración
+        Guardar Cambios
       </button>
     </form>
   </div>
@@ -145,27 +159,30 @@ const statistics = db.landing?.statistics || [];
         dataTestimonials.forEach((t, index) => {
           const div = document.createElement('div');
           div.className =
-            'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-5 relative';
+            'rounded-xl border border-neutral-200/90 bg-neutral-50/70 p-4.5 dark:border-neutral-800 dark:bg-neutral-800/40 relative';
           div.innerHTML = `
-            <button type="button" class="absolute top-4 right-4 text-red-400 hover:text-red-300" onclick="window.removeTest(${index})">Eliminar</button>
-            <div class="space-y-4 mt-2">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-center justify-between border-b border-neutral-200/60 dark:border-neutral-700/60 pb-2.5 mb-3">
+              <span class="text-xs font-semibold text-neutral-700 dark:text-neutral-300">Testimonio #${index + 1}</span>
+              <button type="button" class="text-xs font-medium text-rose-500 hover:text-rose-600 dark:text-rose-400" onclick="window.removeTest(${index})">Eliminar</button>
+            </div>
+            <div class="space-y-3">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <label class="text-xs text-neutral-400">Autor</label>
-                  <input type="text" value="${escapeHtml(t.author)}" data-type="test" data-field="author" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+                  <label class="mb-1 block text-[11px] font-medium text-neutral-600 dark:text-neutral-400">Autor</label>
+                  <input type="text" value="${escapeHtml(t.author)}" data-type="test" data-field="author" data-index="${index}" class="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
                 </div>
                 <div>
-                  <label class="text-xs text-neutral-400">Rol / Empresa</label>
-                  <input type="text" value="${escapeHtml(t.role)}" data-type="test" data-field="role" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+                  <label class="mb-1 block text-[11px] font-medium text-neutral-600 dark:text-neutral-400">Rol / Empresa</label>
+                  <input type="text" value="${escapeHtml(t.role)}" data-type="test" data-field="role" data-index="${index}" class="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
                 </div>
               </div>
               <div>
-                <label class="text-xs text-neutral-400">URL del Avatar (Imagen)</label>
-                <input type="text" value="${escapeHtml(t.avatarSrc)}" data-type="test" data-field="avatarSrc" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+                <label class="mb-1 block text-[11px] font-medium text-neutral-600 dark:text-neutral-400">URL del Avatar (Imagen)</label>
+                <input type="text" value="${escapeHtml(t.avatarSrc)}" data-type="test" data-field="avatarSrc" data-index="${index}" class="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
               </div>
               <div>
-                <label class="text-xs text-neutral-400">Contenido (Mensaje)</label>
-                <textarea rows="3" data-type="test" data-field="content" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">${escapeHtml(t.content)}</textarea>
+                <label class="mb-1 block text-[11px] font-medium text-neutral-600 dark:text-neutral-400">Contenido (Mensaje)</label>
+                <textarea rows="3" data-type="test" data-field="content" data-index="${index}" class="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">${escapeHtml(t.content)}</textarea>
               </div>
             </div>
           `;
@@ -179,13 +196,13 @@ const statistics = db.landing?.statistics || [];
         dataStats.forEach((stat, index) => {
           const div = document.createElement('div');
           div.className =
-            'bg-neutral-800/50 border border-neutral-700 rounded-2xl p-4 flex gap-4 items-start';
+            'rounded-xl border border-neutral-200/90 bg-neutral-50/70 p-3.5 flex gap-3 items-center dark:border-neutral-800 dark:bg-neutral-800/40';
           div.innerHTML = `
-            <div class="flex-1 space-y-3">
-              <input type="text" placeholder="Número/Cantidad (ej: 70k+)" value="${escapeHtml(stat.count)}" data-type="stat" data-field="count" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500 font-bold">
-              <input type="text" placeholder="Descripción de la métrica" value="${escapeHtml(stat.description)}" data-type="stat" data-field="description" data-index="${index}" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+            <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input type="text" placeholder="Valor (ej: 70k+)" value="${escapeHtml(stat.count)}" data-type="stat" data-field="count" data-index="${index}" class="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-900 focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
+              <input type="text" placeholder="Descripción de la métrica" value="${escapeHtml(stat.description)}" data-type="stat" data-field="description" data-index="${index}" class="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-neutral-900 focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
             </div>
-            <button type="button" class="text-red-400 hover:text-red-300 pt-2" onclick="window.removeStat(${index})">X</button>
+            <button type="button" class="text-xs font-medium text-rose-500 hover:text-rose-600 dark:text-rose-400 p-1" onclick="window.removeStat(${index})">✕</button>
           `;
           statsContainer.appendChild(div);
         });
@@ -221,16 +238,16 @@ const statistics = db.landing?.statistics || [];
 
       document.getElementById('add-test').onclick = () => {
         dataTestimonials.push({
-          content: 'Nuevo Testimonio',
-          author: 'Nombre',
-          role: 'Rol',
+          content: 'Nuevo testimonio de cliente...',
+          author: 'Nombre del Cliente',
+          role: 'Cargo / Empresa',
           avatarSrc: '',
         });
         renderTestimonials();
       };
 
       document.getElementById('add-stat').onclick = () => {
-        dataStats.push({ count: '0', description: 'Nueva Métrica' });
+        dataStats.push({ count: '100+', description: 'Nueva Métrica' });
         renderStats();
       };
 

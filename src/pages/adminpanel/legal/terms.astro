@@ -3,6 +3,7 @@ export const prerender = false;
 import AdminLayout from '@layouts/AdminLayout.astro';
 import { getDB, saveDB } from '../../../utils/db';
 const db = getDB();
+let success = false;
 
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
@@ -14,56 +15,73 @@ if (Astro.request.method === 'POST') {
     db.legal.terms_en = content_en;
   }
   saveDB(db);
+  success = true;
 }
 ---
 
-<AdminLayout title="Terms & Conditions">
-  <div class="mb-8">
-    <h1 class="mb-2 text-3xl font-bold text-white">Terms & Conditions</h1>
-    <p class="text-neutral-400">
-      Edit your site's Terms & Conditions page content.
-    </p>
+<AdminLayout title="Términos y Condiciones">
+  <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+        Términos y Condiciones
+      </h1>
+      <p class="mt-0.5 text-xs text-neutral-500 dark:text-neutral-400">
+        Edita los términos y condiciones de servicio del sitio web.
+      </p>
+    </div>
+    {
+      success && (
+        <span class="flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+          </svg>
+          ¡Cambios Guardados!
+        </span>
+      )
+    }
   </div>
 
   <div
-    class="flex h-[600px] flex-col rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm"
+    class="rounded-xl border border-neutral-200/80 bg-white p-6 shadow-xs dark:border-neutral-800/80 dark:bg-neutral-900/60"
   >
-    <form method="POST" class="flex h-full flex-col space-y-4">
-      <div class="flex flex-1 flex-col gap-4 overflow-y-auto pr-2">
+    <form method="POST" class="space-y-6">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div>
           <label
             for="content"
-            class="mb-2 block text-sm font-medium text-neutral-300"
+            class="mb-1.5 block text-xs font-medium text-neutral-700 dark:text-neutral-300"
             >Contenido (Español)</label
           >
           <textarea
             name="content"
             id="content"
-            class="h-48 w-full resize-none rounded-xl border border-neutral-700 bg-neutral-800 px-4 py-4 font-mono text-sm text-white transition-colors focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none"
+            rows="14"
+            class="w-full rounded-lg border border-neutral-200 bg-white p-3 font-mono text-xs text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white"
             >{db.legal?.terms || ''}</textarea
           >
         </div>
         <div>
           <label
             for="content_en"
-            class="mb-2 block text-sm font-medium text-neutral-300"
+            class="mb-1.5 block text-xs font-medium text-neutral-700 dark:text-neutral-300"
             >Content (English)</label
           >
           <textarea
             name="content_en"
             id="content_en"
-            class="h-48 w-full resize-none rounded-xl border border-neutral-700 bg-neutral-800 px-4 py-4 font-mono text-sm text-white transition-colors focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none"
+            rows="14"
+            class="w-full rounded-lg border border-neutral-200 bg-white p-3 font-mono text-xs text-neutral-900 transition-colors focus:border-orange-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white"
             >{db.legal?.terms_en || ''}</textarea
           >
         </div>
       </div>
 
-      <div>
+      <div class="flex justify-end border-t border-neutral-100 pt-4 dark:border-neutral-800">
         <button
           type="submit"
-          class="rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-3 font-semibold text-white shadow-lg shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500"
+          class="rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-2.5 text-xs font-semibold text-white shadow-md shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500 hover:-translate-y-0.5"
         >
-          Publish Changes
+          Guardar Cambios
         </button>
       </div>
     </form>

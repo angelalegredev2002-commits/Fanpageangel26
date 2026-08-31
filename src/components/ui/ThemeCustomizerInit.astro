@@ -1,5 +1,5 @@
 ---
-// ThemeCustomizerInit.astro - Fast inline initialization & global CSS variable engine
+// ThemeCustomizerInit.astro - Global Design System & Theme Engine
 ---
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -56,10 +56,8 @@
 
 <style is:global>
   /* ==========================================================================
-     Theme Customizer Global Dynamic Variables & Rules
+     1. FONT FAMILIES
      ========================================================================== */
-
-  /* 1. Font Families */
   html[data-theme-font='manrope'],
   html[data-theme-font='manrope'] body {
     font-family: 'Manrope', system-ui, -apple-system, sans-serif !important;
@@ -81,7 +79,9 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   }
 
-  /* 2. Radius scale */
+  /* ==========================================================================
+     2. RADIUS SCALE
+     ========================================================================== */
   html[data-theme-radius='none'] * {
     border-radius: 0px !important;
   }
@@ -95,7 +95,9 @@
     --app-radius: 1.25rem;
   }
 
-  /* 3. Scale factor */
+  /* ==========================================================================
+     3. SCALE FACTOR
+     ========================================================================== */
   html[data-theme-scale='sm'] {
     font-size: 92%;
   }
@@ -106,14 +108,24 @@
     font-size: 108%;
   }
 
-  /* 4. Content Layout */
+  /* ==========================================================================
+     4. CONTENT LAYOUT
+     ========================================================================== */
   html[data-content-layout='compact'] .max-w-7xl {
     max-width: 64rem !important;
   }
 
   /* ==========================================================================
-     5. Theme Presets - Dynamic Color Overrides for BOTH Sidebar and Layout
+     5. THEME PRESETS - COLOR DEFINITIONS
      ========================================================================== */
+
+  /* Default fallback */
+  :root {
+    --theme-primary: #c25e36;
+    --theme-primary-rgb: 194, 94, 54;
+    --theme-gradient-from: #d97706;
+    --theme-gradient-to: #c2410c;
+  }
 
   /* CLAUDE (Terracotta / Warm Amber) */
   html[data-theme-preset='claude'] {
@@ -165,39 +177,78 @@
     --theme-gradient-to: #52525b;
   }
 
-  /* Universal Preset Style Bindings for Sidebar & Layout */
-  html[data-theme-preset] #app-sidebar .bg-orange-500\/10,
-  html[data-theme-preset] .bg-orange-500\/10 {
+  /* ==========================================================================
+     6. UNIVERSAL DYNAMIC COMPONENT STYLING (Sidebar, Header, Forms, Buttons)
+     ========================================================================== */
+
+  /* 6.1 Sidebar Active Links & Icons */
+  #app-sidebar .sidebar-active-link {
     background-color: rgba(var(--theme-primary-rgb), 0.12) !important;
-  }
-  html[data-theme-preset] #app-sidebar .border-orange-500,
-  html[data-theme-preset] .border-orange-500 {
-    border-color: var(--theme-primary) !important;
-  }
-  html[data-theme-preset] #app-sidebar .text-orange-500,
-  html[data-theme-preset] #app-sidebar .text-orange-400,
-  html[data-theme-preset] .text-orange-500,
-  html[data-theme-preset] .text-orange-400 {
+    border-left-color: var(--theme-primary) !important;
     color: var(--theme-primary) !important;
   }
-  html[data-theme-preset] .bg-orange-500 {
+  #app-sidebar .sidebar-active-link svg {
+    color: var(--theme-primary) !important;
+  }
+  #app-sidebar a:hover svg {
+    color: var(--theme-primary) !important;
+  }
+
+  /* 6.2 Brand Logos & Gradients */
+  .admin-brand-icon {
+    background: linear-gradient(135deg, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
+  }
+  .admin-brand-text {
+    background: linear-gradient(to right, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+  /* 6.3 Submit & Primary Action Buttons */
+  button[type='submit'],
+  .btn-theme-primary {
+    background: linear-gradient(to right, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
+    color: #ffffff !important;
+  }
+
+  /* 6.4 Active Language / Navigation Tabs */
+  .tab-active {
+    border-color: var(--theme-primary) !important;
+    background-color: rgba(var(--theme-primary-rgb), 0.12) !important;
+    color: var(--theme-primary) !important;
+  }
+
+  /* 6.5 Form Focus Rings */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--theme-primary) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1px var(--theme-primary) !important;
+  }
+
+  /* 6.6 Accent utility overrides */
+  .text-orange-500,
+  .text-orange-400,
+  .dark .text-orange-400 {
+    color: var(--theme-primary) !important;
+  }
+  .bg-orange-500 {
     background-color: var(--theme-primary) !important;
   }
-  html[data-theme-preset] .from-orange-400,
-  html[data-theme-preset] .from-orange-500 {
-    --tw-gradient-from: var(--theme-gradient-from) !important;
+  .border-orange-500 {
+    border-color: var(--theme-primary) !important;
   }
-  html[data-theme-preset] .to-orange-600 {
-    --tw-gradient-to: var(--theme-gradient-to) !important;
+  .bg-orange-500\/10 {
+    background-color: rgba(var(--theme-primary-rgb), 0.12) !important;
   }
-  html[data-theme-preset] .bg-orange-500\/5 {
-    background-color: rgba(var(--theme-primary-rgb), 0.08) !important;
-  }
-  html[data-theme-preset] .admin-bar {
+  .admin-bar {
     background: linear-gradient(to top, var(--theme-gradient-to), var(--theme-gradient-from)) !important;
   }
 
-  /* 6. Sidebar Variants in Admin */
+  /* ==========================================================================
+     7. SIDEBAR VARIANTS IN ADMIN
+     ========================================================================== */
   html[data-sidebar-variant='inset'] #app-sidebar {
     margin: 0.75rem;
     border-radius: 1rem;
@@ -212,7 +263,9 @@
     border: 1px solid rgba(120, 120, 120, 0.15);
   }
 
-  /* 7. Sidebar Modes in Admin */
+  /* ==========================================================================
+     8. SIDEBAR MODES IN ADMIN
+     ========================================================================== */
   html[data-sidebar-mode='hidden'] #app-sidebar {
     display: none !important;
   }

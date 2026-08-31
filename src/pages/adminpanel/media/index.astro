@@ -10,14 +10,12 @@ const imageFiles = import.meta.glob(
 
 const allImages = Object.entries(imageFiles).map(
   ([path, file]: [string, any], index) => {
-    // Extract just the filename from the path
     const name = path.split('/').pop() || `Image ${index}`;
-    // Generate a mock size based on the string length just to show something
     const mockSize = name.length * 12 + ' KB';
 
     return {
       id: index,
-      url: file.default?.src || file.default || path, // Handle different Vite asset import formats
+      url: file.default?.src || file.default || path,
       name: name,
       size: mockSize,
     };
@@ -36,100 +34,105 @@ const endIdx = startIdx + itemsPerPage;
 const realImages = allImages.slice(startIdx, endIdx);
 ---
 
-<AdminLayout title="Media Library">
-  <div class="mb-8 flex items-end justify-between">
+<AdminLayout title="Biblioteca de Medios">
+  <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
     <div>
-      <h1 class="mb-2 text-3xl font-bold text-white">Media Library</h1>
-      <p class="text-neutral-400">
-        Manage your photos, images, and other visual assets.
+      <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+        Biblioteca de Medios
+      </h1>
+      <p class="mt-0.5 text-xs text-neutral-500 dark:text-neutral-400">
+        Gestiona las fotografías, gráficos y activos visuales de la plataforma.
       </p>
     </div>
     <button
-      class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-5 py-2 font-semibold text-white shadow-lg shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500"
+      type="button"
+      class="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-orange-500/25 transition-all hover:from-orange-400 hover:to-orange-500 hover:-translate-y-0.5"
     >
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        ><path
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
           d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-        ></path></svg
-      >
-      Upload New
+        ></path>
+      </svg>
+      Subir Archivo
     </button>
   </div>
 
   <!-- Drag and Drop Area -->
   <div
-    class="group mb-8 w-full cursor-pointer rounded-2xl border-2 border-dashed border-neutral-700 bg-neutral-900/50 p-12 text-center transition-colors hover:border-orange-500"
+    class="group mb-6 w-full cursor-pointer rounded-xl border-2 border-dashed border-neutral-300 bg-neutral-50/50 p-8 text-center transition-colors hover:border-orange-500 hover:bg-orange-50/30 dark:border-neutral-700 dark:bg-neutral-900/40 dark:hover:border-orange-500/50 dark:hover:bg-neutral-800/40"
   >
     <div
-      class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-neutral-800 transition-transform group-hover:scale-110"
+      class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white shadow-xs transition-transform group-hover:scale-105 dark:bg-neutral-800"
     >
       <svg
-        class="h-8 w-8 text-neutral-400 transition-colors group-hover:text-orange-500"
+        class="h-6 w-6 text-neutral-400 transition-colors group-hover:text-orange-500 dark:text-neutral-500"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        ><path
+      >
+        <path
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
-          d="M12 4v16m8-8H4"></path></svg
-      >
+          d="M12 4v16m8-8H4"
+        ></path>
+      </svg>
     </div>
-    <h3 class="mb-1 text-lg font-medium text-white">
-      Drag and drop images here
+    <h3 class="text-xs font-semibold text-neutral-800 dark:text-neutral-200">
+      Arrastra y suelta imágenes aquí
     </h3>
-    <p class="text-sm text-neutral-500">
-      or click to browse from your computer (JPG, PNG, WEBP)
+    <p class="mt-0.5 text-[11px] text-neutral-500 dark:text-neutral-400">
+      o haz clic para explorar en tu equipo (JPG, PNG, WEBP, SVG)
     </p>
   </div>
 
   <!-- Gallery Grid -->
-  <div class="mb-8 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+  <div class="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
     {
       realImages.map(img => (
-        <div class="group overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/50 transition-colors hover:border-orange-500/50">
-          <div class="relative h-40 w-full overflow-hidden bg-neutral-800">
+        <div class="group overflow-hidden rounded-xl border border-neutral-200/80 bg-white shadow-xs transition-all hover:border-orange-500/50 dark:border-neutral-800 dark:bg-neutral-900/60">
+          <div class="relative h-36 w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800">
             <img
               src={img.url}
               alt={img.name}
-              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
-            <div class="absolute inset-0 flex items-center justify-center gap-3 bg-black/50 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
+            <div class="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 backdrop-blur-xs transition-opacity group-hover:opacity-100">
               <button
-                class="rounded-lg bg-neutral-800 p-2 text-white transition-colors hover:bg-orange-500"
-                title="View"
+                type="button"
+                class="rounded-lg bg-white/90 p-2 text-neutral-800 transition-colors hover:bg-orange-500 hover:text-white dark:bg-neutral-800 dark:text-white dark:hover:bg-orange-500"
+                title="Ver"
               >
                 <svg
-                  class="h-5 w-5"
+                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <>
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                  </>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
                 </svg>
               </button>
               <button
-                class="rounded-lg bg-neutral-800 p-2 text-white transition-colors hover:bg-red-500"
-                title="Delete"
+                type="button"
+                class="rounded-lg bg-white/90 p-2 text-rose-600 transition-colors hover:bg-rose-500 hover:text-white dark:bg-neutral-800 dark:text-rose-400 dark:hover:bg-rose-500"
+                title="Eliminar"
               >
                 <svg
-                  class="h-5 w-5"
+                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -144,11 +147,11 @@ const realImages = allImages.slice(startIdx, endIdx);
               </button>
             </div>
           </div>
-          <div class="p-4">
-            <p class="truncate text-sm font-medium text-white" title={img.name}>
+          <div class="p-3">
+            <p class="truncate text-xs font-medium text-neutral-800 dark:text-neutral-200" title={img.name}>
               {img.name}
             </p>
-            <p class="mt-1 text-xs text-neutral-500">{img.size}</p>
+            <p class="mt-0.5 text-[10px] text-neutral-400 dark:text-neutral-500">{img.size}</p>
           </div>
         </div>
       ))
@@ -158,21 +161,21 @@ const realImages = allImages.slice(startIdx, endIdx);
   <!-- Pagination Controls -->
   {
     totalPages > 1 && (
-      <div class="flex items-center justify-between border-t border-neutral-800 pt-6">
-        <div class="text-sm text-neutral-400">
-          Mostrando página <span class="font-bold text-white">{validPage}</span>{' '}
-          de <span class="font-bold text-white">{totalPages}</span>
+      <div class="flex items-center justify-between border-t border-neutral-100 pt-4 dark:border-neutral-800">
+        <div class="text-xs text-neutral-500 dark:text-neutral-400">
+          Mostrando página <span class="font-semibold text-neutral-900 dark:text-white">{validPage}</span>{' '}
+          de <span class="font-semibold text-neutral-900 dark:text-white">{totalPages}</span>
         </div>
         <div class="flex items-center gap-2">
           <a
             href={validPage > 1 ? `?page=${validPage - 1}` : '#'}
-            class={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${validPage > 1 ? 'bg-neutral-800 text-white hover:bg-neutral-700' : 'pointer-events-none cursor-not-allowed bg-neutral-900 text-neutral-600'}`}
+            class={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${validPage > 1 ? 'border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200' : 'pointer-events-none cursor-not-allowed border border-neutral-100 bg-neutral-50 text-neutral-300 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-600'}`}
           >
             Anterior
           </a>
           <a
             href={validPage < totalPages ? `?page=${validPage + 1}` : '#'}
-            class={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${validPage < totalPages ? 'bg-neutral-800 text-white hover:bg-neutral-700' : 'pointer-events-none cursor-not-allowed bg-neutral-900 text-neutral-600'}`}
+            class={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${validPage < totalPages ? 'border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200' : 'pointer-events-none cursor-not-allowed border border-neutral-100 bg-neutral-50 text-neutral-300 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-600'}`}
           >
             Siguiente
           </a>
